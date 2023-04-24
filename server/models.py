@@ -122,6 +122,38 @@ class Feature(db.Model, SerializerMixin):
 
     #Serialization
 
+class Equipment(db.Model, SerializerMixin):
+    __tablename__ = 'Equipments'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    url = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    # characters (many to many)
+
+
+    #Serialization
+
+class Spell(db.Model, SerializerMixin):
+    __tablename__ = 'Spells'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    url = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    # characters (many to many)
+
+
+    #Serialization
+
 
 
 
