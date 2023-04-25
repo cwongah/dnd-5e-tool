@@ -18,8 +18,24 @@ class User(db.Model, SerializerMixin):
     updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
     #Relationships
-    # characters (many to many)
-    # encounters (one to many)
+    characters = db.relationship('Character', backref='user')
+    encounters = db.relationship('Encounter', backref='user')
+
+    #Serialization
+
+class Encounter(db.Model, SerializerMixin):
+    __tablename__ = 'encounters'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    encounter_characters = db.relationship('EncounterCharacter', backref='encounter')
+    characters = association_proxy('encounter_characters', 'character')
 
     #Serialization
 
@@ -77,16 +93,27 @@ class Character(db.Model, SerializerMixin):
     updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
     #Relationships
-    # skills (many to many)
-    # Features (many to many)
-    # Equipment (many to many)
-    # Spells (many to many)
-    # race = db.Column(db.String)
-    # subrace = db.Column(db.String)
-    # character_class = db.Column(db.String)
-    # subclass = db.Column(db.String)
-    # background?
-    # users (many to one)
+    character_skills = db.relationship('CharacterSkill', backref='character')
+    skills = association_proxy('character_skills', 'skill')
+    character_features = db.relationship('CharacterFeature', backref='character')
+    features = association_proxy('character_features', 'feature')
+    character_equipments = db.relationship('CharacterEquipment', backref='character')
+    equipments = association_proxy('character_equipments', 'equipment')
+    character_spells = db.relationship('CharacterSpell', backref='character')
+    spells = association_proxy('character_spells', 'spell')
+    character_races = db.relationship('CharacterRace', backref='character')
+    races = association_proxy('character_races', 'race')
+    # subrace (many to one) maybe?
+    character_character_classes = db.relationship('CharacterCharacterClass', backref='character')
+    character_classes = association_proxy('character_character_classes', 'character_class')
+    character_subclasses = db.relationship('CharacterSubclass', backref='character')
+    subclasses = association_proxy('character_subclasses', 'subclass')
+    character_proficiencies = db.relationship('CharacterProficiency', backref='character')
+    proficiencies = association_proxy('character_proficiencies', 'proficiency')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    encounter_characters = db.relationship('EncounterCharacter', backref='character')
+    encounters = association_proxy('encounter_characters', 'encounter')
+    
 
     #Serialization
 
@@ -102,9 +129,11 @@ class Skill(db.Model, SerializerMixin):
     updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
     #Relationships
-    # characters (many to many)
+    character_skills = db.relationship('CharacterSkill', backref='skill')
+    characters = association_proxy('character_skills', 'character')
 
     #Serialization
+
 
 class Feature(db.Model, SerializerMixin):
     __tablename__ = 'features'
@@ -117,13 +146,14 @@ class Feature(db.Model, SerializerMixin):
     updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
     #Relationships
-    # characters (many to many)
-
+    character_features = db.relationship('CharacterFeature', backref='feature')
+    characters = association_proxy('character_features', 'character')
 
     #Serialization
 
+
 class Equipment(db.Model, SerializerMixin):
-    __tablename__ = 'Equipments'
+    __tablename__ = 'equipments'
 
     #Attributes
     id = db.Column(db.Integer, primary_key=True)
@@ -133,13 +163,64 @@ class Equipment(db.Model, SerializerMixin):
     updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
     #Relationships
-    # characters (many to many)
-
+    character_equipments = db.relationship('CharacterEquipment', backref='equipment')
+    characters = association_proxy('character_equipments', 'character')
 
     #Serialization
 
 class Spell(db.Model, SerializerMixin):
-    __tablename__ = 'Spells'
+    __tablename__ = 'spells'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    url = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    character_spells = db.relationship('CharacterSpell', backref='spell')
+    characters = association_proxy('character_spells', 'character')
+
+    #Serialization
+
+
+class Race(db.Model, SerializerMixin):
+    __tablename__ = 'races'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    url = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    character_races = db.relationship('CharacterRace', backref='race')
+    characters = association_proxy('character_races', 'character')
+
+    #Serialization
+
+
+class CharacterClass(db.Model, SerializerMixin):
+    __tablename__ = 'character_classes'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    url = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    character_character_classes = db.relationship('CharacterCharacterClass', backref='character_class')
+    characters = association_proxy('character_character_classes', 'character')
+
+    #Serialization
+
+
+class Subclass(db.Model, SerializerMixin):
+    __tablename__ = 'subclasses'
 
     #Attributes
     id = db.Column(db.Integer, primary_key=True)
@@ -150,16 +231,153 @@ class Spell(db.Model, SerializerMixin):
 
     #Relationships
     # characters (many to many)
-
+    character_subclasses = db.relationship('CharacterSubclass', backref='subclass')
+    characters = association_proxy('character_subclasses', 'character')
 
     #Serialization
 
+class Proficiency(db.Model, SerializerMixin):
+    __tablename__ = 'proficiencies'
 
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    url = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
+    #Relationships
+    character_proficiencies = db.relationship('CharacterProficiency', backref='character')
+    characters = association_proxy('character_proficiencies', 'character')
 
-
+    #Serialization
 
 # Joining tables
+class EncounterCharacter(db.Model, SerializerMixin):
+    __tablename__ = 'encounter_characters'
+
+    # Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    # Relationships
+    encounter_id = db.Column(db.Integer, db.ForeignKey('encounters.id'))
+    character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+
+    # Serialization
+
+class CharacterSkill(db.Model, SerializerMixin):
+    __tablename__ = 'character_skills'
+
+    # Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    # Relationships
+    character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+    skill_id = db.Column(db.Integer, db.ForeignKey('skills.id'))
+    
+    # Serialization
+
+class CharacterFeature(db.Model, SerializerMixin):
+    __tablename__ = 'character_features'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+    feature_id = db.Column(db.Integer, db.ForeignKey('features.id'))
+
+    #Serialization
+
+class CharacterEquipment(db.Model, SerializerMixin):
+    __tablename__ = 'character_equipments'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+    equipment_id = db.Column(db.Integer, db.ForeignKey('equipments.id'))
+
+    #Serialization
+
+class CharacterSpell(db.Model, SerializerMixin):
+    __tablename__ = 'character_spells'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+    spell_id = db.Column(db.Integer, db.ForeignKey('spells.id'))
+
+    #Serialization
+
+class CharacterRace(db.Model, SerializerMixin):
+    __tablename__ = 'character_races'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+    race_id = db.Column(db.Integer, db.ForeignKey('races.id'))
+
+    #Serialization
+
+class CharacterCharacterClass(db.Model, SerializerMixin):
+    __tablename__ = 'character_character_classes'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+    character_class_id = db.Column(db.Integer, db.ForeignKey('character_classes.id'))
+
+    #Serialization
+
+class CharacterSubclass(db.Model, SerializerMixin):
+    __tablename__ = 'character_subclasses'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+    subclass_id = db.Column(db.Integer, db.ForeignKey('subclasses.id'))
+
+    #Serialization
+
+class CharacterProficiency(db.Model, SerializerMixin):
+    __tablename__ = 'character_proficiencies'
+
+    #Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+    proficiency_id = db.Column(db.Integer, db.ForeignKey('proficiencies.id'))
+
+    #Serialization
 
 # Models Template
 # class (db.Model, SerializerMixin):
@@ -171,5 +389,19 @@ class Spell(db.Model, SerializerMixin):
 #     updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
 #     #Relationships
+
+#     #Serialization
+
+# class (db.Model, SerializerMixin):
+#     __tablename__ = ''
+
+#     #Attributes
+#     id = db.Column(db.Integer, primary_key=True)
+#     created_at = db.Column(db.DateTime, server_default=db.func.now())
+#     updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+#     #Relationships
+#     character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+#     _id = db.Column(db.Integer, db.ForeignKey('.id'))
 
 #     #Serialization
