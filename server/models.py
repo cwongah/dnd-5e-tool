@@ -22,6 +22,7 @@ class User(db.Model, SerializerMixin):
     encounters = db.relationship('Encounter', backref='user')
 
     #Serialization
+    serialize_only= ('id', 'username', 'password', 'email', 'characters', 'encounters')
 
 class Encounter(db.Model, SerializerMixin):
     __tablename__ = 'encounters'
@@ -38,12 +39,15 @@ class Encounter(db.Model, SerializerMixin):
     characters = association_proxy('encounter_characters', 'character')
 
     #Serialization
+    serialize_only = ('id', 'name', 'user_id', 'characters')
 
 class Character(db.Model, SerializerMixin):
     __tablename__ = 'characters'
 
     #Attributes
     id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
     # Character info
     name = db.Column(db.String)
@@ -89,9 +93,6 @@ class Character(db.Model, SerializerMixin):
     wisdom_saving_throw = db.Column(db.Integer)
     charisma_saving_throw = db.Column(db.Integer)
 
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
-
     #Relationships
     character_skills = db.relationship('CharacterSkill', backref='character')
     skills = association_proxy('character_skills', 'skill')
@@ -114,8 +115,8 @@ class Character(db.Model, SerializerMixin):
     encounter_characters = db.relationship('EncounterCharacter', backref='character')
     encounters = association_proxy('encounter_characters', 'encounter')
     
-
     #Serialization
+    serialize_rules = ('-created_at', '-updated_at', '-character_skills', '-character_features', '-character_equipments', '-character_spells', '-character_races', '-character_character_classes', '-character_subclasses', '-character_proficiencies', '-encounter_characters')
 
 class Skill(db.Model, SerializerMixin):
     __tablename__ = 'skills'
@@ -133,6 +134,7 @@ class Skill(db.Model, SerializerMixin):
     characters = association_proxy('character_skills', 'character')
 
     #Serialization
+    serialize_only = ('id', 'name', 'url', 'ability')
 
 
 class Feature(db.Model, SerializerMixin):
@@ -150,6 +152,7 @@ class Feature(db.Model, SerializerMixin):
     characters = association_proxy('character_features', 'character')
 
     #Serialization
+    serialize_only = ('id', 'name', 'url')
 
 
 class Equipment(db.Model, SerializerMixin):
@@ -167,6 +170,7 @@ class Equipment(db.Model, SerializerMixin):
     characters = association_proxy('character_equipments', 'character')
 
     #Serialization
+    serialize_only = ('id', 'name', 'url')
 
 class Spell(db.Model, SerializerMixin):
     __tablename__ = 'spells'
@@ -183,7 +187,7 @@ class Spell(db.Model, SerializerMixin):
     characters = association_proxy('character_spells', 'character')
 
     #Serialization
-
+    serialize_only = ('id', 'name', 'url')
 
 class Race(db.Model, SerializerMixin):
     __tablename__ = 'races'
@@ -200,7 +204,7 @@ class Race(db.Model, SerializerMixin):
     characters = association_proxy('character_races', 'character')
 
     #Serialization
-
+    serialize_only = ('id', 'name', 'url')
 
 class CharacterClass(db.Model, SerializerMixin):
     __tablename__ = 'character_classes'
@@ -217,7 +221,7 @@ class CharacterClass(db.Model, SerializerMixin):
     characters = association_proxy('character_character_classes', 'character')
 
     #Serialization
-
+    serialize_only = ('id', 'name', 'url')
 
 class Subclass(db.Model, SerializerMixin):
     __tablename__ = 'subclasses'
@@ -235,6 +239,7 @@ class Subclass(db.Model, SerializerMixin):
     characters = association_proxy('character_subclasses', 'character')
 
     #Serialization
+    serialize_only = ('id', 'name', 'url')
 
 class Proficiency(db.Model, SerializerMixin):
     __tablename__ = 'proficiencies'
@@ -251,6 +256,11 @@ class Proficiency(db.Model, SerializerMixin):
     characters = association_proxy('character_proficiencies', 'character')
 
     #Serialization
+    serialize_only = ('id', 'name', 'url')
+
+
+
+
 
 # Joining tables
 class EncounterCharacter(db.Model, SerializerMixin):
@@ -266,6 +276,7 @@ class EncounterCharacter(db.Model, SerializerMixin):
     character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
 
     # Serialization
+    serialize_only = ('id', 'character_id', 'encounter_id')
 
 class CharacterSkill(db.Model, SerializerMixin):
     __tablename__ = 'character_skills'
@@ -280,6 +291,7 @@ class CharacterSkill(db.Model, SerializerMixin):
     skill_id = db.Column(db.Integer, db.ForeignKey('skills.id'))
     
     # Serialization
+    serialize_only = ('id', 'character_id', 'skill_id')
 
 class CharacterFeature(db.Model, SerializerMixin):
     __tablename__ = 'character_features'
@@ -294,6 +306,7 @@ class CharacterFeature(db.Model, SerializerMixin):
     feature_id = db.Column(db.Integer, db.ForeignKey('features.id'))
 
     #Serialization
+    serialize_only = ('id', 'character_id', 'feature_id')
 
 class CharacterEquipment(db.Model, SerializerMixin):
     __tablename__ = 'character_equipments'
@@ -308,6 +321,7 @@ class CharacterEquipment(db.Model, SerializerMixin):
     equipment_id = db.Column(db.Integer, db.ForeignKey('equipments.id'))
 
     #Serialization
+    serialize_only = ('id', 'character_id', 'equipment_id')
 
 class CharacterSpell(db.Model, SerializerMixin):
     __tablename__ = 'character_spells'
@@ -322,6 +336,7 @@ class CharacterSpell(db.Model, SerializerMixin):
     spell_id = db.Column(db.Integer, db.ForeignKey('spells.id'))
 
     #Serialization
+    serialize_only = ('id', 'character_id', 'spell_id')
 
 class CharacterRace(db.Model, SerializerMixin):
     __tablename__ = 'character_races'
@@ -336,6 +351,7 @@ class CharacterRace(db.Model, SerializerMixin):
     race_id = db.Column(db.Integer, db.ForeignKey('races.id'))
 
     #Serialization
+    serialize_only = ('id', 'character_id', 'race_id')
 
 class CharacterCharacterClass(db.Model, SerializerMixin):
     __tablename__ = 'character_character_classes'
@@ -350,6 +366,7 @@ class CharacterCharacterClass(db.Model, SerializerMixin):
     character_class_id = db.Column(db.Integer, db.ForeignKey('character_classes.id'))
 
     #Serialization
+    serialize_only = ('id', 'character_id', 'character_class_id')
 
 class CharacterSubclass(db.Model, SerializerMixin):
     __tablename__ = 'character_subclasses'
@@ -364,6 +381,7 @@ class CharacterSubclass(db.Model, SerializerMixin):
     subclass_id = db.Column(db.Integer, db.ForeignKey('subclasses.id'))
 
     #Serialization
+    serialize_only = ('id', 'character_id', 'subclass_id')
 
 class CharacterProficiency(db.Model, SerializerMixin):
     __tablename__ = 'character_proficiencies'
@@ -378,6 +396,7 @@ class CharacterProficiency(db.Model, SerializerMixin):
     proficiency_id = db.Column(db.Integer, db.ForeignKey('proficiencies.id'))
 
     #Serialization
+    serialize_only = ('id', 'character_id', 'proficiency_id')
 
 # Models Template
 # class (db.Model, SerializerMixin):
