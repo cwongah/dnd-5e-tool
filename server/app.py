@@ -24,7 +24,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 class Users(Resource):
     def get(self):
         users = User.query.all()
-        users_dict_list = [users.to_dict() for user in users]
+        users_dict_list = [user.to_dict() for user in users]
         return make_response(users_dict_list, 200)
     
     def post(self):

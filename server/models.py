@@ -255,7 +255,7 @@ class Proficiency(db.Model, SerializerMixin):
     updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
     #Relationships
-    character_proficiencies = db.relationship('CharacterProficiency', backref='character')
+    character_proficiencies = db.relationship('CharacterProficiency', backref='proficiency')
     characters = association_proxy('character_proficiencies', 'character')
 
     #Serialization

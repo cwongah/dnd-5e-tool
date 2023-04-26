@@ -23,7 +23,7 @@ def make_users():
             email = fake.email()
         )
         users.append(user)
-    db.sessions.add_all(users)
+    db.session.add_all(users)
     db.session.commit()
 
 def make_encounters():
@@ -47,7 +47,7 @@ def make_characters():
                 name = fake.name(),
                 bio = 'Character Bio ' + str((i + 1) + (j * 20)),
                 level = random.randint(1, 20),
-                proficieny_bonus = random.randint(1, 10),
+                proficiency_bonus = random.randint(1, 10),
                 passive_perception = random.randint(1, 20),
                 speed = random.randint(20, 45),
                 armor_class = random.randint(1, 20),
@@ -181,21 +181,21 @@ def make_skills():
         }
     ]
     for skill_list_item in skills_list:
-        attribute = ''
+        ability = ''
         if skill_list_item['name'] in dex:
-            attribute = 'Dexterity'
+            ability = 'Dexterity'
         elif skill_list_item['name'] in wis:
-            attribute = 'Wisdom'
+            ability = 'Wisdom'
         elif skill_list_item['name'] in int:
-            attribute = 'Intelligence'
+            ability = 'Intelligence'
         elif skill_list_item['name'] in str:
-            attribute = 'Strength'
+            ability = 'Strength'
         elif skill_list_item['name'] in cha:
-            attribute = 'Charisma'
+            ability = 'Charisma'
         skill = Skill(
             name = skill_list_item['name'],
             url = skill_list_item['url'],
-            attribute = attribute
+            ability = ability
         )
         skills.append(skill)
     db.session.add_all(skills)
