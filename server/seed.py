@@ -9,7 +9,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, User, Encounter, Character, Skill, Feature, Equipment, Spell, Race, CharacterClass, Subclass, Proficiency, Trait, EncounterCharacter, CharacterSkill, CharacterFeature, CharacterEquipment, CharacterSpell, CharacterRace, CharacterCharacterClass, CharacterSubclass, CharacterProficiency
+from models import db, User, Encounter, Character, Skill, Feature, Equipment, Spell, Race, CharacterClass, Subclass, Proficiency, Trait, EncounterCharacter, CharacterSkill, CharacterFeature, CharacterEquipment, CharacterSpell, CharacterRace, CharacterCharacterClass, CharacterSubclass, CharacterProficiency, CharacterTrait
 
 fake = Faker()
 
@@ -5882,6 +5882,147 @@ def make_traits():
     db.session.add_all(traits)
     db.session.commit()
 
+def make_encounter_characters():
+    EncounterCharacter.query.delete()
+    encounter_characters = []
+    for i in range(4):
+        for j in range(20):
+            encounter_character = EncounterCharacter(
+                encounter_id = j + 1,
+                character_id = ((j + 1) + (i * 20))
+            )
+            encounter_characters.append(encounter_character)
+    db.session.add_all(encounter_characters)
+    db.session.commit()
+
+def make_character_skills():
+    CharacterSkill.query.delete()
+    character_skills = []
+    for j in range(5):
+        for i in range(80):
+            character_skill = CharacterSkill(
+                character_id = i + 1,
+                skill_id = random.randint(1, 18)
+            )
+            character_skills.append(character_skill)
+    db.session.add_all(character_skills)
+    db.session.commit()
+
+def make_character_features():
+    CharacterFeature.query.delete()
+    character_features = []
+    for j in range(5):
+        for i in range(80):
+            character_feature = CharacterFeature(
+                character_id = i + 1,
+                feature_id = random.randint(1, 370)
+            )
+            character_features.append(character_feature)
+    db.session.add_all(character_features)
+    db.session.commit()
+
+def make_character_equipments():
+    CharacterEquipment.query.delete()
+    character_equipments = []
+    for j in range(3):
+        for i in range(80):
+            character_equipment = CharacterEquipment(
+                character_id = i + 1,
+                equipment_id = random.randint(1, 237)
+            )
+            character_equipments.append(character_equipment)
+    db.session.add_all(character_equipments)
+    db.session.commit()
+
+def make_character_spells():
+    CharacterSpell.query.delete()
+    character_spells = []
+    for j in range(5):
+        for i in range(80):
+            character_spell = CharacterSpell(
+                character_id = i + 1,
+                spell_id = random.randint(1, 319)
+            )
+            character_spells.append(character_spell)
+    db.session.add_all(character_spells)
+    db.session.commit()
+
+def make_character_race():
+    CharacterRace.query.delete()
+    character_races = []
+    for i in range(80):
+        character_race = CharacterRace(
+            character_id = i + 1,
+            race_id = random.randint(1, 9)
+        )
+        character_races.append(character_race)
+    db.session.add_all(character_races)
+    db.session.commit()
+
+def make_character_character_classes():
+    CharacterCharacterClass.query.delete()
+    character_character_classes = []
+    for i in range(80):
+        character_character_class = CharacterCharacterClass(
+            character_id = i + 1,
+            character_class_id = random.randint(1, 12)
+        )
+        character_character_classes.append(character_character_class)
+    db.session.add_all(character_character_classes)
+    db.session.commit()
+
+def make_character_subclasses():
+    CharacterSubclass.query.delete()
+    character_subclasses = []
+    for i in range(80):
+        character_subclass = CharacterSubclass(
+            character_id = i + 1,
+            subclass_id = random.randint(1, 12)
+        )
+        character_subclasses.append(character_subclass)
+    db.session.add_all(character_subclasses)
+    db.session.commit()
+
+def make_character_proficiencies():
+    CharacterProficiency.query.delete()
+    character_proficiencies = []
+    for j in range(3):
+        for i in range(80):
+            character_proficiency = CharacterProficiency(
+                character_id = i + 1,
+                proficiency_id = random.randint(1, 117)
+            )
+            character_proficiencies.append(character_proficiency)
+    db.session.add_all(character_proficiencies)
+    db.session.commit()
+
+def make_character_traits():
+    CharacterTrait.query.delete()
+    character_traits = []   
+    for j in range(3):
+        for i in range(80):
+            character_trait = CharacterTrait(
+                character_id = i + 1,
+                trait_id = random.randint(1, 38)
+            )
+            character_traits.append(character_trait)
+    db.session.add_all(character_traits)
+    db.session.commit()
+
+
+
+# def make_character_():
+#     Character.query.delete()
+#     character_ = []
+#     for i in range(80):
+#         character_ = (
+#             character_id = i + 1,
+#             _id = random.randint(1, )
+#         )
+#         character_.append(character_)
+#     db.session.add_all(character_)
+#     db.session.commit()
+
 # def make_():
 #     .query.delete()
 #      = []
@@ -5901,4 +6042,27 @@ if __name__ == '__main__':
     fake = Faker()
     with app.app_context():
         print("Starting seed...")
+        make_users()
+        make_encounters()
+        make_characters()
+        make_skills()
+        make_features()
+        make_equipment()
+        make_spell()
+        make_races()
+        make_character_classes()
+        make_subclasses()
+        make_proficiencies()
+        make_traits()
+        make_encounter_characters()
+        make_character_skills()
+        make_character_features()
+        make_character_equipments()
+        make_character_spells()
+        make_character_race()
+        make_character_character_classes()
+        make_character_subclasses()
+        make_character_proficiencies()
+        make_character_traits()
+        print("Seed completed")
         # Seed code goes here!
