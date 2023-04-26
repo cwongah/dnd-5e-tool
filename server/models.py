@@ -112,12 +112,14 @@ class Character(db.Model, SerializerMixin):
     subclasses = association_proxy('character_subclasses', 'subclass')
     character_proficiencies = db.relationship('CharacterProficiency', backref='character')
     proficiencies = association_proxy('character_proficiencies', 'proficiency')
+    character_traits = db.relationship('CharacterTrait', backref='character')
+    traits = association_proxy('character_traits', 'trait')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     encounter_characters = db.relationship('EncounterCharacter', backref='character')
     encounters = association_proxy('encounter_characters', 'encounter')
     
     #Serialization
-    serialize_rules = ('-created_at', '-updated_at', '-character_skills', '-character_features', '-character_equipments', '-character_spells', '-character_races', '-character_character_classes', '-character_subclasses', '-character_proficiencies', '-encounter_characters')
+    serialize_rules = ('-created_at', '-updated_at', '-character_skills', '-character_features', '-character_equipments', '-character_spells', '-character_races', '-character_character_classes', '-character_subclasses', '-character_proficiencies', '-encounter_characters', '-character_traits')
 
 class Skill(db.Model, SerializerMixin):
     __tablename__ = 'skills'
@@ -259,6 +261,22 @@ class Proficiency(db.Model, SerializerMixin):
     #Serialization
     serialize_only = ('id', 'name', 'url')
 
+class Trait(db.Model, SerializerMixin):
+    __tablename__ = 'traits'
+
+    # Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    url = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+
+    # Relationships
+    character_traits = db.relationship('CharacterTrait', backref='trait')
+    characters = association_proxy('character_traits', 'character')
+    
+    # Serialization
+
 
 
 
@@ -398,6 +416,21 @@ class CharacterProficiency(db.Model, SerializerMixin):
 
     #Serialization
     serialize_only = ('id', 'character_id', 'proficiency_id')
+
+class CharacterTrait(db.Model, SerializerMixin):
+    __tablename__ = 'character_traits'
+
+    # Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column (db.DateTime, onupdate=db.func.now())
+
+    #Relationships
+    character_id = db.Column(db.Integer, db.ForeignKey('characters.id'))
+    trait_id = db.Column(db.Integer, db.ForeignKey('traits.id'))
+
+    #Serialization
+    serialize_only = ('id', 'character_id', 'trait_id')
 
 # Models Template
 # class (db.Model, SerializerMixin):
