@@ -54,6 +54,7 @@ class Character(db.Model, SerializerMixin):
     bio = db.Column(db.String)
 
     # Character stats
+    level = db.Column(db.Integer)
     proficiency_bonus = db.Column(db.Integer)
     passive_perception = db.Column(db.Integer)
     speed = db.Column(db.Integer)
