@@ -277,10 +277,7 @@ class Trait(db.Model, SerializerMixin):
     characters = association_proxy('character_traits', 'character')
     
     # Serialization
-
-
-
-
+    serialize_only = ('id', 'name', 'url')
 
 # Joining tables
 class EncounterCharacter(db.Model, SerializerMixin):
