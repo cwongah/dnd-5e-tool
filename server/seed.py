@@ -52,6 +52,7 @@ def make_characters():
                 speed = random.randint(20, 45),
                 armor_class = random.randint(1, 20),
                 hit_die = random.choice([6, 8, 10, 12]),
+                hit_die_total = random.randint(0, 6),
                 hit_points = random.randint(1, 100),
                 spellcasting_ability = random.randint(0, 10),
                 spellcasting_save = random.randint(0, 10),

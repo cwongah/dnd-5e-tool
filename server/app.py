@@ -69,7 +69,7 @@ api.add_resource(UsersById, '/users/<int:id>')
 class Encounters(Resource):
     def get(self):
         encounters = Encounter.query.all()
-        encounters_dict_list = [e.to_dict() for e in encounters]
+        encounters_dict_list = [e.to_dict(rules=('characters',)) for e in encounters]
         return make_response(encounters_dict_list, 200)
     
     def post(self):
@@ -88,7 +88,7 @@ class EncountersById(Resource):
         encounter = Encounter.query.filter_by(id=id).first()
         if not encounter:
             make_response({'error': 'Encounter not found'}, 404)
-        return make_response(encounter.to_dict(), 200)
+        return make_response(encounter.to_dict(rules=('characters', )), 200)
     
     def patch(self, id):
         encounter = Encounter.query.filter_by(id=id).first()
@@ -162,7 +162,7 @@ class CharactersById(Resource):
         character = Character.query.filter_by(id=id).first()
         if not character:
             make_response({'error': 'Character not found'}, 404)
-        return make_response(character.to_dict(), 200)
+        return make_response(character.to_dict(rules=('bio', 'level', 'proficiency_bonus', 'passive_perception', 'speed', 'armor_class', 'hit_die', 'hit_die_total', 'hit_points', 'spellcasting_ability', 'spellcasting_save', 'spellcasting_attack', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma', 'strength_proficiency', 'dexterity_proficiency', 'constitution_proficiency', 'intelligence_proficiency', 'wisdom_proficiency', 'charisma_proficiency', 'strength_saving_throw', 'dexterity_saving_throw', 'constitution_saving_throw', 'intelligence_saving_throw', 'wisdom_saving_throw', 'charisma_saving_throw', 'skills', 'features', 'equipments', 'spells', 'races', 'character_classes', 'proficiencies', 'traits', 'user_id', 'encounters')), 200)
     
     def patch(self, id):
         character = Character.query.filter_by(id=id).first()

@@ -39,7 +39,7 @@ class Encounter(db.Model, SerializerMixin):
     characters = association_proxy('encounter_characters', 'character')
 
     #Serialization
-    serialize_only = ('id', 'name', 'user_id', 'characters')
+    serialize_only = ('id', 'name', 'user_id')
 
 class Character(db.Model, SerializerMixin):
     __tablename__ = 'characters'
@@ -61,7 +61,7 @@ class Character(db.Model, SerializerMixin):
     armor_class = db.Column(db.Integer)
     hit_die = db.Column(db.Integer)
     # hit_die_quantity = db.Column(db.Integer) maybe
-    hit_die_total = db.Column
+    hit_die_total = db.Column(db.Integer)
     hit_points = db.Column(db.Integer)
     # death_saves? (do as pos and neg)
     # temp hp?
@@ -119,7 +119,8 @@ class Character(db.Model, SerializerMixin):
     encounters = association_proxy('encounter_characters', 'encounter')
     
     #Serialization
-    serialize_rules = ('-created_at', '-updated_at', '-character_skills', '-character_features', '-character_equipments', '-character_spells', '-character_races', '-character_character_classes', '-character_subclasses', '-character_proficiencies', '-encounter_characters', '-character_traits')
+    # serialize_rules = ('-created_at', '-updated_at', '-character_skills', '-character_features', '-character_equipments', '-character_spells', '-character_races', '-character_character_classes', '-character_subclasses', '-character_proficiencies', '-encounter_characters', '-character_traits', '-encounters')
+    serialize_only = ('id', 'name', 'level')
 
 class Skill(db.Model, SerializerMixin):
     __tablename__ = 'skills'
