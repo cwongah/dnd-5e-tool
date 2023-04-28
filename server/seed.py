@@ -9,7 +9,7 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, User, Encounter, Character, Skill, Feature, Equipment, Spell, Race, CharacterClass, Subclass, Proficiency, Trait, EncounterCharacter, CharacterSkill, CharacterFeature, CharacterEquipment, CharacterSpell, CharacterRace, CharacterCharacterClass, CharacterSubclass, CharacterProficiency, CharacterTrait
+from models import db, User, Encounter, Character, Skill, Feature, Equipment, Spell, Race, CharacterClass, Subclass, Proficiency, Trait, EncounterCharacter, CharacterSkill, CharacterFeature, CharacterEquipment, CharacterSpell, CharacterRace, CharacterCharacterClass, CharacterSubclass, CharacterProficiency, CharacterTrait, Reference
 
 fake = Faker()
 
@@ -20,7 +20,8 @@ def make_users():
         user = User(
             username = fake.name(),
             password = str(random.randint(0, 10000)),
-            email = fake.email()
+            email = fake.email(),
+            url = 'http://127.0.0.1:5555/users/' + str(i + 1)
         )
         users.append(user)
     db.session.add_all(users)
@@ -32,7 +33,8 @@ def make_encounters():
     for i in range(20):
         encounter = Encounter(
             name = "encounter " + str(i + 1),
-            user_id = i + 1
+            user_id = i + 1,
+            url = 'http://127.0.0.1:5555/encounters/' + str(i + 1)
         )
         encounters.append(encounter)
     db.session.add_all(encounters)
@@ -46,6 +48,7 @@ def make_characters():
             character = Character(
                 name = fake.name(),
                 bio = 'Character Bio ' + str((i + 1) + (j * 20)),
+                url = 'http://127.0.0.1:5555/characters/' + str((i + 1) + (j * 20)),
                 level = random.randint(1, 20),
                 proficiency_bonus = random.randint(1, 10),
                 passive_perception = random.randint(1, 20),
@@ -6010,6 +6013,143 @@ def make_character_traits():
     db.session.add_all(character_traits)
     db.session.commit()
 
+def make_references():
+    Reference.query.delete()
+
+    users_list = User.query.all()
+    reference_users = []
+    for user in users_list:
+        reference_user = Reference(
+            name = user.username,
+            url = 'http://127.0.0.1:5555/users/' + str(user.id),
+            class_type = 'user'
+        )
+        reference_users.append(reference_user)
+    db.session.add_all(reference_users)
+
+    encounters_list = Encounter.query.all()
+    reference_encounters = []
+    for encounter in encounters_list:
+        reference_encounter = Reference(
+            name = encounter.name,
+            url = 'http://127.0.0.1:5555/encounters' + str(encounter.id),
+            class_type = 'encounter'
+        )
+        reference_encounters.append(reference_encounter)
+    db.session.add_all(reference_encounters)
+
+    characters_list = Character.query.all()
+    reference_characters = []
+    for character in characters_list:
+        reference_character = Reference(
+            name = character.name,
+            url = 'http://127.0.0.1:5555/characters' + str(character.id),
+            class_type = 'character'
+        )
+        reference_characters.append(reference_character)
+    db.session.add_all(reference_characters)
+
+    skills_list = Skill.query.all()
+    reference_skills = []
+    for skill in skills_list:
+        reference_skill = Reference(
+            name = skill.name,
+            url = 'https://www.dnd5eapi.co' + skill.url,
+            class_type = 'skill'
+        )
+        reference_skills.append(reference_skill)
+    db.session.add_all(reference_skills)
+
+    features_list = Feature.query.all()
+    reference_features = []
+    for feature in features_list:
+        reference_feature = Reference(
+            name = feature.name,
+            url = 'https://www.dnd5eapi.co' + feature.url,
+            class_type = 'feature'
+        )
+        reference_features.append(reference_feature)
+    db.session.add_all(reference_features)
+
+    equipments_list = Equipment.query.all()
+    reference_equipments = []
+    for equipment in equipments_list:
+        reference_equipment = Reference(
+            name = equipment.name,
+            url = 'https://www.dnd5eapi.co' + equipment.url,
+            class_type = 'equipment'
+        )
+        reference_equipments.append(reference_equipment)
+    db.session.add_all(reference_equipments)
+
+    spells_list = Spell.query.all()
+    reference_spells = []
+    for spell in spells_list:
+        reference_spell = Reference(
+            name = spell.name,
+            url = 'https://www.dnd5eapi.co' + spell.url,
+            class_type = 'spell'
+        )
+        reference_spells.append(reference_spell)
+    db.session.add_all(reference_spells)
+
+    races_list = Race.query.all()
+    reference_races = []
+    for race in races_list:
+        reference_race = Reference(
+            name = race.name,
+            url = 'https://www.dnd5eapi.co' + race.url,
+            class_type = 'race'
+        )
+        reference_races.append(reference_race)
+    db.session.add_all(reference_races)
+
+    classes_list = CharacterClass.query.all()
+    reference_classes = []
+    for character_class in classes_list:
+        reference_class = Reference(
+            name = character_class.name,
+            url = 'https://www.dnd5eapi.co' + character_class.url,
+            class_type = 'class'
+        )
+        reference_classes.append(reference_class)
+    db.session.add_all(reference_classes)
+
+    subclasses_list = Subclass.query.all()
+    reference_subclasses = []
+    for subclass in subclasses_list:
+        reference_subclass = Reference(
+            name = subclass.name,
+            url = 'https://www.dnd5eapi.co' + subclass.url,
+            class_type = 'subclass'
+        )
+        reference_subclasses.append(reference_subclass)
+    db.session.add_all(reference_subclasses)
+
+    proficiencies_list = Proficiency.query.all()
+    reference_proficiencies = []
+    for proficiency in proficiencies_list:
+        reference_proficiency = Reference(
+            name = proficiency.name,
+            url = 'https://www.dnd5eapi.co' + proficiency.url,
+            class_type = 'proficiency'
+        )
+        reference_proficiencies.append(reference_proficiency)
+    db.session.add_all(reference_proficiencies)
+
+    traits_list = Trait.query.all()
+    reference_traits = []
+    for trait in traits_list:
+        reference_trait = Reference(
+            name = trait.name,
+            url = 'https://www.dnd5eapi.co' + trait.url,
+            class_type = 'trait'
+        )
+        reference_traits.append(reference_trait)
+    db.session.add_all(reference_traits)
+
+    db.session.commit()
+
 if __name__ == '__main__':
     fake = Faker()
     with app.app_context():
@@ -6036,6 +6176,7 @@ if __name__ == '__main__':
         make_character_subclasses()
         make_character_proficiencies()
         make_character_traits()
+        make_references()
         print("Seed completed")
 
 # def make_character_():

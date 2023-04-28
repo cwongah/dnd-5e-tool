@@ -14,6 +14,7 @@ class User(db.Model, SerializerMixin):
     username = db.Column(db.String)
     password = db.Column(db.Text)
     email = db.Column(db.String)
+    url = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
@@ -30,6 +31,7 @@ class Encounter(db.Model, SerializerMixin):
     #Attributes
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    url = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
@@ -46,6 +48,7 @@ class Character(db.Model, SerializerMixin):
 
     #Attributes
     id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column (db.DateTime, onupdate=db.func.now())
 
@@ -429,6 +432,16 @@ class CharacterTrait(db.Model, SerializerMixin):
 
     #Serialization
     serialize_only = ('id', 'character_id', 'trait_id')
+
+# Reference Table for Search
+class Reference(db.Model, SerializerMixin):
+    __tablename__='References'
+
+    # Attributes
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    url = db.Column(db.String)
+    class_type = db.Column(db.String)
 
 # Models Template
 # class (db.Model, SerializerMixin):
