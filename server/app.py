@@ -11,7 +11,7 @@ from flask_cors import CORS
 # Local imports
 # from config import app, db, api
 from config import *
-from models import User, Encounter, Character, Skill, Feature, Equipment, Spell, Race, CharacterClass, Subclass, Proficiency, Trait, EncounterCharacter, CharacterSkill, CharacterFeature, CharacterEquipment, CharacterSpell, CharacterRace, CharacterCharacterClass, CharacterSubclass, CharacterProficiency, CharacterTrait
+from models import User, Encounter, Character, Skill, Feature, Equipment, Spell, Race, CharacterClass, Subclass, Proficiency, Trait, EncounterCharacter, CharacterSkill, CharacterFeature, CharacterEquipment, CharacterSpell, CharacterRace, CharacterCharacterClass, CharacterSubclass, CharacterProficiency, CharacterTrait, Reference
 
 # Views go here!
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -20,6 +20,13 @@ app.json.compact = False
 
 CORS(app,origins="http://localhost:4000", supports_credentials=True)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+class References(Resource):
+    def get(self):
+        references = Reference.query.all()
+        references_dict_list = [reference.to_dict() for reference in references]
+        return make_response(references_dict_list, 200)
+api.add_resource(References, '/references')
 
 class Users(Resource):
     def get(self):

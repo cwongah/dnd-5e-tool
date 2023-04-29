@@ -6032,7 +6032,7 @@ def make_references():
     for encounter in encounters_list:
         reference_encounter = Reference(
             name = encounter.name,
-            url = 'http://127.0.0.1:5555/encounters' + str(encounter.id),
+            url = 'http://127.0.0.1:5555/encounters/' + str(encounter.id),
             class_type = 'encounter'
         )
         reference_encounters.append(reference_encounter)
@@ -6043,7 +6043,7 @@ def make_references():
     for character in characters_list:
         reference_character = Reference(
             name = character.name,
-            url = 'http://127.0.0.1:5555/characters' + str(character.id),
+            url = 'http://127.0.0.1:5555/characters/' + str(character.id),
             class_type = 'character'
         )
         reference_characters.append(reference_character)

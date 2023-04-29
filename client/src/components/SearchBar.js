@@ -1,16 +1,25 @@
 import React, {useState} from 'react'
 
-function SearchBar(){ 
+function SearchBar({referenceTable, setSearchedObject}){ 
     const [search, setSearch] = useState('')
     const handleSearchChange = (e)=>{
         setSearch(e.target.value.toLowerCase())
-        console.log(search)
+
     }
     const handleSubmit = (e)=>{
         e.preventDefault()
-        fetch(`https://www.dnd5eapi.co/api/classes/${search}`)
-            .then(r => r.json())
-            .then(data => console.log(data))
+        const searchUrl = referenceTable.filter((reference) => reference.name.toLowerCase().includes(search))
+        console.log(searchUrl)
+        if(searchUrl.length == 0){
+            alert('not found')
+        }else{
+            fetch(`${searchUrl[0].url}`)
+                .then(r => r.json())
+                .then(data => {
+                    console.log(data, searchUrl[0].class_type)
+                    setSearchedObject(data)
+            })
+        }
     }
 
     return(

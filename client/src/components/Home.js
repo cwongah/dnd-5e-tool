@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
 import SearchBar from './SearchBar'
 
-function Home(){
+function Home({referenceTable, setSearchedObject}){
+    // console.log(referenceTable.length)
     return(
         <div>
             <div>Hello! This is my home page</div>
-            <SearchBar />
+            <SearchBar referenceTable={referenceTable} setSearchedObject={setSearchedObject} />
         </div>
     )
 }

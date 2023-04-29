@@ -23,7 +23,7 @@ class User(db.Model, SerializerMixin):
     encounters = db.relationship('Encounter', backref='user')
 
     #Serialization
-    serialize_only= ('id', 'username', 'password', 'email', 'characters', 'encounters')
+    serialize_only= ('id', 'username', 'password', 'email', 'characters', 'encounters', 'url')
 
 class Encounter(db.Model, SerializerMixin):
     __tablename__ = 'encounters'
@@ -41,7 +41,7 @@ class Encounter(db.Model, SerializerMixin):
     characters = association_proxy('encounter_characters', 'character')
 
     #Serialization
-    serialize_only = ('id', 'name', 'user_id')
+    serialize_only = ('id', 'name', 'user_id', 'url')
 
 class Character(db.Model, SerializerMixin):
     __tablename__ = 'characters'
@@ -123,7 +123,7 @@ class Character(db.Model, SerializerMixin):
     
     #Serialization
     # serialize_rules = ('-created_at', '-updated_at', '-character_skills', '-character_features', '-character_equipments', '-character_spells', '-character_races', '-character_character_classes', '-character_subclasses', '-character_proficiencies', '-encounter_characters', '-character_traits', '-encounters')
-    serialize_only = ('id', 'name', 'level')
+    serialize_only = ('id', 'name', 'level', 'url')
 
 class Skill(db.Model, SerializerMixin):
     __tablename__ = 'skills'
