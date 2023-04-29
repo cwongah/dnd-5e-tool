@@ -1,16 +1,21 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Character({name, level, url}){
+function Character({name, level, url, id, setCharacterId}){
+
     const navigate = useNavigate()
-    function handleClick(){
-        navigate('/characters/:id')
+    
+    function handleCharacterClick(){
+        console.log(url)
+        setCharacterId(id)
+        navigate(`/characters/${id}`)
     }
 
     return(
-        <div onClick={handleClick}>
+        <div onClick={handleCharacterClick}>
             <div>{name}</div><div>{level}</div>
         </div>
     )
 }
+
 export default Character

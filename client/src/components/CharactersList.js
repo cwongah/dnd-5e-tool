@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Character from "./Character";
+// import { useNavigate } from "react-router-dom";
 
-function CharactersList(){
+function CharactersList({setCharacterId}){
+    
     const [charactersList, setCharactersList] = useState([])
     useEffect(() => {
         fetch('http://127.0.0.1:5555/characters')
@@ -10,9 +12,15 @@ function CharactersList(){
             setCharactersList(data)
         })
     },[])
-    console.log(charactersList)
+    // console.log(charactersList)
+
+
     const charactersToDisplay = charactersList.map((character) => {
-        return <Character key={character.id} name={character.name} level={character.level} url={character.url} />
+        return (
+            <div >
+                <Character key={character.id} id={character.id} name={character.name} level={character.level} url={character.url} setCharacterId={setCharacterId} />
+            </div>
+        )
     })
 
     return(

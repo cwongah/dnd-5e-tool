@@ -12,8 +12,10 @@ function App() {
   const [currentUser, setCurrentUser] = useState('')
   const [userPW, setUserPW] = useState('')
   const [searchedObject, setSearchedObject] = useState()
+  const [characterId, setCharacterId] = useState('')
 
   // console.log(searchedObject)
+  console.log(characterId)
 
   useEffect(() => {
     fetch('http://127.0.0.1:5555/references')
@@ -24,7 +26,7 @@ function App() {
       })
   }, [])
 
-  console.log(referenceTable)
+  // console.log(referenceTable)
 
   return(
     <div>
@@ -34,7 +36,7 @@ function App() {
         {/* to do */}
         <Route path="/login" element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} userPW={userPW} setUserPW={setUserPW} />} />
         <Route path="/users" element={<Users />} />
-        <Route path="/characters" element={<CharactersList />} />
+        <Route path="/characters" element={<CharactersList setCharacterId={setCharacterId} />} />
         <Route path="/encounters" />
         <Route path="/skills" />
         <Route path="/features" />
@@ -46,7 +48,7 @@ function App() {
         <Route path="/proficiencies" />
         <Route path="/traits" />
         <Route path="/users/:id" />
-        <Route path="/characters/:id" element={<CharacterView />} />
+        <Route path="/characters/:id" element={<CharacterView characterId={characterId} />} />
         <Route path="/encounters/:id" />
         <Route path="/skills/:id" />
         <Route path="/features/:id" />
