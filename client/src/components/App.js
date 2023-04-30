@@ -6,6 +6,7 @@ import Users from "./Users";
 import Login from "./Login";
 import CharactersList from "./CharactersList";
 import CharacterView from "./CharacterView";
+import EncountersList from "./EncountersList";
 
 function App() {
   const [referenceTable, setReferenceTable] = useState([])
@@ -13,6 +14,7 @@ function App() {
   const [userPW, setUserPW] = useState('')
   const [searchedObject, setSearchedObject] = useState()
   const [characterId, setCharacterId] = useState('')
+  const [encounterId, setEncounterId] = useState('')
 
   // console.log(searchedObject)
   console.log(characterId)
@@ -37,7 +39,7 @@ function App() {
         <Route path="/login" element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} userPW={userPW} setUserPW={setUserPW} />} />
         <Route path="/users" element={<Users />} />
         <Route path="/characters" element={<CharactersList setCharacterId={setCharacterId} />} />
-        <Route path="/encounters" />
+        <Route path="/encounters" element={<EncountersList />} />
         <Route path="/skills" />
         <Route path="/features" />
         <Route path="/equipments" />
