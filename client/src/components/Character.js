@@ -6,7 +6,6 @@ function Character({name, level, url, id, setCharacterId}){
     const navigate = useNavigate()
     
     function handleCharacterClick(){
-        console.log(url)
         setCharacterId(id)
         navigate(`/characters/${id}`)
     }

@@ -12,8 +12,6 @@ function CharactersList({setCharacterId}){
             setCharactersList(data)
         })
     },[])
-    // console.log(charactersList)
-
 
     const charactersToDisplay = charactersList.map((character) => {
         return (

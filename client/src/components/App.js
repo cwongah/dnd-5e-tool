@@ -8,6 +8,10 @@ import CharactersList from "./CharactersList";
 import CharacterView from "./CharacterView";
 import EncountersList from "./EncountersList";
 import EncounterView from "./EncounterView";
+import SkillsList from "./SkillsList";
+import SkillView from "./SkillView";
+import FeaturesList from "./FeaturesList";
+import FeatureView from "./FeatureView";
 
 function App() {
   const [referenceTable, setReferenceTable] = useState([])
@@ -17,11 +21,8 @@ function App() {
   const [characterId, setCharacterId] = useState('')
   const [encounterId, setEncounterId] = useState('')
   const [encounterUser, setEncounterUser] = useState({})
-
-  // console.log(searchedObject)
-  console.log(characterId)
-  // console.log(encounterUser)
-
+  // const [skillUrl, setSkillUrl] = useState('')
+  const [referenceUrl, setReferenceUrl] = useState('')
 
   useEffect(() => {
     fetch('http://127.0.0.1:5555/references')
@@ -31,8 +32,6 @@ function App() {
         // console.log(data)
       })
   }, [])
-
-  // console.log(referenceTable)
 
   return(
     <div>
@@ -44,8 +43,8 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/characters" element={<CharactersList setCharacterId={setCharacterId} />} />
         <Route path="/encounters" element={<EncountersList setEncounterId={setEncounterId} referenceTable={referenceTable} setEncounterUser={setEncounterUser} encounterUser={encounterUser} />} />
-        <Route path="/skills" />
-        <Route path="/features" />
+        <Route path="/skills" element={<SkillsList setReferenceUrl={setReferenceUrl} />} />
+        <Route path="/features" element={<FeaturesList setReferenceUrl={setReferenceUrl} />} />
         <Route path="/equipments" />
         <Route path="/spells" />
         <Route path="/races" />
@@ -56,8 +55,8 @@ function App() {
         <Route path="/users/:id" />
         <Route path="/characters/:id" element={<CharacterView characterId={characterId} />} />
         <Route path="/encounters/:id" element={<EncounterView encounterId={encounterId} referenceTable={referenceTable} />} />
-        <Route path="/skills/:id" />
-        <Route path="/features/:id" />
+        <Route path="/skills/:id" element={<SkillView referenceUrl={referenceUrl} />} />
+        <Route path="/features/:id" element={<FeatureView referenceUrl={referenceUrl} />} />
         <Route path="/equipments/:id" />
         <Route path="/spells/:id" />
         <Route path="/races/:id" />
