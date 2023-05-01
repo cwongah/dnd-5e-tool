@@ -12,6 +12,13 @@ import SkillsList from "./SkillsList";
 import SkillView from "./SkillView";
 import FeaturesList from "./FeaturesList";
 import FeatureView from "./FeatureView";
+import EquipmentsList from "./EquipmentsList";
+import EquipmentView from "./EquipmentView";
+import SpellsList from "./SpellsList";
+import SpellView from "./SpellView";
+import RacesList from "./RacesList";
+import RaceView from "./RaceView";
+
 
 function App() {
   const [referenceTable, setReferenceTable] = useState([])
@@ -23,6 +30,8 @@ function App() {
   const [encounterUser, setEncounterUser] = useState({})
   // const [skillUrl, setSkillUrl] = useState('')
   const [referenceUrl, setReferenceUrl] = useState('')
+
+  // console.log((referenceTable))
 
   useEffect(() => {
     fetch('http://127.0.0.1:5555/references')
@@ -45,9 +54,9 @@ function App() {
         <Route path="/encounters" element={<EncountersList setEncounterId={setEncounterId} referenceTable={referenceTable} setEncounterUser={setEncounterUser} encounterUser={encounterUser} />} />
         <Route path="/skills" element={<SkillsList setReferenceUrl={setReferenceUrl} />} />
         <Route path="/features" element={<FeaturesList setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/equipments" />
-        <Route path="/spells" />
-        <Route path="/races" />
+        <Route path="/equipment" element={<EquipmentsList setReferenceUrl={setReferenceUrl} />} />
+        <Route path="/spells" element={<SpellsList setReferenceUrl={setReferenceUrl} />} />
+        <Route path="/races" element={<RacesList setReferenceUrl={setReferenceUrl} />} />
         <Route path="/classes" />
         <Route path="/subclasses" />
         <Route path="/proficiencies" />
@@ -57,9 +66,9 @@ function App() {
         <Route path="/encounters/:id" element={<EncounterView encounterId={encounterId} referenceTable={referenceTable} />} />
         <Route path="/skills/:id" element={<SkillView referenceUrl={referenceUrl} />} />
         <Route path="/features/:id" element={<FeatureView referenceUrl={referenceUrl} />} />
-        <Route path="/equipments/:id" />
-        <Route path="/spells/:id" />
-        <Route path="/races/:id" />
+        <Route path="/equipment/:id"element={<EquipmentView referenceUrl={referenceUrl} />} />
+        <Route path="/spells/:id" element={<SpellView referenceUrl={referenceUrl} />} />
+        <Route path="/races/:id" element={<RaceView  referenceUrl={referenceUrl} />} />
         <Route path="/classes/:id" />
         <Route path="/subclasses/:id" />
         <Route path="/proficiencies/:id" />
