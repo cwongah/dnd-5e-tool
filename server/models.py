@@ -442,6 +442,7 @@ class Reference(db.Model, SerializerMixin):
     name = db.Column(db.String)
     url = db.Column(db.String)
     class_type = db.Column(db.String)
+    object_id = db.Column(db.Integer)
 
 # Models Template
 # class (db.Model, SerializerMixin):

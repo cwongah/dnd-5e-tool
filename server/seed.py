@@ -6022,7 +6022,8 @@ def make_references():
         reference_user = Reference(
             name = user.username,
             url = 'http://127.0.0.1:5555/users/' + str(user.id),
-            class_type = 'user'
+            class_type = 'user',
+            object_id = user.id
         )
         reference_users.append(reference_user)
     db.session.add_all(reference_users)
@@ -6033,7 +6034,8 @@ def make_references():
         reference_encounter = Reference(
             name = encounter.name,
             url = 'http://127.0.0.1:5555/encounters/' + str(encounter.id),
-            class_type = 'encounter'
+            class_type = 'encounter',
+            object_id = encounter.id
         )
         reference_encounters.append(reference_encounter)
     db.session.add_all(reference_encounters)
@@ -6044,7 +6046,8 @@ def make_references():
         reference_character = Reference(
             name = character.name,
             url = 'http://127.0.0.1:5555/characters/' + str(character.id),
-            class_type = 'character'
+            class_type = 'character',
+            object_id = character.id
         )
         reference_characters.append(reference_character)
     db.session.add_all(reference_characters)
@@ -6055,7 +6058,8 @@ def make_references():
         reference_skill = Reference(
             name = skill.name,
             url = 'https://www.dnd5eapi.co' + skill.url,
-            class_type = 'skill'
+            class_type = 'skill',
+            object_id = skill.id
         )
         reference_skills.append(reference_skill)
     db.session.add_all(reference_skills)
@@ -6066,7 +6070,8 @@ def make_references():
         reference_feature = Reference(
             name = feature.name,
             url = 'https://www.dnd5eapi.co' + feature.url,
-            class_type = 'feature'
+            class_type = 'feature',
+            object_id = feature.id
         )
         reference_features.append(reference_feature)
     db.session.add_all(reference_features)
@@ -6077,7 +6082,8 @@ def make_references():
         reference_equipment = Reference(
             name = equipment.name,
             url = 'https://www.dnd5eapi.co' + equipment.url,
-            class_type = 'equipment'
+            class_type = 'equipment',
+            object_id = equipment.id
         )
         reference_equipments.append(reference_equipment)
     db.session.add_all(reference_equipments)
@@ -6088,7 +6094,8 @@ def make_references():
         reference_spell = Reference(
             name = spell.name,
             url = 'https://www.dnd5eapi.co' + spell.url,
-            class_type = 'spell'
+            class_type = 'spell',
+            object_id = spell.id
         )
         reference_spells.append(reference_spell)
     db.session.add_all(reference_spells)
@@ -6099,7 +6106,8 @@ def make_references():
         reference_race = Reference(
             name = race.name,
             url = 'https://www.dnd5eapi.co' + race.url,
-            class_type = 'race'
+            class_type = 'race',
+            object_id = race.id
         )
         reference_races.append(reference_race)
     db.session.add_all(reference_races)
@@ -6110,7 +6118,8 @@ def make_references():
         reference_class = Reference(
             name = character_class.name,
             url = 'https://www.dnd5eapi.co' + character_class.url,
-            class_type = 'class'
+            class_type = 'class',
+            object_id = character_class.id
         )
         reference_classes.append(reference_class)
     db.session.add_all(reference_classes)
@@ -6121,7 +6130,8 @@ def make_references():
         reference_subclass = Reference(
             name = subclass.name,
             url = 'https://www.dnd5eapi.co' + subclass.url,
-            class_type = 'subclass'
+            class_type = 'subclass',
+            object_id = subclass.id
         )
         reference_subclasses.append(reference_subclass)
     db.session.add_all(reference_subclasses)
@@ -6132,7 +6142,8 @@ def make_references():
         reference_proficiency = Reference(
             name = proficiency.name,
             url = 'https://www.dnd5eapi.co' + proficiency.url,
-            class_type = 'proficiency'
+            class_type = 'proficiency',
+            object_id = proficiency.id
         )
         reference_proficiencies.append(reference_proficiency)
     db.session.add_all(reference_proficiencies)
@@ -6143,7 +6154,8 @@ def make_references():
         reference_trait = Reference(
             name = trait.name,
             url = 'https://www.dnd5eapi.co' + trait.url,
-            class_type = 'trait'
+            class_type = 'trait',
+            object_id = trait.id
         )
         reference_traits.append(reference_trait)
     db.session.add_all(reference_traits)
