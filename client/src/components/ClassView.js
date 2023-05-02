@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function ClassView({referenceUrl, setReferenceUrl, setCurrentClass}){
+function ClassView({classUrl, setCurrentClass, setClassLevelUrl, setClassSpellUrl}){
     const navigate = useNavigate()
 
     const [characterClass, setCharacterClass] = useState({})
 
     useEffect(()=>{
-        fetch(referenceUrl)
+        fetch(classUrl)
             .then(r => r.json())
             .then(data => {
                 setCharacterClass(data)
@@ -16,12 +16,12 @@ function ClassView({referenceUrl, setReferenceUrl, setCurrentClass}){
     }, [])
 
     function handleLevelsClick(){
-        setReferenceUrl(`https://www.dnd5eapi.co${characterClass.class_levels}`)
+        setClassLevelUrl(`https://www.dnd5eapi.co${characterClass.class_levels}`)
         navigate(`/classes/${characterClass.name}/levels`)
     }
 
     function handleSpellsClick(){
-        setReferenceUrl(`https://www.dnd5eapi.co${characterClass.spells}`)
+        setClassSpellUrl(`https://www.dnd5eapi.co${characterClass.spells}`)
         navigate(`/classes/${characterClass.name}/spells`)
     }
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-function SkillView({referenceUrl}){
+function SkillView({skillUrl}){
     const [skill, setSkill] = useState({})
 
     useEffect(()=>{
-        fetch(referenceUrl)
+        fetch(skillUrl)
             .then(r => r.json())
             .then(data => setSkill(data))
     }, [])

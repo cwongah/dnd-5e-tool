@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Equipment({name, index, url, setReferenceUrl}){
+function Equipment({name, index, url, setEquipmentUrl}){
     const navigate = useNavigate()
 
     function handleClick(){
-        setReferenceUrl(`https://www.dnd5eapi.co${url}`)
-        navigate(`/equipment/${index}`)
+        setEquipmentUrl(`https://www.dnd5eapi.co${url}`)
+        navigate(`/equipment/${name}`)
     }
 
     return(

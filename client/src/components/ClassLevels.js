@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Feature from "./Feature";
 
-function ClassLevels({referenceUrl, currentClass}){
+function ClassLevels({classLevelUrl, currentClass, setFeatureUrl}){
     const [classLevels, setClassLevels] = useState([])
 
     useEffect(()=>{
-        fetch(referenceUrl)
+        fetch(classLevelUrl)
             .then(r => r.json())
             .then(data => setClassLevels(data))
     }, [])
@@ -24,9 +25,7 @@ function ClassLevels({referenceUrl, currentClass}){
                               <div>
                                 Features
                                 {item.features.map((feature, index) =>
-                                    <div key={index}>
-                                        {feature.name}
-                                    </div>
+                                    <Feature key={index} name={feature.name} url={feature.url} setFeatureUrl={setFeatureUrl} />
                                 )}
                               </div>
                             ):('')}

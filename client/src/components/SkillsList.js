@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Skill from "./Skill";
 
-function SkillsList({setReferenceUrl}){
+function SkillsList({setSkillUrl}){
     const [skillsList, setSkillsList] = useState([])
     
     useEffect(() => {
@@ -15,7 +15,7 @@ function SkillsList({setReferenceUrl}){
     const skillsToDisplay = skillsList.map((skill) => {
         return(
             <div>
-                <Skill key={skill.index} name={skill.name} index={skill.index} url={skill.url} setReferenceUrl={setReferenceUrl} />
+                <Skill key={skill.index} name={skill.name} index={skill.index} url={skill.url} setSkillUrl={setSkillUrl} />
             </div>
         )
     })

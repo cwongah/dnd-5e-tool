@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Subclass({name, index, url, setReferenceUrl}){
+function Subclass({name, index, url, setSubclassUrl}){
     const navigate = useNavigate()
 
     function handleClick(){
-        setReferenceUrl(`https://www.dnd5eapi.co${url}`)
-        navigate(`/subclasses/${index}`)
+        setSubclassUrl(`https://www.dnd5eapi.co${url}`)
+        navigate(`/subclasses/${name}`)
     }
 
     return(

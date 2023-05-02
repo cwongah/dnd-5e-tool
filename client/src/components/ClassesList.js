@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CharacterClass from "./CharacterClass";
 
-function ClassesList({setReferenceUrl}){
+function ClassesList({setClassUrl}){
     const [classesList, setClassesList] = useState([])
     
     useEffect(() => {
@@ -13,7 +13,7 @@ function ClassesList({setReferenceUrl}){
     const classesToDisplay = classesList.map((characterClass) => {
         return(
             <div>
-                <CharacterClass key={characterClass.index} name={characterClass.name} index={characterClass.index} url={characterClass.url} setReferenceUrl={setReferenceUrl} />
+                <CharacterClass key={characterClass.index} name={characterClass.name} index={characterClass.index} url={characterClass.url} setClassUrl={setClassUrl} />
             </div>
         )
     })

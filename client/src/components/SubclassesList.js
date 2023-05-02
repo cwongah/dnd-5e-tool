@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Subclass from "./Subclass";
 
-function SubclassesList({setReferenceUrl}){
+function SubclassesList({setSubclassUrl}){
     const [subclassesList, setSubclassesList] = useState([])
     
     useEffect(() => {
@@ -13,7 +13,7 @@ function SubclassesList({setReferenceUrl}){
     const subclassesToDisplay = subclassesList.map((subclass) => {
         return(
             <div>
-                <Subclass key={subclass.index} name={subclass.name} index={subclass.index} url={subclass.url} setReferenceUrl={setReferenceUrl} />
+                <Subclass key={subclass.index} name={subclass.name} index={subclass.index} url={subclass.url} setSubclassUrl={setSubclassUrl} />
             </div>
         )
     })

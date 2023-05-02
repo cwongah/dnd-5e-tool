@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function CharacterClass({name, index, url, setReferenceUrl}){
+function CharacterClass({name, index, url, setClassUrl}){
     const navigate = useNavigate()
 
     function handleClick(){
-        setReferenceUrl(`https://www.dnd5eapi.co${url}`)
+        setClassUrl(`https://www.dnd5eapi.co${url}`)
         navigate(`/classes/${index}`)
     }
 

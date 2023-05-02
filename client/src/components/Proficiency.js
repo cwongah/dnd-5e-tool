@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Proficiency({name, index, url, setReferenceUrl}){
+function Proficiency({name, index, url, setProficiencyUrl}){
     const navigate = useNavigate()
 
     function handleClick(){
-        setReferenceUrl(`https://www.dnd5eapi.co${url}`)
-        navigate(`/proficiencies/${index}`)
+        setProficiencyUrl(`https://www.dnd5eapi.co${url}`)
+        navigate(`/proficiencies/${name}`)
     }
 
     return(

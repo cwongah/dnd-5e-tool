@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-function EquipmentView({referenceUrl}){
+function EquipmentView({equipmentUrl}){
     const [equipment, setEquipment] = useState({})
 
     useEffect(()=>{
-        fetch(referenceUrl)
+        fetch(equipmentUrl)
             .then(r => r.json())
             .then(data => setEquipment(data))
     }, [])

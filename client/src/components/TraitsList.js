@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Trait from "./Trait";
 
-function TraitsList({setReferenceUrl}){
+function TraitsList({setTraitUrl}){
     const [traitsList, setTraitsList] = useState([])
     
     useEffect(() => {
@@ -13,7 +13,7 @@ function TraitsList({setReferenceUrl}){
     const traitsToDisplay = traitsList.map((trait) => {
         return(
             <div>
-                <Trait key={trait.index} name={trait.name} index={trait.index} url={trait.url} setReferenceUrl={setReferenceUrl} />
+                <Trait key={trait.index} name={trait.name} index={trait.index} url={trait.url} setTraitUrl={setTraitUrl} />
             </div>
         )
     })

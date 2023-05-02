@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Spell from "./Spell";
 
-function SpellsList({setReferenceUrl}){
+function SpellsList({setSpellUrl}){
     const [spellsList, setSpellsList] = useState([])
     
     useEffect(() => {
@@ -13,7 +13,7 @@ function SpellsList({setReferenceUrl}){
     const spellsToDisplay = spellsList.map((spell) => {
         return(
             <div>
-                <Spell key={spell.index} name={spell.name} index={spell.index} url={spell.url} setReferenceUrl={setReferenceUrl} />
+                <Spell key={spell.index} name={spell.name} index={spell.index} url={spell.url} setSpellUrl={setSpellUrl} />
             </div>
         )
     })

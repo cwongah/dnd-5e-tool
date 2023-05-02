@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Race({name, index, url, setReferenceUrl}){
+function Race({name, index, url, setRaceUrl}){
     const navigate = useNavigate()
 
     function handleClick(){
-        setReferenceUrl(`https://www.dnd5eapi.co${url}`)
-        navigate(`/races/${index}`)
+        setRaceUrl(`https://www.dnd5eapi.co${url}`)
+        navigate(`/races/${name}`)
     }
 
     return(

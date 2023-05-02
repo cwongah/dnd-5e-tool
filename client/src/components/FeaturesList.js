@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Feature from "./Feature";
 
-function FeaturesList({setReferenceUrl}){
+function FeaturesList({setFeatureUrl}){
     const [featuresList, setFeaturesList] = useState([])
     
     useEffect(() => {
@@ -13,7 +13,7 @@ function FeaturesList({setReferenceUrl}){
     const featuresToDisplay = featuresList.map((feature) => {
         return(
             <div>
-                <Feature key={feature.index} name={feature.name} index={feature.index} url={feature.url} setReferenceUrl={setReferenceUrl} />
+                <Feature key={feature.index} name={feature.name} index={feature.index} url={feature.url} setFeatureUrl={setFeatureUrl} />
             </div>
         )
     })

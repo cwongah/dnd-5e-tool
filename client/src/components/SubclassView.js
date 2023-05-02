@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function SubclassView({referenceUrl, setCurrentSubclass, setReferenceUrl}){
+function SubclassView({subclassUrl, setCurrentSubclass, setSubclassUrl}){
     const [subclass, setSubclass] = useState({})
     const navigate = useNavigate()
 
     function handleSubClassLevelClick(){
         setCurrentSubclass(subclass.name)
-        setReferenceUrl(`https://www.dnd5eapi.co${subclass.subclass_levels}`)
+        setSubclassUrl(`https://www.dnd5eapi.co${subclass.subclass_levels}`)
         navigate(`/subclasses/${subclass.name}/levels`)
     }
 
     useEffect(()=>{
-        fetch(referenceUrl)
+        fetch(subclassUrl)
             .then(r => r.json())
             .then(data => setSubclass(data))
     }, [])

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Race from "./Race";
 
-function TraitView({referenceUrl, setReferenceUrl}){
+function TraitView({traitUrl, setRaceUrl}){
     const [trait, setTrait] = useState({})
 
     useEffect(()=>{
-        fetch(referenceUrl)
+        fetch(traitUrl)
             .then(r => r.json())
             .then(data => setTrait(data))
     }, [])
@@ -15,7 +15,13 @@ function TraitView({referenceUrl, setReferenceUrl}){
             <div>Trait Page</div>
             <div>{trait.name}</div>
             {trait.desc ? (<div>{trait.desc}</div>):('')}
-            {trait.races ? (<div>{trait.races.map((race, index)=><Race key={index} name={race.name} index={race.index} url={race.url} setReferenceUrl={setReferenceUrl} />)}</div>):('')}
+            {trait.races ? (
+                <div>
+                    {trait.races.map((race, index)=>
+                        <Race key={index} name={race.name} index={race.index} url={race.url} setRaceUrl={setRaceUrl} />
+                    )}
+                </div>
+            ):('')}
             
         </div>
     )

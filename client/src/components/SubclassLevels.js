@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-function SubclassLevels({referenceUrl, currentSubclass}){
+function SubclassLevels({subClassUrl, currentSubclass}){
     const [subclassLevels, setSubclassLevels] = useState([])
 
     useEffect(()=>{
-        fetch(referenceUrl)
+        fetch(subClassUrl)
             .then(r=>r.json())
             .then(data=>setSubclassLevels(data))
     },[])
-
-    console.log(subclassLevels)
-    console.log(referenceUrl)
 
     return(
         <div>

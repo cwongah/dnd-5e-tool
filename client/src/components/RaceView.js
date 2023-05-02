@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-function RaceView({referenceUrl}){
+function RaceView({raceUrl}){
     const [race, setRace] = useState({})
 
     useEffect(()=>{
-        fetch(referenceUrl)
+        fetch(raceUrl)
             .then(r => r.json())
             .then(data => setRace(data))
     }, [])

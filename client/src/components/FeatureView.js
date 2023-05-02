@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-function FeatureView({referenceUrl}){
+function FeatureView({featureUrl}){
     const [feature, setFeature] = useState({})
 
     useEffect(()=>{
-        fetch(referenceUrl)
+        fetch(featureUrl)
             .then(r => r.json())
             .then(data => setFeature(data))
     }, [])

@@ -38,10 +38,20 @@ function App() {
   const [characterId, setCharacterId] = useState('')
   const [encounterId, setEncounterId] = useState('')
   const [encounterUser, setEncounterUser] = useState({})
-  // const [skillUrl, setSkillUrl] = useState('')
-  const [referenceUrl, setReferenceUrl] = useState('')
   const [currentClass, setCurrentClass] = useState('')
   const [currentSubclass, setCurrentSubclass] = useState('')
+  const [referenceUrl, setReferenceUrl] = useState('')
+  const [classUrl, setClassUrl] = useState('')
+  const [skillUrl, setSkillUrl] = useState('')
+  const [featureUrl, setFeatureUrl] = useState('')
+  const [equipmentUrl, setEquipmentUrl] = useState('')
+  const [spellUrl, setSpellUrl] = useState('')
+  const [raceUrl, setRaceUrl] = useState('')
+  const [subclassUrl, setSubclassUrl] = useState('')
+  const [proficiencyUrl, setProficiencyUrl] = useState('')
+  const [classLevelUrl, setClassLevelUrl] = useState('')
+  const [classSpellUrl, setClassSpellUrl] = useState('')
+  const [traitUrl, setTraitUrl] = useState('')
 
   // console.log((referenceTable))
   console.log(referenceUrl)
@@ -65,30 +75,30 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/characters" element={<CharactersList setCharacterId={setCharacterId} />} />
         <Route path="/encounters" element={<EncountersList setEncounterId={setEncounterId} referenceTable={referenceTable} setEncounterUser={setEncounterUser} encounterUser={encounterUser} />} />
-        <Route path="/skills" element={<SkillsList setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/features" element={<FeaturesList setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/equipment" element={<EquipmentsList setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/spells" element={<SpellsList setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/races" element={<RacesList setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/classes" element={<ClassesList setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/subclasses" element={<SubclassesList setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/proficiencies" element={<ProficienciesList setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/traits" element={<TraitsList setReferenceUrl={setReferenceUrl} />} />
+        <Route path="/skills" element={<SkillsList setSkillUrl={setSkillUrl} />} />
+        <Route path="/features" element={<FeaturesList setFeatureUrl={setFeatureUrl} />} />
+        <Route path="/equipment" element={<EquipmentsList setEquipmentUrl={setEquipmentUrl} />} />
+        <Route path="/spells" element={<SpellsList setSpellUrl={setSpellUrl} />} />
+        <Route path="/races" element={<RacesList setRaceUrl={setRaceUrl} />} />
+        <Route path="/classes" element={<ClassesList setClassUrl={setClassUrl} />} />
+        <Route path="/subclasses" element={<SubclassesList setSubclassUrl={setSubclassUrl} />} />
+        <Route path="/proficiencies" element={<ProficienciesList setProficiencyUrl={setProficiencyUrl} />} />
+        <Route path="/traits" element={<TraitsList setTraitUrl={setTraitUrl} />} />
         <Route path="/users/:id" />
-        <Route path="/characters/:id" element={<CharacterView characterId={characterId} />} />
+        <Route path="/characters/:id" element={<CharacterView characterId={characterId} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setClassUrl={setClassUrl} setTraitUrl={setTraitUrl} />} />
         <Route path="/encounters/:id" element={<EncounterView encounterId={encounterId} referenceTable={referenceTable} />} />
-        <Route path="/skills/:id" element={<SkillView referenceUrl={referenceUrl} />} />
-        <Route path="/features/:id" element={<FeatureView referenceUrl={referenceUrl} />} />
-        <Route path="/equipment/:id"element={<EquipmentView referenceUrl={referenceUrl} />} />
-        <Route path="/spells/:id" element={<SpellView referenceUrl={referenceUrl} />} />
-        <Route path="/races/:id" element={<RaceView  referenceUrl={referenceUrl} />} />
-        <Route path="/classes/:id" element={<ClassView referenceUrl={referenceUrl} setReferenceUrl={setReferenceUrl} setCurrentClass={setCurrentClass} />} />
-        <Route path="/subclasses/:id" element={<SubclassView referenceUrl={referenceUrl} setReferenceUrl={setReferenceUrl} setCurrentSubclass={setCurrentSubclass} />} />
-        <Route path="/proficiencies/:id" element={<ProficiencyView referenceUrl={referenceUrl} setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/traits/:id" element={<TraitView referenceUrl={referenceUrl} setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/classes/:className/levels" element={<ClassLevels referenceUrl={referenceUrl} currentClass={currentClass} />} />
-        <Route path="/classes/:className/spells" element={<ClassSpells referenceUrl={referenceUrl} currentClass={currentClass} setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/subclasses/:subclassName/levels" element={<SubclassLevels referenceUrl={referenceUrl} currentSubclass={currentSubclass} />} />
+        <Route path="/skills/:id" element={<SkillView skillUrl={skillUrl} />} />
+        <Route path="/features/:id" element={<FeatureView featureUrl={featureUrl} />} />
+        <Route path="/equipment/:id"element={<EquipmentView equipmentUrl={equipmentUrl} />} />
+        <Route path="/spells/:id" element={<SpellView spellUrl={spellUrl} />} />
+        <Route path="/races/:id" element={<RaceView  raceUrl={raceUrl} />} />
+        <Route path="/classes/:id" element={<ClassView classUrl={classUrl} setClassUrl={setClassUrl} setCurrentClass={setCurrentClass} setClassLevelUrl={setClassLevelUrl} setClassSpellUrl={setClassSpellUrl} />} />
+        <Route path="/subclasses/:id" element={<SubclassView subclassUrl={subclassUrl} setSubclassUrl={setSubclassUrl} setCurrentSubclass={setCurrentSubclass} />} />
+        <Route path="/proficiencies/:id" element={<ProficiencyView proficiencyUrl={proficiencyUrl} setProficiencyUrl={setProficiencyUrl} setRaceUrl={setRaceUrl} setClassUrl={setClassUrl} />} />
+        <Route path="/traits/:id" element={<TraitView traitUrl={traitUrl} setRaceUrl={setRaceUrl} />} />
+        <Route path="/classes/:className/levels" element={<ClassLevels classLevelUrl={classLevelUrl} currentClass={currentClass} setFeatureUrl={setFeatureUrl} />} />
+        <Route path="/classes/:className/spells" element={<ClassSpells spellUrl={spellUrl} currentClass={currentClass} setSpellUrl={setSpellUrl} classSpellUrl={classSpellUrl} />} />
+        <Route path="/subclasses/:subclassName/levels" element={<SubclassLevels subclassUrl={subclassUrl} currentSubclass={currentSubclass} />} />
       </Routes>
     </div>
   )

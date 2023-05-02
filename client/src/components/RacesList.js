@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Race from "./Race";
 
-function RacesList({setReferenceUrl}){
+function RacesList({setRaceUrl}){
     const [racesList, setRacesList] = useState([])
     
     useEffect(() => {
@@ -13,7 +13,7 @@ function RacesList({setReferenceUrl}){
     const racesToDisplay = racesList.map((race, index) => {
         return(
             <div>
-                <Race key={index} name={race.name} index={race.index} url={race.url} setReferenceUrl={setReferenceUrl} />
+                <Race key={index} name={race.name} index={race.index} url={race.url} setRaceUrl={setRaceUrl} />
             </div>
         )
     })

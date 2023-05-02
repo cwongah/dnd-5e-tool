@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Proficiency from "./Proficiency";
 
-function ProficienciesList({setReferenceUrl}){
+function ProficienciesList({setProficiencyUrl}){
     const [proficienciesList, setProficienciesList] = useState([])
     
     useEffect(() => {
@@ -13,7 +13,7 @@ function ProficienciesList({setReferenceUrl}){
     const proficienciesToDisplay = proficienciesList.map((proficiency) => {
         return(
             <div>
-                <Proficiency key={proficiency.index} name={proficiency.name} index={proficiency.index} url={proficiency.url} setReferenceUrl={setReferenceUrl} />
+                <Proficiency key={proficiency.index} name={proficiency.name} index={proficiency.index} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
             </div>
         )
     })

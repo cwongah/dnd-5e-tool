@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Spell({name, index, url, setReferenceUrl}){
+function Spell({name, index, url, setSpellUrl}){
     const navigate = useNavigate()
 
     function handleClick(){
-        setReferenceUrl(`https://www.dnd5eapi.co${url}`)
-        navigate(`/spells/${index}`)
+        setSpellUrl(`https://www.dnd5eapi.co${url}`)
+        navigate(`/spells/${name}`)
     }
 
     return(

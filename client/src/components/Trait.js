@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Trait({name, index, url, setReferenceUrl}){
+function Trait({name, index, url, setTraitUrl}){
     const navigate = useNavigate()
 
     function handleClick(){
-        setReferenceUrl(`https://www.dnd5eapi.co${url}`)
+        setTraitUrl(`https://www.dnd5eapi.co${url}`)
         navigate(`/traits/${index}`)
     }
 

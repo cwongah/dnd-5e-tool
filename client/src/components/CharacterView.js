@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
+import Skill from "./Skill";
+import Feature from "./Feature";
+import Equipment from "./Equipment";
+import Spell from "./Spell";
+import Race from "./Race";
+import Subclass from "./Subclass";
+import Proficiency from "./Proficiency";
+import CharacterClass from "./CharacterClass";
+import Trait from "./Trait";
 
-function CharacterView({characterId}){
+function CharacterView({characterId, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setClassUrl, setTraitUrl}){
 
     const [character, setCharacter] = useState({})
 
@@ -17,7 +26,13 @@ function CharacterView({characterId}){
     const characterAttrToDisplay = (<div>
             <div>name: {character.name}</div> 
             <div>bio: {character.bio}</div>
-            {character.character_classes && character.character_classes[0].name ? (<div>class: {character.character_classes[0].name}</div>) : (<div>Loading...</div>)}
+            {character.character_classes ? (
+                <div>
+                    {character.character_classes.map((characterClass, index)=>
+                        <CharacterClass key={index} name={characterClass.name} url={characterClass.url} setClassUrl={setClassUrl} />
+                    )}
+                </div>
+            ):('')}
             <div>level: {character.level}</div>
             <div>proficiency bonus:{character.proficiency_bonus}</div>
             <div>passive perception: {character.passive_perception}</div>
@@ -47,14 +62,62 @@ function CharacterView({characterId}){
             <div>intelligence saving throw: {character.intelligence_saving_throw}</div>
             <div>wisdom saving throw: {character.wisdom_saving_throw}</div>
             <div>charisma saving throw: {character.charisma_saving_throw}</div>
-            {character.skills && character.skills.length > 0 ? (<div>{character.skills.map((skill, index) => (<div key={index}>{skill.name}: {skill.ability}</div>))}</div>) : (<div>Loading...</div>)}
-            {character.features && character.features.length > 0 ? (<div>{character.features.map((feature, index) => (<div key={index}>{feature.name}</div>))}</div>) : (<div>Loading...</div>)}
-            {character.equipments && character.equipments.length > 0 ? (<div>{character.equipments.map((equipment, index) => (<div key={index}>{equipment.name}</div>))}</div>) : (<div>Loading...</div>)}
-            {character.spells && character.spells.length > 0 ? (<div>{character.spells.map((spell, index) => (<div key={index}>{spell.name}</div>))}</div>) : (<div>Loading...</div>)}
-            {character.races && character.races.length > 0 ? (<div>{character.races.map((race, index) => (<div key={index}>{race.name}</div>))}</div>) : (<div>Loading...</div>)}
-            {character.subclasses && character.subclasses.length > 0 ? (<div>{character.subclasses.map((subclass, index) => (<div key={index}>{subclass.name}</div>))}</div>) : (<div>Loading...</div>)}
-            {character.proficiencies && character.proficiencies.length > 0 ? (<div>{character.proficiencies.map((proficiency, index) => (<div key={index}>{proficiency.name}</div>))}</div>) : (<div>Loading...</div>)}
-            {character.traits && character.traits.length > 0 ? (<div>{character.traits.map((trait, index) => (<div key={index}>{trait.name}</div>))}</div>) : (<div>Loading...</div>)}
+            {character.skills && character.skills.length > 0 ? (
+                <div>
+                    {character.skills.map((skill, index) => (
+                        <div><Skill key={index} name={skill.name} url={skill.url} setSkillUrl={setSkillUrl} /> {skill.ability}</div>
+                    ))}
+                </div>
+            ) : (<div>Loading...</div>)}
+            {character.features && character.features.length > 0 ? (
+                <div>
+                    {character.features.map((feature, index) => (
+                        <Feature key={index} name={feature.name} url={feature.url} setFeatureUrl={setFeatureUrl} />
+                    ))}
+                </div>
+            ) : (<div>Loading...</div>)}
+            {character.equipments && character.equipments.length > 0 ? (
+                <div>
+                    {character.equipments.map((equipment, index) => (
+                        <Equipment key={index} name={equipment.name} url={equipment.url} setEquipmentUrl={setEquipmentUrl} />
+                    ))}
+                </div>
+            ) : (<div>Loading...</div>)}
+            {character.spells && character.spells.length > 0 ? (
+                <div>
+                    {character.spells.map((spell, index) => (
+                        <Spell key={index} name={spell.name} url={spell.url} setSpellUrl={setSpellUrl} />
+                    ))}
+                </div>
+            ) : (<div>Loading...</div>)}
+            {character.races && character.races.length > 0 ? (
+                <div>
+                    {character.races.map((race, index) => (
+                        <Race key={index} name={race.name} url={race.url} setRaceUrl={setRaceUrl} />
+                    ))}
+                </div>
+            ) : (<div>Loading...</div>)}
+            {character.subclasses && character.subclasses.length > 0 ? (
+                <div>
+                    {character.subclasses.map((subclass, index) => (
+                        <Subclass key={index} name={subclass.name} url={subclass.url} setSubclassUrl={setSubclassUrl} />
+                    ))}
+                </div>
+            ) : ('')}
+            {character.proficiencies && character.proficiencies.length > 0 ? (
+                <div>
+                    {character.proficiencies.map((proficiency, index) => (
+                        <Proficiency key={index} name={proficiency.name} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
+                    ))}
+                </div>
+            ) : (<div>Loading...</div>)}
+            {character.traits && character.traits.length > 0 ? (
+                <div>
+                    {character.traits.map((trait, index) => (
+                        <Trait key={index} name={trait.name} url={trait.url} setTraitUrl={setTraitUrl} />
+                    ))}
+                </div>
+            ) : (<div>Loading...</div>)}
             {character.encounters && character.encounters.length > 0 ? (<div>{character.encounters.map((encounter, index) => (<div key={index}>{encounter.name}</div>))}</div>) : (<div>Loading...</div>)}
             
         </div>)

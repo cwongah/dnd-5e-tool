@@ -7,7 +7,7 @@ function Character({name, level, url, id, setCharacterId}){
     
     function handleCharacterClick(){
         setCharacterId(id)
-        navigate(`/characters/${id}`)
+        navigate(`/characters/${name}`)
     }
 
     return(

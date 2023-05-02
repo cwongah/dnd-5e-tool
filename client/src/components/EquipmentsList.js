@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Equipment from './Equipment'
 
-function EquipmentsList({setReferenceUrl}){
+function EquipmentsList({setEquipmentsUrl}){
     const [equipmentsList, setEquipmentsList] = useState([])
     
     useEffect(() => {
@@ -13,7 +13,7 @@ function EquipmentsList({setReferenceUrl}){
     const equipmentsToDisplay = equipmentsList.map((equipment) => {
         return(
             <div>
-                <Equipment key={equipment.index} name={equipment.name} index={equipment.index} url={equipment.url} setReferenceUrl={setReferenceUrl} />
+                <Equipment key={equipment.index} name={equipment.name} index={equipment.index} url={equipment.url} setEquipmentsUrl={setEquipmentsUrl} />
             </div>
         )
     })

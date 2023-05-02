@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Spell from "./Spell";
 
-function ClassSpells({referenceUrl, currentClass, setReferenceUrl}){
+function ClassSpells({classSpellUrl, currentClass, setSpellUrl}){
     const[spells, setSpells] = useState([])
 
     useEffect(()=>{
-        fetch(referenceUrl)
+        fetch(classSpellUrl)
             .then(r => r.json())
             .then(data => setSpells(data.results))
     }, [])
@@ -15,7 +15,7 @@ function ClassSpells({referenceUrl, currentClass, setReferenceUrl}){
     const spellsToDisplay = spells.map((spell) => {
         return(
             <div>
-                <Spell key={spell.index} name={spell.name} index={spell.index} url={spell.url} setReferenceUrl={setReferenceUrl} />
+                <Spell key={spell.index} name={spell.name} index={spell.index} url={spell.url} setSpellUrl={setSpellUrl} />
             </div>
         )
     })

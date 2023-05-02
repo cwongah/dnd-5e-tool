@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-function SpellView({referenceUrl}){
+function SpellView({spellUrl}){
     const [spell, setSpell] = useState({})
 
     useEffect(()=>{
-        fetch(referenceUrl)
+        fetch(spellUrl)
             .then(r => r.json())
             .then(data => setSpell(data))
     }, [])
