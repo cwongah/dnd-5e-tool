@@ -18,7 +18,8 @@ import SpellsList from "./SpellsList";
 import SpellView from "./SpellView";
 import RacesList from "./RacesList";
 import RaceView from "./RaceView";
-
+import ClassesList from "./ClassesList";
+import ClassView from "./ClassView";
 
 function App() {
   const [referenceTable, setReferenceTable] = useState([])
@@ -32,6 +33,7 @@ function App() {
   const [referenceUrl, setReferenceUrl] = useState('')
 
   // console.log((referenceTable))
+  console.log(referenceUrl)
 
   useEffect(() => {
     fetch('http://127.0.0.1:5555/references')
@@ -57,7 +59,7 @@ function App() {
         <Route path="/equipment" element={<EquipmentsList setReferenceUrl={setReferenceUrl} />} />
         <Route path="/spells" element={<SpellsList setReferenceUrl={setReferenceUrl} />} />
         <Route path="/races" element={<RacesList setReferenceUrl={setReferenceUrl} />} />
-        <Route path="/classes" />
+        <Route path="/classes" element={<ClassesList setReferenceUrl={setReferenceUrl} />} />
         <Route path="/subclasses" />
         <Route path="/proficiencies" />
         <Route path="/traits" />
@@ -69,10 +71,12 @@ function App() {
         <Route path="/equipment/:id"element={<EquipmentView referenceUrl={referenceUrl} />} />
         <Route path="/spells/:id" element={<SpellView referenceUrl={referenceUrl} />} />
         <Route path="/races/:id" element={<RaceView  referenceUrl={referenceUrl} />} />
-        <Route path="/classes/:id" />
+        <Route path="/classes/:id" element={<ClassView referenceUrl={referenceUrl} setReferenceUrl={setReferenceUrl} />} />
         <Route path="/subclasses/:id" />
         <Route path="/proficiencies/:id" />
         <Route path="/traits/:id" />
+        <Route path="/classes/:className/levels" />
+        <Route path="/classes/:className/spells" />
       </Routes>
     </div>
   )
