@@ -10,10 +10,10 @@ function SubclassesList({setSubclassUrl}){
         .then (data => setSubclassesList(data.results))
     }, [])
 
-    const subclassesToDisplay = subclassesList.map((subclass) => {
+    const subclassesToDisplay = subclassesList.map((subclass, index) => {
         return(
             <div>
-                <Subclass key={subclass.index} name={subclass.name} index={subclass.index} url={subclass.url} setSubclassUrl={setSubclassUrl} />
+                <Subclass key={index} name={subclass.name} index={subclass.index} url={subclass.url} setSubclassUrl={setSubclassUrl} />
             </div>
         )
     })

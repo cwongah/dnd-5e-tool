@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import CharacterClass from "./CharacterClass";
+import Subclass from "./Subclass";
 
-function SpellView({spellUrl}){
+function SpellView({spellUrl, setClassUrl, setSubclassUrl}){
     const [spell, setSpell] = useState({})
 
     useEffect(()=>{
@@ -29,8 +31,20 @@ function SpellView({spellUrl}){
                 {spell.damage ? (<div>{spell.damage.damage_type.name}</div>) : ('')}
                 {spell.damage ? (Object.entries(spell.damage.damage_at_slot_level).map(([key, value])=>(<div>{key}: {value}</div>))):('')}
                 {spell.school ? (<div>{spell.school.name}</div>):('')}
-                {spell.classes && spell.classes.length > 0 ? (<div>{spell.classes.map((character_class, index) => (<div key={index}>{character_class.name}</div>))}</div>):('')}
-                {spell.subclasses && spell.subclasses.length > 0 ? (<div>{spell.subclasses.map((subclass, index) => (<div key={index}>{subclass.name}</div>))}</div>):('')}
+                {spell.classes && spell.classes.length > 0 ? (
+                    <div>
+                        {spell.classes.map((characterClass, index) => (
+                            <CharacterClass key={index} name={characterClass.name} url={characterClass.url} setClassUrl={setClassUrl} />
+                        ))}
+                    </div>
+                ):('')}
+                {spell.subclasses && spell.subclasses.length > 0 ? (
+                    <div>
+                        {spell.subclasses.map((subclass, index) => (
+                            <Subclass key={index} name={subclass.name} url={subclass.url} setSubclassUrl={setSubclassUrl} />
+                        ))}
+                    </div>
+                ):('')}
             </div>):('')}
         </div>
     )

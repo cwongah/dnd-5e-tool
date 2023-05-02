@@ -6,7 +6,7 @@ function CharacterClass({name, index, url, setClassUrl}){
 
     function handleClick(){
         setClassUrl(`https://www.dnd5eapi.co${url}`)
-        navigate(`/classes/${index}`)
+        navigate(`/classes/${name}`)
     }
 
     return(

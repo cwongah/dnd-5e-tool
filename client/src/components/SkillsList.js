@@ -10,12 +10,10 @@ function SkillsList({setSkillUrl}){
         .then (data => setSkillsList(data.results))
     }, [])
 
-    console.log(skillsList)
-
-    const skillsToDisplay = skillsList.map((skill) => {
+    const skillsToDisplay = skillsList.map((skill, index) => {
         return(
             <div>
-                <Skill key={skill.index} name={skill.name} index={skill.index} url={skill.url} setSkillUrl={setSkillUrl} />
+                <Skill key={index} name={skill.name} index={skill.index} url={skill.url} setSkillUrl={setSkillUrl} />
             </div>
         )
     })

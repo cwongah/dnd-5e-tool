@@ -10,10 +10,10 @@ function FeaturesList({setFeatureUrl}){
         .then (data => setFeaturesList(data.results))
     }, [])
 
-    const featuresToDisplay = featuresList.map((feature) => {
+    const featuresToDisplay = featuresList.map((feature, index) => {
         return(
             <div>
-                <Feature key={feature.index} name={feature.name} index={feature.index} url={feature.url} setFeatureUrl={setFeatureUrl} />
+                <Feature key={index} name={feature.name} index={feature.index} url={feature.url} setFeatureUrl={setFeatureUrl} />
             </div>
         )
     })

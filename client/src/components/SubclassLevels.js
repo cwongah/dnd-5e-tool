@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import Feature from "./Feature";
 
-function SubclassLevels({subClassUrl, currentSubclass}){
+function SubclassLevels({subclassLevelUrl, currentSubclass, setFeatureUrl}){
     const [subclassLevels, setSubclassLevels] = useState([])
 
     useEffect(()=>{
-        fetch(subClassUrl)
+        fetch(subclassLevelUrl)
             .then(r=>r.json())
             .then(data=>setSubclassLevels(data))
     },[])
@@ -17,10 +18,8 @@ function SubclassLevels({subClassUrl, currentSubclass}){
                     {subclassLevels.map((subclass) => 
                         <div>
                             {subclass.level}
-                            {subclass.features.map((feature)=>
-                            <div>
-                                {feature.name}
-                            </div>
+                            {subclass.features.map((feature, index)=>
+                                <Feature key={index} name={feature.name} url={feature.url} setFeatureUrl={setFeatureUrl} />
                             )}
                         </div>
                     )}

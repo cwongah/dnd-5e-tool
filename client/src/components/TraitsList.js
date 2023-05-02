@@ -10,10 +10,10 @@ function TraitsList({setTraitUrl}){
         .then (data => setTraitsList(data.results))
     }, [])
 
-    const traitsToDisplay = traitsList.map((trait) => {
+    const traitsToDisplay = traitsList.map((trait, index) => {
         return(
             <div>
-                <Trait key={trait.index} name={trait.name} index={trait.index} url={trait.url} setTraitUrl={setTraitUrl} />
+                <Trait key={index} name={trait.name} index={trait.index} url={trait.url} setTraitUrl={setTraitUrl} />
             </div>
         )
     })

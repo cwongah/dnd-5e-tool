@@ -52,9 +52,10 @@ function App() {
   const [classLevelUrl, setClassLevelUrl] = useState('')
   const [classSpellUrl, setClassSpellUrl] = useState('')
   const [traitUrl, setTraitUrl] = useState('')
+  const [subclassLevelUrl, setSubclassLevelUrl] = useState('')
 
   // console.log((referenceTable))
-  console.log(referenceUrl)
+  console.log(proficiencyUrl)
 
   useEffect(() => {
     fetch('http://127.0.0.1:5555/references')
@@ -88,17 +89,17 @@ function App() {
         <Route path="/characters/:id" element={<CharacterView characterId={characterId} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setClassUrl={setClassUrl} setTraitUrl={setTraitUrl} />} />
         <Route path="/encounters/:id" element={<EncounterView encounterId={encounterId} referenceTable={referenceTable} />} />
         <Route path="/skills/:id" element={<SkillView skillUrl={skillUrl} />} />
-        <Route path="/features/:id" element={<FeatureView featureUrl={featureUrl} />} />
+        <Route path="/features/:id" element={<FeatureView featureUrl={featureUrl} setClassUrl={setClassUrl} setSubclassUrl={setSubclassUrl} />} />
         <Route path="/equipment/:id"element={<EquipmentView equipmentUrl={equipmentUrl} />} />
-        <Route path="/spells/:id" element={<SpellView spellUrl={spellUrl} />} />
-        <Route path="/races/:id" element={<RaceView  raceUrl={raceUrl} />} />
-        <Route path="/classes/:id" element={<ClassView classUrl={classUrl} setClassUrl={setClassUrl} setCurrentClass={setCurrentClass} setClassLevelUrl={setClassLevelUrl} setClassSpellUrl={setClassSpellUrl} />} />
-        <Route path="/subclasses/:id" element={<SubclassView subclassUrl={subclassUrl} setSubclassUrl={setSubclassUrl} setCurrentSubclass={setCurrentSubclass} />} />
+        <Route path="/spells/:id" element={<SpellView spellUrl={spellUrl} setClassUrl={setClassUrl} setSubclassUrl={setSubclassUrl} />} />
+        <Route path="/races/:id" element={<RaceView  raceUrl={raceUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
+        <Route path="/classes/:id" element={<ClassView classUrl={classUrl} setClassUrl={setClassUrl} setCurrentClass={setCurrentClass} setClassLevelUrl={setClassLevelUrl} setClassSpellUrl={setClassSpellUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setEquipmentUrl={setEquipmentUrl} />} />
+        <Route path="/subclasses/:id" element={<SubclassView subclassUrl={subclassUrl} setSubclassUrl={setSubclassUrl} setCurrentSubclass={setCurrentSubclass} setSpellUrl={setSpellUrl} setSubclassLevelUrl={setSubclassLevelUrl} />} />
         <Route path="/proficiencies/:id" element={<ProficiencyView proficiencyUrl={proficiencyUrl} setProficiencyUrl={setProficiencyUrl} setRaceUrl={setRaceUrl} setClassUrl={setClassUrl} />} />
         <Route path="/traits/:id" element={<TraitView traitUrl={traitUrl} setRaceUrl={setRaceUrl} />} />
         <Route path="/classes/:className/levels" element={<ClassLevels classLevelUrl={classLevelUrl} currentClass={currentClass} setFeatureUrl={setFeatureUrl} />} />
         <Route path="/classes/:className/spells" element={<ClassSpells spellUrl={spellUrl} currentClass={currentClass} setSpellUrl={setSpellUrl} classSpellUrl={classSpellUrl} />} />
-        <Route path="/subclasses/:subclassName/levels" element={<SubclassLevels subclassUrl={subclassUrl} currentSubclass={currentSubclass} />} />
+        <Route path="/subclasses/:subclassName/levels" element={<SubclassLevels subclassLevelUrl={subclassLevelUrl} currentSubclass={currentSubclass} setFeatureUrl={setFeatureUrl} />} />
       </Routes>
     </div>
   )

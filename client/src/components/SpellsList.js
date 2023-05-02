@@ -10,10 +10,10 @@ function SpellsList({setSpellUrl}){
         .then (data => setSpellsList(data.results))
     }, [])
 
-    const spellsToDisplay = spellsList.map((spell) => {
+    const spellsToDisplay = spellsList.map((spell, index) => {
         return(
             <div>
-                <Spell key={spell.index} name={spell.name} index={spell.index} url={spell.url} setSpellUrl={setSpellUrl} />
+                <Spell key={index} name={spell.name} index={spell.index} url={spell.url} setSpellUrl={setSpellUrl} />
             </div>
         )
     })

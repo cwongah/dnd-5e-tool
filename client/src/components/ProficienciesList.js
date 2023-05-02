@@ -10,10 +10,10 @@ function ProficienciesList({setProficiencyUrl}){
         .then (data => setProficienciesList(data.results))
     }, [])
 
-    const proficienciesToDisplay = proficienciesList.map((proficiency) => {
+    const proficienciesToDisplay = proficienciesList.map((proficiency, index) => {
         return(
             <div>
-                <Proficiency key={proficiency.index} name={proficiency.name} index={proficiency.index} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
+                <Proficiency key={index} name={proficiency.name} index={proficiency.index} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
             </div>
         )
     })

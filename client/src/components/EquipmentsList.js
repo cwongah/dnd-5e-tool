@@ -10,10 +10,10 @@ function EquipmentsList({setEquipmentsUrl}){
         .then (data => setEquipmentsList(data.results))
     }, [])
 
-    const equipmentsToDisplay = equipmentsList.map((equipment) => {
+    const equipmentsToDisplay = equipmentsList.map((equipment, index) => {
         return(
             <div>
-                <Equipment key={equipment.index} name={equipment.name} index={equipment.index} url={equipment.url} setEquipmentsUrl={setEquipmentsUrl} />
+                <Equipment key={index} name={equipment.name} index={equipment.index} url={equipment.url} setEquipmentsUrl={setEquipmentsUrl} />
             </div>
         )
     })

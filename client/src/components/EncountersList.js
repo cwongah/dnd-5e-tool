@@ -11,10 +11,10 @@ function EncountersList({setEncounterId, referenceTable, setEncounterUser, encou
     }, [])
 
 
-    const encountersToDisplay = encountersList.map((encounter) => {
+    const encountersToDisplay = encountersList.map((encounter, index) => {
         return(
             <div>
-                <Encounter key={encounter.id} id={encounter.id} name={encounter.name} user_id={encounter.user_id} setEncounterId={setEncounterId} referenceTable={referenceTable} setEncounterUser={setEncounterUser} encounterUser={encounterUser} />
+                <Encounter key={index} id={encounter.id} name={encounter.name} user_id={encounter.user_id} setEncounterId={setEncounterId} referenceTable={referenceTable} setEncounterUser={setEncounterUser} encounterUser={encounterUser} />
             </div>
         )
     })

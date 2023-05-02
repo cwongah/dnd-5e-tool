@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import CharacterClass from "./CharacterClass";
 import Race from "./Race";
 
-function ProficiencyView({proficienyUrl, setRaceUrl, setClassUrl}){
-    const [proficieny, setProficiency] = useState({})
+function ProficiencyView({proficiencyUrl, setRaceUrl, setClassUrl}){
+    const [proficiency, setProficiency] = useState({})
 
     useEffect(()=>{
-        fetch(proficienyUrl)
+        fetch(proficiencyUrl)
             .then(r => r.json())
             .then(data => setProficiency(data))
     }, [])
@@ -14,17 +14,17 @@ function ProficiencyView({proficienyUrl, setRaceUrl, setClassUrl}){
     return(
         <div>
             <div>Proficiency Page</div>
-            <div>{proficieny.name}</div>
-            {proficieny.classes ? (
+            <div>{proficiency.name}</div>
+            {proficiency.classes ? (
                 <div>
-                    {proficieny.classes.map((character_class, index)=>
+                    {proficiency.classes.map((character_class, index)=>
                         <CharacterClass key={index} name={character_class.name} index={character_class.index} url={character_class.url} setClassUrl={setClassUrl} />
                     )}
                 </div>
             ):('')}
-            {proficieny.races ? (
+            {proficiency.races ? (
                 <div>
-                    {proficieny.races.map((race, index)=>
+                    {proficiency.races.map((race, index)=>
                         <Race key={index} name={race.name} index={race.index} url={race.url} setRaceUrl={setRaceUrl} />
                     )}
                 </div>

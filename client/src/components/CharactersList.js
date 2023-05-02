@@ -13,10 +13,10 @@ function CharactersList({setCharacterId}){
         })
     },[])
 
-    const charactersToDisplay = charactersList.map((character) => {
+    const charactersToDisplay = charactersList.map((character, index) => {
         return (
             <div >
-                <Character key={character.id} id={character.id} name={character.name} level={character.level} url={character.url} setCharacterId={setCharacterId} />
+                <Character key={index} id={character.id} name={character.name} level={character.level} url={character.url} setCharacterId={setCharacterId} />
             </div>
         )
     })

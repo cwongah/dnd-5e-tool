@@ -10,10 +10,10 @@ function ClassesList({setClassUrl}){
         .then (data => setClassesList(data.results))
     }, [])
 
-    const classesToDisplay = classesList.map((characterClass) => {
+    const classesToDisplay = classesList.map((characterClass, index) => {
         return(
             <div>
-                <CharacterClass key={characterClass.index} name={characterClass.name} index={characterClass.index} url={characterClass.url} setClassUrl={setClassUrl} />
+                <CharacterClass key={index} name={characterClass.name} index={characterClass.index} url={characterClass.url} setClassUrl={setClassUrl} />
             </div>
         )
     })
