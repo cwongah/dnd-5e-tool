@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function ClassView({referenceUrl, setReferenceUrl}){
+function ClassView({referenceUrl, setReferenceUrl, setCurrentClass}){
     const navigate = useNavigate()
 
     const [characterClass, setCharacterClass] = useState({})
@@ -9,7 +9,10 @@ function ClassView({referenceUrl, setReferenceUrl}){
     useEffect(()=>{
         fetch(referenceUrl)
             .then(r => r.json())
-            .then(data => setCharacterClass(data))
+            .then(data => {
+                setCharacterClass(data)
+                setCurrentClass(data.name)
+            })
     }, [])
 
     function handleLevelsClick(){
