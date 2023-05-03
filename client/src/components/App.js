@@ -41,6 +41,7 @@ function App() {
   const [currentClass, setCurrentClass] = useState('')
   const [currentSubclass, setCurrentSubclass] = useState('')
   const [referenceUrl, setReferenceUrl] = useState('')
+  const [userUrl, setUserUrl] = useState('')
   const [classUrl, setClassUrl] = useState('')
   const [skillUrl, setSkillUrl] = useState('')
   const [featureUrl, setFeatureUrl] = useState('')
@@ -55,7 +56,8 @@ function App() {
   const [subclassLevelUrl, setSubclassLevelUrl] = useState('')
 
   // console.log((referenceTable))
-  console.log(proficiencyUrl)
+  // console.log(proficiencyUrl)
+  // console.log(userUrl)
 
   useEffect(() => {
     fetch('http://127.0.0.1:5555/references')
@@ -70,7 +72,7 @@ function App() {
     <div>
       <NavBar />
       <Routes>
-        <Route path="/" element={<Home referenceTable={referenceTable} setSearchedObject={setSearchedObject} />} />
+        <Route path="/" element={<Home referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
         {/* to do */}
         <Route path="/login" element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} userPW={userPW} setUserPW={setUserPW} />} />
         <Route path="/users" element={<Users />} />

@@ -1,24 +1,71 @@
 import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 
-function SearchBar({referenceTable, setSearchedObject}){ 
+function SearchBar({referenceTable, setSearchedObject, setUserUrl, setClassUrl, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setTraitUrl }){ 
     const [search, setSearch] = useState('')
+
+    const navigate = useNavigate()
+
     const handleSearchChange = (e)=>{
         setSearch(e.target.value.toLowerCase())
 
     }
+
     const handleSubmit = (e)=>{
         e.preventDefault()
-        const searchUrl = referenceTable.filter((reference) => reference.name.toLowerCase().includes(search))
-        console.log(searchUrl)
-        if(searchUrl.length == 0){
+        let searchObject = referenceTable.filter((reference) => reference.name.toLowerCase().includes(search))
+        if(searchObject.length == 0){
             alert('not found')
         }else{
-            fetch(`${searchUrl[0].url}`)
-                .then(r => r.json())
-                .then(data => {
-                    console.log(data, searchUrl[0].class_type)
-                    setSearchedObject(data)
-            })
+            // console.log(searchObject)
+            switch(searchObject[0].class_type){
+                case 'user':
+                    setUserUrl(searchObject[0].url)
+                    navigate(`/users/${searchObject[0].name}`)
+                    break
+                case 'class':
+                    setClassUrl(searchObject[0].url)
+                    navigate(`/classes/${searchObject[0].name}`)
+                    break
+                case 'skill':
+                    setSkillUrl(searchObject[0].url)
+                    navigate(`/skills/${searchObject[0].name}`)
+                    break
+                case 'feature':
+                    setFeatureUrl(searchObject[0].url)
+                    navigate(`/features/${searchObject[0].name}`)
+                    break
+                case 'equipment':
+                    setEquipmentUrl(searchObject[0].url)
+                    navigate(`/equipment/${searchObject[0].name}`)
+                    break
+                case 'spell':
+                    setSpellUrl(searchObject[0].url)
+                    navigate(`/spells/${searchObject[0].name}`)
+                    break
+                case 'race':
+                    setRaceUrl(searchObject[0].url)
+                    navigate(`/races/${searchObject[0].name}`)
+                    break
+                case 'subclass':
+                    setSubclassUrl(searchObject[0].url)
+                    navigate(`/subclasses/${searchObject[0].name}`)
+                    break
+                case 'proficiency':
+                    setProficiencyUrl(searchObject[0].url)
+                    navigate(`/proficiencies/${searchObject[0].name}`)
+                    break
+                case 'trait':
+                    setTraitUrl(searchObject[0].url)
+                    navigate(`/traits/${searchObject[0].name}`)
+                    break
+            }
+            // fetch(`${searchUrl[0].url}`)
+            //     .then(r => r.json())
+            //     .then(data => {
+            //         console.log(data, searchUrl[0].class_type)
+            //         setSearchedObject(data)
+            // })
         }
     }
 
