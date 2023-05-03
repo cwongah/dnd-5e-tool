@@ -15,7 +15,7 @@ function SearchBar({referenceTable, setSearchedObject, setUserUrl, setClassUrl, 
         e.preventDefault()
         let searchObject = referenceTable.filter((reference) => reference.name.toLowerCase().includes(search))
         if(searchObject.length == 0){
-            alert('not found')
+            alert('Not Found')
         }else{
             // console.log(searchObject)
             switch(searchObject[0].class_type){
@@ -60,19 +60,19 @@ function SearchBar({referenceTable, setSearchedObject, setUserUrl, setClassUrl, 
                     navigate(`/traits/${searchObject[0].name}`)
                     break
             }
-            // fetch(`${searchUrl[0].url}`)
-            //     .then(r => r.json())
-            //     .then(data => {
-            //         console.log(data, searchUrl[0].class_type)
-            //         setSearchedObject(data)
-            // })
         }
     }
 
     return(
         <div className='searchBar'>
             <form onSubmit={handleSubmit}>
-                <input type='text' onChange={handleSearchChange} placeholder='Search'></input>
+                <input 
+                    type='text' 
+                    onChange={handleSearchChange} 
+                    placeholder='Search'
+                    className="block w-full px-4 py-1 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    >
+                </input>
             </form>
         </div>
     )
