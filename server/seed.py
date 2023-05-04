@@ -6056,7 +6056,7 @@ def make_references():
     reference_skills = []
     for skill in skills_list:
         reference_skill = Reference(
-            name = skill.name,
+            name = 'Skill: ' + skill.name,
             url = 'https://www.dnd5eapi.co' + skill.url,
             class_type = 'skill',
             object_id = skill.id
