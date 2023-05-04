@@ -96,7 +96,7 @@ class Character(db.Model, SerializerMixin):
     intelligence_saving_throw = db.Column(db.Integer)
     wisdom_saving_throw = db.Column(db.Integer)
     charisma_saving_throw = db.Column(db.Integer)
-
+    
     #Relationships
     character_skills = db.relationship('CharacterSkill', backref='character')
     skills = association_proxy('character_skills', 'skill')

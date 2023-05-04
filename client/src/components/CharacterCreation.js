@@ -16,9 +16,17 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
     const [subclassData, setSubclassData] = useState('')
     const [selectedRace, setSelectedRace] = useState('')
     const [raceData, setRaceData] = useState('')
-    const [prof, setProf] = useState([])
+    const [raceProf, setRaceProf] = useState([])
+    const [classProf, setClassProf] = useState([])
     const [checkedProf, setCheckedProf] = useState('')
     const [traitData, setTraitData] = useState([])
+    const [strengthAS, setStrengthAS] = useState(0)
+    const [dexterityAS, setDexterityAS] = useState(0)
+    const [constitutionAS, setConstitutionAS] = useState(0)
+    const [intelligenceAS, setIntelligenceAS] = useState(0)
+    const [wisdomAS, setWisdomAS] = useState(0)
+    const [charismaAS, setCharismaAS] = useState(0)
+    const [asBonus, setAsBonus] = useState({'str':0, 'dex':0, 'con':0, 'int':0, 'wis':0, 'cha':0})
     // console.log(selectedClass)
     // console.log(classData)
     // console.log(featureData)
@@ -32,7 +40,10 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
     useEffect(()=>{
         fetch(`https://www.dnd5eapi.co/api/classes/${selectedClass.toLowerCase()}`)
         .then(r=>r.json())
-        .then(data => setClassData(data))
+        .then((data) => {
+            setClassData(data)
+            setClassProf(data.proficiencies)
+        })
     },[selectedClass])
 
     useEffect(()=>{
@@ -54,7 +65,9 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
         .then(r=>r.json())
         .then(data => {
             setRaceData(data)
-            setProf(data.starting_proficiencies ? data.starting_proficiencies.map((prof)=>prof): [])
+            setRaceProf(data.starting_proficiencies ? data.starting_proficiencies.map((raceProf)=>raceProf): [])
+            setTraitData(data.traits ? data.traits: [])
+            setAsBonus(addASBonus(data))
         })
     },[selectedRace])
 
@@ -67,7 +80,7 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
     }
     function handleRaceSelection(e){
         setSelectedRace(e.target.value)
-        setProf([])
+        setRaceProf([])
         setCheckedRaceSkill({})
     }
     function removeSkillChoice(choice){
@@ -98,6 +111,53 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
     function handleProfChoiceChange(e){
         e.target.checked ? setCheckedProf({...checkedEquip, [e.target.name]:e.target.checked}): setCheckedProf(removeProfChoice(e.target.name))
     }
+    function handleReroll(e){
+        e.preventDefault()
+        setStrengthAS(Math.floor(Math.random()*15)+4)
+        setDexterityAS(Math.floor(Math.random()*15)+4)
+        setConstitutionAS(Math.floor(Math.random()*15)+4)
+        setIntelligenceAS(Math.floor(Math.random()*15)+4)
+        setWisdomAS(Math.floor(Math.random()*15)+4)
+        setCharismaAS(Math.floor(Math.random()*15)+4)
+    }
+    function addASBonus(data){
+        let resetASB = {'str':0, 'dex':0, 'con':0, 'int':0, 'wis':0, 'cha':0}
+        if(data){
+            data.ability_bonuses.map((ab)=>{
+                switch(ab.ability_score.index){
+                    case 'str':
+                        resetASB['str']=ab.bonus
+                        break
+                }
+                switch(ab.ability_score.index){
+                    case 'dex':
+                        resetASB['dex']=ab.bonus
+                        break
+                }
+                switch(ab.ability_score.index){
+                    case 'con':
+                        resetASB['con']=ab.bonus
+                        break
+                }
+                switch(ab.ability_score.index){
+                    case 'int':
+                        resetASB['int']=ab.bonus
+                        break
+                }
+                switch(ab.ability_score.index){
+                    case 'wis':
+                        resetASB['wis']=ab.bonus
+                        break
+                }
+                switch(ab.ability_score.index){
+                    case 'cha':
+                        resetASB['cha']=ab.bonus
+                        break
+                }
+            })
+        }
+        return(resetASB)
+    }
 
     return(
         <div>
@@ -114,6 +174,32 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
                     <option value={''} disabled selected>Select a Race</option>
                     {races.map((race, index)=><option key={index} value={race}>{race}</option>)}
                 </select>
+                <div>Level: 1</div>
+                <div>Proficiency Bonus: +2 </div>
+                <div>Passive Perception: </div>
+                <div>Speed: </div>
+                <div>Armor Class: </div>
+                <div>Hit Points: </div>
+                <div>Hit Die: </div>
+                <div>Strength: {strengthAS + asBonus['str']}</div>
+                <div>Dexterity: {dexterityAS + asBonus['dex']}</div>
+                <div>Constitution: {constitutionAS + asBonus['con']}</div>
+                <div>Intelligence: {intelligenceAS +asBonus['int']}</div>
+                <div>Wisdom: {wisdomAS + asBonus['wis']}</div>
+                <div>Charisma: {charismaAS + asBonus['cha']}</div>
+                <button onClick={handleReroll}>Roll Ability Scores</button>
+                <div>Strength Proficiency: </div>
+                <div>Dexterity Proficiency: </div>
+                <div>Constitution Proficiency: </div>
+                <div>Intelligence Proficiency: </div>
+                <div>Wisdom Proficiency: </div>
+                <div>Charisma Proficiency: </div>
+                <div>Strength Saving Throw: </div>
+                <div>Dexterity Saving Throw: </div>
+                <div>Constitution Saving Throw: </div>
+                <div>Intelligence Saving Throw: </div>
+                <div>Wisdom Saving Throw: </div>
+                <div>Charisma Saving Throw: </div>
                 <div>
                     <div>Features</div>
                     {featureData ? (
@@ -125,11 +211,28 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
                     ):('')}
                 </div>
                 <div>
-                    {prof !== [] ? (
+                    <div>Traits</div>
+                    {traitData ? (
+                        <div>
+                            {traitData.map((trait, index)=>
+                                <Trait key={index} name={trait.name} url={trait.url} setTraitUrl={setTraitUrl} />
+                            )}
+                        </div>
+                    ):('')}
+                </div>
+                <div>
+                    {raceProf !== [] ? (
                         <div>
                             <div>Starting Proficiencies</div>
                             <div>
-                                {prof.map((proficiency, index)=>
+                                {classProf ? (
+                                    classProf.map((prof, index)=>
+                                        <Proficiency key={index} name={prof.name} url={prof.url} setProficiencyUrl={setProficiencyUrl} />
+                                    )
+                                ):('')}
+                            </div>
+                            <div>
+                                {raceProf.map((proficiency, index)=>
                                     <Proficiency key={index} name={proficiency.name} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
                                     )}
                             </div>
