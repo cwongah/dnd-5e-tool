@@ -75,7 +75,7 @@ function App() {
       </div>
       <div class="col-span-2  ">
         <NavBar toggle={toggle} setToggle={setToggle} referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />
-        <div className="">
+        <div className="px-10">
           <Routes>
             <Route path="/" element={<Home referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
             <Route path="/login" element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} userPW={userPW} setUserPW={setUserPW} />} />
@@ -106,7 +106,7 @@ function App() {
             <Route path="/classes/:className/levels" element={<ClassLevels classLevelUrl={classLevelUrl} currentClass={currentClass} setFeatureUrl={setFeatureUrl} />} />
             <Route path="/classes/:className/spells" element={<ClassSpells spellUrl={spellUrl} currentClass={currentClass} setSpellUrl={setSpellUrl} classSpellUrl={classSpellUrl} />} />
             <Route path="/subclasses/:subclassName/levels" element={<SubclassLevels subclassLevelUrl={subclassLevelUrl} currentSubclass={currentSubclass} setFeatureUrl={setFeatureUrl} />} />
-            <Route path="/character_creation" element={<CharacterCreation setFeatureUrl={setFeatureUrl} />} />
+            <Route path="/character_creation" element={<CharacterCreation setFeatureUrl={setFeatureUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
           </Routes>
         </div>
       </div>
