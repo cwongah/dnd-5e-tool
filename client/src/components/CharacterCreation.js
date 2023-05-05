@@ -3,7 +3,7 @@ import Feature from "./Feature";
 import Proficiency from "./Proficiency";
 import Trait from "./Trait";
 
-function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
+function CharacterCreation({referenceTable, setFeatureUrl, setProficiencyUrl, setTraitUrl}){
     const classes = [{'name': 'Barbarian','subclass': 'Berserker'},{'name': 'Bard','subclass': 'Lore'},{'name': 'Cleric','subclass': 'Life'},{'name': 'Druid','subclass': 'Land'},{'name': 'Fighter','subclass': 'Champion'},{'name': 'Monk','subclass': 'Open-Hand'},{'name': 'Paladin','subclass': 'Devotion'},{'name': 'Ranger','subclass': 'Hunter'},{'name': 'Rogue','subclass': 'Thief'},{'name': 'Sorcerer','subclass': 'Draconic'},{'name': 'Warlock','subclass': 'Fiend'},{'name': 'Wizard','subclass': 'Evocation'}]
     const races = ['Dragonborn', 'Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Half-Orc', 'Halfling', 'Human', 'Tiefling']
     const [characterName, setCharacterName] = useState('')
@@ -11,6 +11,7 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
     const [selectedClass, setSelectedClass] = useState('')
     const [passivePerception, setPassivePerception] = useState(0)
     const [ac, setAc] = useState(0)
+    const [speed, setSpeed] = useState(0)
     const [classData, setClassData] = useState('')
     const [featureData, setFeatureData] = useState('')
     const [checkedSkill, setCheckedSkill] = useState({})
@@ -32,13 +33,48 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
     const [charismaAS, setCharismaAS] = useState(0)
     const [asBonus, setAsBonus] = useState({'str':0, 'dex':0, 'con':0, 'int':0, 'wis':0, 'cha':0})
     const [checkedASB, setCheckedASB] = useState({})
-    const [hitDie, setHitDie] = useState('')
+    const [hitDie, setHitDie] = useState(0)
     const [hitPoints, setHitPoints] = useState(0)
     const [ogHitPoints, setOgHitPoints] = useState(0)
     const [abProf, setAbProf] = useState({'str':false, 'dex':false, 'con':false, 'int':false, 'wis':false, 'cha':false})
     const [pb, setPb] = useState(2)
     const [level, setLevel] = useState(1)
+    const [hitDieTotal, setHitDieTotal] = useState(1)
     const [spellcasting, setSpellcasting] = useState({'scab':0, 'scat':0, 'scs':0})
+    const [newChar, setNewChar] = useState({
+        'name': '',
+        'bio': '',
+        'level': 1,
+        'proficiency_bonus': 2,
+        'passive_perception': 0,
+        'speed': 0,
+        'armor_class': 0,
+        'hit_die': 0,
+        'hit_die_total': 1,
+        'hit_points': 0,
+        'spellcasting_ability': 0,
+        'spellcasting_save': 0,
+        'spellcasting_attack': 0,
+        'strength': 0,
+        'dexterity': 0,
+        'constitution': 0,
+        'intelligence': 0,
+        'wisdom': 0,
+        'charisma': 0,
+        'strength_proficiency': false,
+        'dexterity_proficiency': false,
+        'constitution_proficiency': false,
+        'intelligence_proficiency': false,
+        'wisdom_proficiency': false,
+        'charisma_proficiency': false,
+        'strength_saving_throw': 0,
+        'dexterity_saving_throw': 0,
+        'constitution_saving_throw': 0,
+        'intelligence_saving_throw': 0,
+        'wisdom_saving_throw': 0,
+        'charisma_saving_throw': 0,
+        'user_id': 1
+    })
 
     useEffect(()=>{
         fetch(`https://www.dnd5eapi.co/api/classes/${selectedClass.toLowerCase()}`)
@@ -74,6 +110,7 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
             setRaceProf(data.starting_proficiencies ? data.starting_proficiencies.map((raceProf)=>raceProf): [])
             setTraitData(data.traits ? data.traits: [])
             setAsBonus(addASBonus(data))
+            setSpeed(data.speed)
         })
     },[selectedRace])
 
@@ -91,7 +128,6 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
 
     useEffect(()=>{
         if(classData && classData.spellcasting){
-            // (()=>{
                 switch(classData.spellcasting.spellcasting_ability.index){
                     case 'cha':
                         setSpellcasting({
@@ -117,6 +153,43 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
             }
         }
     },[asBonus['cha'], asBonus['wis'], asBonus['int'], charismaAS, wisdomAS, intelligenceAS])
+
+    useEffect(()=>{
+        setNewChar({
+            'name': characterName,
+            'bio': characterBio,
+            'level': level,
+            'proficiency_bonus': pb,
+            'passive_perception': passivePerception,
+            'speed': speed,
+            'armor_class': ac,
+            'hit_die': hitDie,
+            'hit_die_total': hitDieTotal,
+            'hit_points': hitPoints,
+            'spellcasting_ability': spellcasting['scab'],
+            'spellcasting_attack': spellcasting['scat'],
+            'spellcasting_save': spellcasting['scs'],
+            'strength': asBonus['str'] + strengthAS,
+            'dexterity': asBonus['dex'] + dexterityAS,
+            'constitution': asBonus['con'] + constitutionAS,
+            'intelligence': asBonus['int'] + intelligenceAS,
+            'wisdom': asBonus['wis'] + wisdomAS,
+            'charisma': asBonus['cha'] + charismaAS,
+            'strength_proficiency': abProf['str'],
+            'dexterity_proficiency': abProf['dex'],
+            'constitution_proficiency': abProf['con'],
+            'intelligence_proficiency': abProf['int'],
+            'wisdom_proficiency': abProf['wis'],
+            'charisma_proficiency': abProf['cha'],
+            'strength_saving_throw': asBonus['str']+strengthAS-10 > 0 ? + Math.floor((asBonus['str'] + strengthAS - 10)/2): Math.ceil((asBonus['str'] + strengthAS - 10)/2),
+            'dexterity_saving_throw': asBonus['dex']+dexterityAS-10 > 0 ? + Math.floor((asBonus['dex'] + dexterityAS - 10)/2): Math.ceil((asBonus['dex'] + dexterityAS - 10)/2),
+            'constitution_saving_throw': asBonus['con']+constitutionAS-10 > 0 ? + Math.floor((asBonus['con'] + constitutionAS - 10)/2): Math.ceil((asBonus['con'] + constitutionAS - 10)/2),
+            'intelligence_saving_throw': asBonus['int']+intelligenceAS-10 > 0 ? + Math.floor((asBonus['int'] + intelligenceAS - 10)/2): Math.ceil((asBonus['int'] + intelligenceAS - 10)/2),
+            'wisdom_saving_throw': asBonus['wis']+wisdomAS-10 > 0 ? + Math.floor((asBonus['wis'] + wisdomAS - 10)/2): Math.ceil((asBonus['wis'] + wisdomAS - 10)/2),
+            'charisma_saving_throw': asBonus['cha']+charismaAS-10 > 0 ? + Math.floor((asBonus['cha'] + charismaAS - 10)/2): Math.ceil((asBonus['cha'] + charismaAS - 10)/2),
+            'user_id': 1
+        })
+    }, [characterName, characterBio, level, pb, passivePerception, speed, ac, hitDie, hitDieTotal, hitPoints, spellcasting, asBonus, strengthAS, dexterityAS, constitutionAS, intelligenceAS, wisdomAS, charismaAS, abProf])
     
     function handleClassSelection(e){
         setSelectedClass(e.target.value)
@@ -251,12 +324,37 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
         }
         return(resetAbProf)
     }
+    function handleCharacterSubmit(e){
+        e.preventDefault()
+        fetch('http://127.0.0.1:5555/characters', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newChar)
+        })
+            .then(r=>r.json())
+            .then(data=>createRelationships(data.id))
+    }
 
+    function createRelationships(charId){
+        console.log(charId)
+        let classId = referenceTable.filter((ref)=> ref.name === selectedClass)[0].object_id
+        fetch('http://127.0.0.1:5555/character_character_classes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"character_id": charId, "character_class_id": classId})
+        })
+            .then(r=>r.json())
+            .then(data=>console.log(data))
+    }
 
     return(
         <div>
             <div>Character Creation</div>
-            <form >
+            <form onSubmit={handleCharacterSubmit} >
                 <input type='text' onChange={(e)=>setCharacterName(e.target.value)} placeholder="Character name" className="block w-1/2 px-4 py-1 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></input>
                 <input type='text' onChange={(e)=>setCharacterBio(e.target.value)} placeholder="Character bio" className="block w-1/2 px-4 py-1 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></input>
                 <select id="class-selection" name="class-selection" onChange={handleClassSelection}>
@@ -271,7 +369,7 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
                 <div>Level: {level}</div>
                 <div>Proficiency Bonus: +{pb} </div>
                 <div>Passive Perception: {passivePerception} </div>
-                <div>Speed: {raceData.speed} </div>
+                <div>Speed: {speed} </div>
                 <div>Armor Class: {ac} </div>
                 <div>Hit Points: {hitPoints && hitPoints > 0 ? hitPoints:('')}</div>
                 <div>Hit Die: {hitDie}</div>
@@ -430,6 +528,7 @@ function CharacterCreation({setFeatureUrl, setProficiencyUrl, setTraitUrl}){
                         </div>
                     ):('')}
                 </div>
+                <input type="submit" value='Create Character' className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg' />
             </form>
         </div>
     )

@@ -125,6 +125,7 @@ class Characters(Resource):
     
     def post(self):
         data = request.get_json()
+        print(data)
         character = Character(
             name = data['name'],
             bio = data['bio'],
