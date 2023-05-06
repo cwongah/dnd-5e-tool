@@ -82,14 +82,14 @@ function CharacterView({characterId, setSkillUrl, setFeatureUrl, setEquipmentUrl
                         <Equipment key={index} name={equipment.name} url={equipment.url} setEquipmentUrl={setEquipmentUrl} />
                     ))}
                 </div>
-            ) : (<div>Loading...</div>)}
+            ) : ('')}
             {character.spells && character.spells.length > 0 ? (
                 <div>
                     {character.spells.map((spell, index) => (
                         <Spell key={index} name={spell.name} url={spell.url} setSpellUrl={setSpellUrl} />
                     ))}
                 </div>
-            ) : (<div>Loading...</div>)}
+            ) : ('')}
             {character.races && character.races.length > 0 ? (
                 <div>
                     {character.races.map((race, index) => (
@@ -118,7 +118,7 @@ function CharacterView({characterId, setSkillUrl, setFeatureUrl, setEquipmentUrl
                     ))}
                 </div>
             ) : (<div>Loading...</div>)}
-            {character.encounters && character.encounters.length > 0 ? (<div>{character.encounters.map((encounter, index) => (<div key={index}>{encounter.name}</div>))}</div>) : (<div>Loading...</div>)}
+            {character.encounters && character.encounters.length > 0 ? (<div>{character.encounters.map((encounter, index) => (<div key={index}>{encounter.name}</div>))}</div>) : ('')}
             
         </div>)
 

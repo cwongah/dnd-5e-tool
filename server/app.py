@@ -26,6 +26,18 @@ class References(Resource):
         references = Reference.query.all()
         references_dict_list = [reference.to_dict() for reference in references]
         return make_response(references_dict_list, 200)
+    
+    def post(self):
+        data=request.get_json()
+        reference = Reference(
+            name = data['name'],
+            url = data['url'],
+            class_type = data['class_type'],
+            object_id = data['object_id']
+        )
+        db.session.add(reference)
+        db.session.commit()
+        return make_response(reference.to_dict(), 201)
 api.add_resource(References, '/references')
 
 class Users(Resource):
@@ -170,7 +182,7 @@ class CharactersById(Resource):
         character = Character.query.filter_by(id=id).first()
         if not character:
             make_response({'error': 'Character not found'}, 404)
-        return make_response(character.to_dict(rules=('bio', 'level', 'proficiency_bonus', 'passive_perception', 'speed', 'armor_class', 'hit_die', 'hit_die_total', 'hit_points', 'spellcasting_ability', 'spellcasting_save', 'spellcasting_attack', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma', 'strength_proficiency', 'dexterity_proficiency', 'constitution_proficiency', 'intelligence_proficiency', 'wisdom_proficiency', 'charisma_proficiency', 'strength_saving_throw', 'dexterity_saving_throw', 'constitution_saving_throw', 'intelligence_saving_throw', 'wisdom_saving_throw', 'charisma_saving_throw', 'skills', 'features', 'equipments', 'spells', 'races', 'character_classes', 'proficiencies', 'traits', 'user_id', 'encounters')), 200)
+        return make_response(character.to_dict(rules=('bio', 'level', 'proficiency_bonus', 'passive_perception', 'speed', 'armor_class', 'hit_die', 'hit_die_total', 'hit_points', 'spellcasting_ability', 'spellcasting_save', 'spellcasting_attack', 'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma', 'strength_proficiency', 'dexterity_proficiency', 'constitution_proficiency', 'intelligence_proficiency', 'wisdom_proficiency', 'charisma_proficiency', 'strength_saving_throw', 'dexterity_saving_throw', 'constitution_saving_throw', 'intelligence_saving_throw', 'wisdom_saving_throw', 'charisma_saving_throw', 'skills', 'features', 'equipments', 'spells', 'races', 'character_classes', 'subclasses', 'proficiencies', 'traits', 'user_id', 'encounters')), 200)
     
     def patch(self, id):
         character = Character.query.filter_by(id=id).first()

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import Feature from "./Feature";
 import Proficiency from "./Proficiency";
 import Trait from "./Trait";
+import { useNavigate } from "react-router-dom";
 
 function CharacterCreation({referenceTable, setFeatureUrl, setProficiencyUrl, setTraitUrl}){
+    const navigate = useNavigate()
     const classes = [{'name': 'Barbarian','subclass': 'Berserker'},{'name': 'Bard','subclass': 'Lore'},{'name': 'Cleric','subclass': 'Life'},{'name': 'Druid','subclass': 'Land'},{'name': 'Fighter','subclass': 'Champion'},{'name': 'Monk','subclass': 'Open-Hand'},{'name': 'Paladin','subclass': 'Devotion'},{'name': 'Ranger','subclass': 'Hunter'},{'name': 'Rogue','subclass': 'Thief'},{'name': 'Sorcerer','subclass': 'Draconic'},{'name': 'Warlock','subclass': 'Fiend'},{'name': 'Wizard','subclass': 'Evocation'}]
     const races = ['Dragonborn', 'Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Half-Orc', 'Halfling', 'Human', 'Tiefling']
     const [characterName, setCharacterName] = useState('')
@@ -23,7 +25,7 @@ function CharacterCreation({referenceTable, setFeatureUrl, setProficiencyUrl, se
     const [raceData, setRaceData] = useState('')
     const [raceProf, setRaceProf] = useState([])
     const [classProf, setClassProf] = useState([])
-    const [checkedProf, setCheckedProf] = useState('')
+    const [checkedProf, setCheckedProf] = useState([])
     const [traitData, setTraitData] = useState([])
     const [strengthAS, setStrengthAS] = useState(0)
     const [dexterityAS, setDexterityAS] = useState(0)
@@ -338,7 +340,6 @@ function CharacterCreation({referenceTable, setFeatureUrl, setProficiencyUrl, se
     }
 
     function createRelationships(charId){
-        console.log(charId)
         let classId = referenceTable.filter((ref)=> ref.name === selectedClass)[0].object_id
         fetch('http://127.0.0.1:5555/character_character_classes', {
             method: 'POST',
@@ -349,6 +350,129 @@ function CharacterCreation({referenceTable, setFeatureUrl, setProficiencyUrl, se
         })
             .then(r=>r.json())
             .then(data=>console.log(data))
+
+        let skillIds = Object.keys(checkedSkill).map((skill)=>referenceTable.filter((ref)=> ref.name === skill && ref.class_type === 'skill')[0].object_id)
+        skillIds.map((skillId)=> 
+            fetch('http://127.0.0.1:5555/character_skills', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"character_id": charId, "skill_id": skillId})
+            })
+                .then(r=>r.json())
+                .then(data=>console.log(data))
+        )
+
+        let featureIds = featureData.map((feature)=>referenceTable.filter((ref)=> ref.name === feature.name)[0].object_id)
+        featureIds.map((featureId)=> 
+            fetch('http://127.0.0.1:5555/character_features', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"character_id": charId, "feature_id": featureId})
+            })
+                .then(r=>r.json())
+                .then(data=>console.log(data))
+        )
+
+        let raceId = referenceTable.filter((ref)=> ref.name === selectedRace)[0].object_id
+        fetch('http://127.0.0.1:5555/character_races', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"character_id": charId, "race_id": raceId})
+        })
+            .then(r=>r.json())
+            .then(data=>console.log(data))
+
+        let subclassId = referenceTable.filter((ref)=> ref.name === selectedSubclass)[0].object_id
+        fetch('http://127.0.0.1:5555/character_subclasses', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"character_id": charId, "subclass_id": subclassId})
+        })
+            .then(r=>r.json())
+            .then(data=>console.log(data))
+
+        let raceProfId = raceProf.map((prof)=>referenceTable.filter((ref)=> ref.name === prof.name)[0].object_id)
+        let classProfId = classProf.map((prof)=>referenceTable.filter((ref)=> ref.name === prof.name)[0].object_id)
+        let checkedProfId = Object.keys(checkedProf).map((prof)=>referenceTable.filter((ref)=> ref.name === prof && ref.class_type === 'proficiency' )[0].object_id)
+        raceProfId.map((profId)=>
+            fetch('http://127.0.0.1:5555/character_proficiencies', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"character_id": charId, "proficiency_id": profId})
+        })
+            .then(r=>r.json())
+            .then(data=>console.log(data))
+        )
+        classProfId.map((profId)=>
+            fetch('http://127.0.0.1:5555/character_proficiencies', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"character_id": charId, "proficiency_id": profId})
+        })
+            .then(r=>r.json())
+            .then(data=>console.log(data))
+        )
+        checkedProfId.map((profId)=>
+            fetch('http://127.0.0.1:5555/character_proficiencies', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"character_id": charId, "proficiency_id": profId})
+        })
+            .then(r=>r.json())
+            .then(data=>console.log(data))
+        )
+
+        let traitIds = traitData.map((trait)=> referenceTable.filter((ref)=> ref.name === trait.name && ref.class_type === 'trait')[0].object_id)
+        traitIds.map((traitId)=>{
+            fetch('http://127.0.0.1:5555/character_traits', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"character_id": charId, "trait_id": traitId})
+            })
+        })
+
+        fetch(`http://127.0.0.1:5555/characters/${charId}`, {
+            method: 'PATCH',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"url": `http://127.0.0.1:5555/characters/${charId}`})
+        })
+            .then(r=>r.json())
+            .then(data=>console.log(data))
+
+        fetch('http://127.0.0.1:5555/references',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "name": characterName,
+                "url": `http://127.0.0.1:5555/characters/${charId}`,
+                "class_type": "character",
+                "object_id": charId
+            })
+        })
+            .then(r=>r.json())
+            .then(data=>console.log(data))
+        
+        navigate(`/characters/${charId}`)
     }
 
     return(
