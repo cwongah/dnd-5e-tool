@@ -9,6 +9,7 @@ from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import current_user
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 # Local imports
@@ -31,11 +32,13 @@ def create_token():
     # username = request.json.get("username", None)
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    if email != "test" or password != "test":
+    user=User.query.filter_by(email=email).first()
+    if not user or not user.password == password:
         return jsonify({"msg": "Bad email or password"}), 401
 
+    # additional_claims = {"id": user.id}
     access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    return jsonify(access_token=access_token, user_id=user.id)
 
 @app.route("/protected", methods=["GET"])
 @jwt_required()
@@ -108,6 +111,7 @@ class UsersById(Resource):
 api.add_resource(UsersById, '/users/<int:id>')
 
 class Encounters(Resource):
+    @jwt_required()
     def get(self):
         encounters = Encounter.query.all()
         encounters_dict_list = [e.to_dict(rules=('characters',)) for e in encounters]
@@ -125,6 +129,7 @@ class Encounters(Resource):
 api.add_resource(Encounters, '/encounters')
 
 class EncountersById(Resource):
+    @jwt_required()
     def get(self, id):
         encounter = Encounter.query.filter_by(id=id).first()
         if not encounter:
@@ -152,6 +157,7 @@ class EncountersById(Resource):
 api.add_resource(EncountersById, '/encounters/<int:id>')
         
 class Characters(Resource):
+    @jwt_required()
     def get(self):
         characters = Character.query.all()
         characters_dict_list = [c.to_dict() for c in characters]
@@ -200,6 +206,7 @@ class Characters(Resource):
 api.add_resource(Characters, '/characters')
 
 class CharactersById(Resource):
+    @jwt_required()
     def get(self, id):
         character = Character.query.filter_by(id=id).first()
         if not character:

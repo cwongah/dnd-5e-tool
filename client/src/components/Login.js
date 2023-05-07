@@ -1,11 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login({setEmail, setPw, email, pw, token, setToken}){
-    console.log(email, pw, token)
+function Login({userId, setUserId, setEmail, setPw, email, pw, token, setToken}){
+    // console.log(email, pw, token)
+    // console.log(userId)
     const navigate = useNavigate()
     // const token = sessionStorage.getItem("token")
-    function handleClick(){
+    function handleSignupClick(){
+        navigate('/signup')
+    }
+    function handleLoginClick(){
         fetch('http://127.0.0.1:5555/token', {
             method: "POST",
             headers: {
@@ -22,10 +26,13 @@ function Login({setEmail, setPw, email, pw, token, setToken}){
             }
         })
         .then(data=>{
-            console.log(data)
+            // console.log(data)
+            // document.getElementById('email').value = ""
+            // document.getElementById('password').value = ""
             sessionStorage.setItem("token", data.access_token)
             setToken(sessionStorage.getItem("token"))
-            navigate('/')
+            setUserId(data.user_id)
+            navigate(`/users/${data.user_id}`)
         })
         .catch(error=>{
             console.error("There was an error", error)
@@ -39,9 +46,15 @@ function Login({setEmail, setPw, email, pw, token, setToken}){
                "You are logged in with this token" + token 
             ):(
             <div>
-                <input type="text" placeholder="Email" value={email} onChange={(e)=> setEmail(e.target.value)}></input>
-                <input type="password" placeholder="Password" value={pw} onChange={(e)=> setPw(e.target.value)}></input>
-                <button onClick={handleClick} >Login</button>
+                <div>
+                    <input id="email" type="text" placeholder="Email" value={email} onChange={(e)=> setEmail(e.target.value)}></input>
+                    <input id="password" type="password" placeholder="Password" value={pw} onChange={(e)=> setPw(e.target.value)}></input>
+                </div>
+                <button onClick={handleLoginClick} >Login</button>
+                <div>
+                    <label>New User?</label>
+                    <button onClick={handleSignupClick}>Signup</button>
+                </div>
             </div>
             )}
         </div>

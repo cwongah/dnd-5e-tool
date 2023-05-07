@@ -2,15 +2,21 @@ import React, { useEffect, useState } from "react";
 import Character from "./Character";
 // import { useNavigate } from "react-router-dom";
 
-function CharactersList({setCharacterId}){
+function CharactersList({setCharacterId, token}){
     
     const [charactersList, setCharactersList] = useState([])
     useEffect(() => {
-        fetch('http://127.0.0.1:5555/characters')
-        .then(r => r.json())
-        .then(data => {
-            setCharactersList(data)
-        })
+        if(token && token != '' && token != undefined){
+            fetch('http://127.0.0.1:5555/characters',{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then(r => r.json())
+            .then(data => {
+                setCharactersList(data)
+            })
+        }
     },[])
 
     const charactersToDisplay = charactersList.map((character, index) => {

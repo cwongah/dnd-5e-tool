@@ -4,7 +4,7 @@ import Proficiency from "./Proficiency";
 import Trait from "./Trait";
 import { useNavigate } from "react-router-dom";
 
-function CharacterCreation({setCharacterId, referenceTable, setFeatureUrl, setProficiencyUrl, setTraitUrl}){
+function CharacterCreation({userId, setCharacterId, referenceTable, setFeatureUrl, setProficiencyUrl, setTraitUrl}){
     const navigate = useNavigate()
     const classes = [{'name': 'Barbarian','subclass': 'Berserker'},{'name': 'Bard','subclass': 'Lore'},{'name': 'Cleric','subclass': 'Life'},{'name': 'Druid','subclass': 'Land'},{'name': 'Fighter','subclass': 'Champion'},{'name': 'Monk','subclass': 'Open-Hand'},{'name': 'Paladin','subclass': 'Devotion'},{'name': 'Ranger','subclass': 'Hunter'},{'name': 'Rogue','subclass': 'Thief'},{'name': 'Sorcerer','subclass': 'Draconic'},{'name': 'Warlock','subclass': 'Fiend'},{'name': 'Wizard','subclass': 'Evocation'}]
     const races = ['Dragonborn', 'Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Half-Orc', 'Halfling', 'Human', 'Tiefling']
@@ -189,7 +189,7 @@ function CharacterCreation({setCharacterId, referenceTable, setFeatureUrl, setPr
             'intelligence_saving_throw': asBonus['int']+intelligenceAS-10 > 0 ? + Math.floor((asBonus['int'] + intelligenceAS - 10)/2): Math.ceil((asBonus['int'] + intelligenceAS - 10)/2),
             'wisdom_saving_throw': asBonus['wis']+wisdomAS-10 > 0 ? + Math.floor((asBonus['wis'] + wisdomAS - 10)/2): Math.ceil((asBonus['wis'] + wisdomAS - 10)/2),
             'charisma_saving_throw': asBonus['cha']+charismaAS-10 > 0 ? + Math.floor((asBonus['cha'] + charismaAS - 10)/2): Math.ceil((asBonus['cha'] + charismaAS - 10)/2),
-            'user_id': 1
+            'user_id': userId
         })
     }, [characterName, characterBio, level, pb, passivePerception, speed, ac, hitDie, hitDieTotal, hitPoints, spellcasting, asBonus, strengthAS, dexterityAS, constitutionAS, intelligenceAS, wisdomAS, charismaAS, abProf])
     
@@ -435,7 +435,6 @@ function CharacterCreation({setCharacterId, referenceTable, setFeatureUrl, setPr
             .then(r=>r.json())
             .then(data=>console.log(data))
         )
-
         let traitIds = traitData.map((trait)=> referenceTable.filter((ref)=> ref.name === trait.name && ref.class_type === 'trait')[0].object_id)
         traitIds.map((traitId)=>{
             fetch('http://127.0.0.1:5555/character_traits', {
@@ -445,9 +444,9 @@ function CharacterCreation({setCharacterId, referenceTable, setFeatureUrl, setPr
             },
             body: JSON.stringify({"character_id": charId, "trait_id": traitId})
             })
-        })
             .then(r=>r.json())
             .then(data=>console.log(data))
+        })
 
         fetch(`http://127.0.0.1:5555/characters/${charId}`, {
             method: 'PATCH',

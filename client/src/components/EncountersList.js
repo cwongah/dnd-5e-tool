@@ -2,12 +2,18 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Encounter from "./Encounter";
 
-function EncountersList({setEncounterId, referenceTable, setEncounterUser, encounterUser}){
+function EncountersList({token, setEncounterId, referenceTable, setEncounterUser, encounterUser}){
     const [encountersList, setEncountersList] = useState([])
     useEffect(()=> {
-        fetch('http://127.0.0.1:5555/encounters')
-            .then(r=>r.json())
-            .then(data => {setEncountersList(data)})
+        if(token && token != '' && token != undefined){
+            fetch('http://127.0.0.1:5555/encounters',{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(r=>r.json())
+                .then(data => {setEncountersList(data)})
+        }
     }, [])
 
 

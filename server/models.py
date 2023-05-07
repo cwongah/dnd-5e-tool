@@ -25,6 +25,7 @@ class User(db.Model, SerializerMixin):
     #Serialization
     serialize_only= ('id', 'username', 'password', 'email', 'characters', 'encounters', 'url')
 
+
 class Encounter(db.Model, SerializerMixin):
     __tablename__ = 'encounters'
 

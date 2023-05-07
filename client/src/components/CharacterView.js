@@ -9,17 +9,23 @@ import Proficiency from "./Proficiency";
 import CharacterClass from "./CharacterClass";
 import Trait from "./Trait";
 
-function CharacterView({characterId, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setClassUrl, setTraitUrl}){
+function CharacterView({token, characterId, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setClassUrl, setTraitUrl}){
 
     const [character, setCharacter] = useState({})
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:5555/characters/${characterId}`)
-            .then(r => r.json())
-            .then(data => {
-                // console.log(data)
-                setCharacter(data)
+        if(token && token != '' && token != undefined){
+            fetch(`http://127.0.0.1:5555/characters/${characterId}`,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
             })
+                .then(r => r.json())
+                .then(data => {
+                    // console.log(data)
+                    setCharacter(data)
+                })
+        }
     }, [])
 
     console.log(character)

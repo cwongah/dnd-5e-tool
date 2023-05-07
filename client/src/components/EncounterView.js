@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 
-function EncounterView({encounterId, referenceTable}){
+function EncounterView({token, encounterId, referenceTable}){
 
     const [encounter, setEncounter] = useState({})
     const [user, setUser] = useState([])
 
     useEffect(() => {
-        fetch(`http://127.0.0.1:5555/encounters/${encounterId}`)
-            .then(r => r.json())
-            .then(data => {
-                // console.log(data)
-                setEncounter(data)
+        if(token && token != '' && token != undefined){
+            fetch(`http://127.0.0.1:5555/encounters/${encounterId}`,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
             })
+                .then(r => r.json())
+                .then(data => {
+                    // console.log(data)
+                    setEncounter(data)
+                })
+        }
     }, [])
 
     useEffect(() => {
