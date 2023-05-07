@@ -4,7 +4,7 @@ import Proficiency from "./Proficiency";
 import Trait from "./Trait";
 import { useNavigate } from "react-router-dom";
 
-function CharacterCreation({referenceTable, setFeatureUrl, setProficiencyUrl, setTraitUrl}){
+function CharacterCreation({setCharacterId, referenceTable, setFeatureUrl, setProficiencyUrl, setTraitUrl}){
     const navigate = useNavigate()
     const classes = [{'name': 'Barbarian','subclass': 'Berserker'},{'name': 'Bard','subclass': 'Lore'},{'name': 'Cleric','subclass': 'Life'},{'name': 'Druid','subclass': 'Land'},{'name': 'Fighter','subclass': 'Champion'},{'name': 'Monk','subclass': 'Open-Hand'},{'name': 'Paladin','subclass': 'Devotion'},{'name': 'Ranger','subclass': 'Hunter'},{'name': 'Rogue','subclass': 'Thief'},{'name': 'Sorcerer','subclass': 'Draconic'},{'name': 'Warlock','subclass': 'Fiend'},{'name': 'Wizard','subclass': 'Evocation'}]
     const races = ['Dragonborn', 'Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Half-Orc', 'Halfling', 'Human', 'Tiefling']
@@ -446,6 +446,8 @@ function CharacterCreation({referenceTable, setFeatureUrl, setProficiencyUrl, se
             body: JSON.stringify({"character_id": charId, "trait_id": traitId})
             })
         })
+            .then(r=>r.json())
+            .then(data=>console.log(data))
 
         fetch(`http://127.0.0.1:5555/characters/${charId}`, {
             method: 'PATCH',
@@ -472,6 +474,7 @@ function CharacterCreation({referenceTable, setFeatureUrl, setProficiencyUrl, se
             .then(r=>r.json())
             .then(data=>console.log(data))
         
+        setCharacterId(charId)
         navigate(`/characters/${charId}`)
     }
 

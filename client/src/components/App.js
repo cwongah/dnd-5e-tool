@@ -34,8 +34,9 @@ import CharacterCreation from "./CharacterCreation";
 
 function App() {
   const [referenceTable, setReferenceTable] = useState([])
-  const [currentUser, setCurrentUser] = useState('')
-  const [userPW, setUserPW] = useState('')
+  const [email, setEmail] = useState('')
+  const [pw, setPw] = useState('')
+  const [token, setToken] = useState('')
   const [searchedObject, setSearchedObject] = useState()
   const [characterId, setCharacterId] = useState('')
   const [encounterId, setEncounterId] = useState('')
@@ -78,7 +79,7 @@ function App() {
         <div className="px-10">
           <Routes>
             <Route path="/" element={<Home referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
-            <Route path="/login" element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} userPW={userPW} setUserPW={setUserPW} />} />
+            <Route path="/login" element={<Login token={token} setToken={setToken} email={email} setEmail={setEmail} pw={pw} setPw={setPw} />} />
             <Route path="/users" element={<Users />} />
             <Route path="/characters" element={<CharactersList setCharacterId={setCharacterId} />} />
             <Route path="/encounters" element={<EncountersList setEncounterId={setEncounterId} referenceTable={referenceTable} setEncounterUser={setEncounterUser} encounterUser={encounterUser} />} />
@@ -106,7 +107,7 @@ function App() {
             <Route path="/classes/:className/levels" element={<ClassLevels classLevelUrl={classLevelUrl} currentClass={currentClass} setFeatureUrl={setFeatureUrl} />} />
             <Route path="/classes/:className/spells" element={<ClassSpells spellUrl={spellUrl} currentClass={currentClass} setSpellUrl={setSpellUrl} classSpellUrl={classSpellUrl} />} />
             <Route path="/subclasses/:subclassName/levels" element={<SubclassLevels subclassLevelUrl={subclassLevelUrl} currentSubclass={currentSubclass} setFeatureUrl={setFeatureUrl} />} />
-            <Route path="/character_creation" element={<CharacterCreation referenceTable={referenceTable} setFeatureUrl={setFeatureUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
+            <Route path="/character_creation" element={<CharacterCreation setCharacterId={setCharacterId} referenceTable={referenceTable} setFeatureUrl={setFeatureUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
           </Routes>
         </div>
       </div>

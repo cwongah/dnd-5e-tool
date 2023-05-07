@@ -7,7 +7,10 @@ from flask import request, Flask, make_response, jsonify, session
 from flask_restful import Resource, Api
 from flask_migrate import Migrate
 from flask_cors import CORS
-
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 # Local imports
 # from config import app, db, api
 from config import *
@@ -17,9 +20,28 @@ from models import User, Encounter, Character, Skill, Feature, Equipment, Spell,
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
+app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
+jwt = JWTManager(app)
 
 CORS(app,origins="http://localhost:4000", supports_credentials=True)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+@app.route("/token", methods=["POST"])
+def create_token():
+    # username = request.json.get("username", None)
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+    if email != "test" or password != "test":
+        return jsonify({"msg": "Bad email or password"}), 401
+
+    access_token = create_access_token(identity=email)
+    return jsonify(access_token=access_token)
+
+@app.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
 
 class References(Resource):
     def get(self):
