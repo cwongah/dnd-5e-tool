@@ -8,10 +8,16 @@ import Subclass from "./Subclass";
 import Proficiency from "./Proficiency";
 import CharacterClass from "./CharacterClass";
 import Trait from "./Trait";
+import { useNavigate } from "react-router-dom";
 
-function CharacterView({token, characterId, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setClassUrl, setTraitUrl}){
+function CharacterView({userId, token, characterId, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setClassUrl, setTraitUrl}){
 
+    const navigate = useNavigate()
     const [character, setCharacter] = useState({})
+
+    function handleLevelUpNav(){
+        navigate(`/characters/${character.name}/level-up`)
+    }
 
     useEffect(() => {
         if(token && token != '' && token != undefined){
@@ -22,13 +28,12 @@ function CharacterView({token, characterId, setSkillUrl, setFeatureUrl, setEquip
             })
                 .then(r => r.json())
                 .then(data => {
-                    // console.log(data)
+                    console.log(data)
                     setCharacter(data)
                 })
         }
     }, [])
 
-    console.log(character)
     const characterAttrToDisplay = (<div>
             <div>name: {character.name}</div> 
             <div>bio: {character.bio}</div>
@@ -125,7 +130,9 @@ function CharacterView({token, characterId, setSkillUrl, setFeatureUrl, setEquip
                 </div>
             ) : (<div>Loading...</div>)}
             {character.encounters && character.encounters.length > 0 ? (<div>{character.encounters.map((encounter, index) => (<div key={index}>{encounter.name}</div>))}</div>) : ('')}
-            
+            {character.user_id == userId ? (
+                <button onClick={handleLevelUpNav} >Level up</button>
+            ):null}
         </div>)
 
     return(

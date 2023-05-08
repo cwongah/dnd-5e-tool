@@ -8,10 +8,10 @@ export default function Sidebar({token, setToken, toggle, setToggle, userId}) {
     function handleLogout(){
         sessionStorage.setItem("token", '')
         setToken(sessionStorage.getItem("token"))
-        navigate('/login')
+        navigate('/')
     }
     function handleLogin(){
-        navigate('/login')
+        navigate('/')
     }
 
     return (

@@ -3,7 +3,7 @@ import Character from "./Character";
 
 function Dashboard({userId, setCharacterId}){
     const [userData, setUserData] = useState({})
-    console.log(userData)
+    // console.log(userData)
     useEffect(()=>{
         fetch(`http://127.0.0.1:5555/users/${userId}`)
             .then(r=>r.json())

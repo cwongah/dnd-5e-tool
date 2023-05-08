@@ -33,6 +33,7 @@ import Sidebar from "./Sidebar";
 import CharacterCreation from "./CharacterCreation";
 import Dashboard from "./Dashboard";
 import Signup from "./Signup";
+import LevelUp from "./LevelUp";
 
 function App() {
   const [referenceTable, setReferenceTable] = useState([])
@@ -46,7 +47,6 @@ function App() {
   const [encounterUser, setEncounterUser] = useState({})
   const [currentClass, setCurrentClass] = useState('')
   const [currentSubclass, setCurrentSubclass] = useState('')
-  const [referenceUrl, setReferenceUrl] = useState('')
   const [userUrl, setUserUrl] = useState('')
   const [classUrl, setClassUrl] = useState('')
   const [skillUrl, setSkillUrl] = useState('')
@@ -61,6 +61,9 @@ function App() {
   const [traitUrl, setTraitUrl] = useState('')
   const [subclassLevelUrl, setSubclassLevelUrl] = useState('')
   const [toggle, setToggle] = useState(false)
+
+  // console.log(characterId)
+  // console.log(token)
 
   useEffect(() => {
     fetch('http://127.0.0.1:5555/references')
@@ -97,7 +100,7 @@ function App() {
             <Route path="/proficiencies" element={<ProficienciesList setProficiencyUrl={setProficiencyUrl} />} />
             <Route path="/traits" element={<TraitsList setTraitUrl={setTraitUrl} />} />
             <Route path="/users/:id" element={<Dashboard setCharacterId={setCharacterId} userId={userId} />} />
-            <Route path="/characters/:id" element={<CharacterView token={token} characterId={characterId} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setClassUrl={setClassUrl} setTraitUrl={setTraitUrl} />} />
+            <Route path="/characters/:id" element={<CharacterView userId={userId} token={token} characterId={characterId} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setClassUrl={setClassUrl} setTraitUrl={setTraitUrl} />} />
             <Route path="/encounters/:id" element={<EncounterView token={token} encounterId={encounterId} referenceTable={referenceTable} />} />
             <Route path="/skills/:id" element={<SkillView skillUrl={skillUrl} />} />
             <Route path="/features/:id" element={<FeatureView featureUrl={featureUrl} setClassUrl={setClassUrl} setSubclassUrl={setSubclassUrl} />} />
@@ -112,6 +115,7 @@ function App() {
             <Route path="/classes/:className/spells" element={<ClassSpells spellUrl={spellUrl} currentClass={currentClass} setSpellUrl={setSpellUrl} classSpellUrl={classSpellUrl} />} />
             <Route path="/subclasses/:subclassName/levels" element={<SubclassLevels subclassLevelUrl={subclassLevelUrl} currentSubclass={currentSubclass} setFeatureUrl={setFeatureUrl} />} />
             <Route path="/character_creation" element={<CharacterCreation userId={userId} setCharacterId={setCharacterId} referenceTable={referenceTable} setFeatureUrl={setFeatureUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
+            <Route path="/characters/:id/level-up" element={<LevelUp token={token} characterId={characterId} setFeatureUrl={setFeatureUrl} />} />
           </Routes>
         </div>
       </div>
