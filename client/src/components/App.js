@@ -115,7 +115,7 @@ function App() {
             <Route path="/classes/:className/spells" element={<ClassSpells spellUrl={spellUrl} currentClass={currentClass} setSpellUrl={setSpellUrl} classSpellUrl={classSpellUrl} />} />
             <Route path="/subclasses/:subclassName/levels" element={<SubclassLevels subclassLevelUrl={subclassLevelUrl} currentSubclass={currentSubclass} setFeatureUrl={setFeatureUrl} />} />
             <Route path="/character_creation" element={<CharacterCreation userId={userId} setCharacterId={setCharacterId} referenceTable={referenceTable} setFeatureUrl={setFeatureUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
-            <Route path="/characters/:id/level-up" element={<LevelUp token={token} characterId={characterId} setFeatureUrl={setFeatureUrl} />} />
+            <Route path="/characters/:id/level-up" element={<LevelUp referenceTable={referenceTable} token={token} characterId={characterId} setFeatureUrl={setFeatureUrl} />} />
           </Routes>
         </div>
       </div>

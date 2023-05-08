@@ -12,6 +12,7 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import current_user
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from datetime import timedelta
 # Local imports
 # from config import app, db, api
 from config import *
@@ -37,7 +38,7 @@ def create_token():
         return jsonify({"msg": "Bad email or password"}), 401
 
     # additional_claims = {"id": user.id}
-    access_token = create_access_token(identity=email)
+    access_token = create_access_token(identity=email, expires_delta=timedelta(minutes=30))
     return jsonify(access_token=access_token, user_id=user.id)
 
 @app.route("/protected", methods=["GET"])
