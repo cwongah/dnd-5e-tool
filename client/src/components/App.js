@@ -35,6 +35,7 @@ import Dashboard from "./Dashboard";
 import Signup from "./Signup";
 import LevelUp from "./LevelUp";
 import EncounterCreation from "./EncounterCreation";
+import UserView from "./UserView";
 
 function App() {
   const [referenceTable, setReferenceTable] = useState([])
@@ -98,7 +99,8 @@ function App() {
             <Route path="/subclasses" element={<SubclassesList setSubclassUrl={setSubclassUrl} />} />
             <Route path="/proficiencies" element={<ProficienciesList setProficiencyUrl={setProficiencyUrl} />} />
             <Route path="/traits" element={<TraitsList setTraitUrl={setTraitUrl} />} />
-            <Route path="/users/:id" element={<Dashboard referenceTable={referenceTable} setEncounterId={setEncounterId} setCharacterId={setCharacterId} userId={userId} />} />
+            <Route path="/dashboard" element={<Dashboard referenceTable={referenceTable} setEncounterId={setEncounterId} setCharacterId={setCharacterId} userId={userId} />} />
+            <Route path="/users/:id" element={<UserView userUrl={userUrl} referenceTable={referenceTable} setEncounterId={setEncounterId} setCharacterId={setCharacterId} userId={userId} />} />
             <Route path="/characters/:id" element={<CharacterView userId={userId} token={token} characterId={characterId} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setClassUrl={setClassUrl} setTraitUrl={setTraitUrl} />} />
             <Route path="/encounters/:id" element={<EncounterView token={token} encounterId={encounterId} referenceTable={referenceTable} />} />
             <Route path="/skills/:id" element={<SkillView skillUrl={skillUrl} />} />

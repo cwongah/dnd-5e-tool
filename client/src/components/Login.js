@@ -33,7 +33,7 @@ function Login({userId, setUserId, setEmail, setPw, email, pw, token, setToken, 
             setToken(sessionStorage.getItem("token"))
             setUserId(data.user_id)
             setToggle(false)
-            navigate(`/users/${data.user_id}`)
+            navigate(`/dashboard`)
         })
         .catch(error=>{
             console.error("There was an error", error)

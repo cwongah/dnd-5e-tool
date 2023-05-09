@@ -2,19 +2,18 @@ import React, { useEffect, useState } from "react";
 import Character from "./Character";
 import Encounter from "./Encounter";
 
-function Dashboard({userId, setEncounterId, setCharacterId, referenceTable}){
+function UserView({userUrl, userId, setEncounterId, setCharacterId, referenceTable}){
     const [userData, setUserData] = useState({})
     console.log(userData)
     useEffect(()=>{
-        fetch(`http://127.0.0.1:5555/users/${userId}`)
+        fetch(userUrl)
             .then(r=>r.json())
             .then(data=>(setUserData(data)))
-    }, [])
+    }, [userUrl])
 
     return (
       <div>
-        <div className="text-white text-5xl font-bold pl-4 pb-5">Welcome!</div>
-        <div className="text-white text-2xl font-bold pl-4 pb-10">{userData.username}</div>
+        <div className="text-white text-5xl font-bold pl-4 pb-10">{userData.username}</div>
         <div className="grid grid-cols-2 gap-8">
           <div className="col-span-1">
             <div className="bg-white bg-opacity-50 rounded-lg shadow-lg p-4">
@@ -61,4 +60,4 @@ function Dashboard({userId, setEncounterId, setCharacterId, referenceTable}){
       
 }
 
-export default Dashboard
+export default UserView

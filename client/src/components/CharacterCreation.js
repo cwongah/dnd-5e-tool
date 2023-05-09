@@ -493,183 +493,207 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
 
     return(
         <div>
-            <div>Character Creation</div>
-            <form onSubmit={handleCharacterSubmit} >
-                <input type='text' onChange={(e)=>setCharacterName(e.target.value)} placeholder="Character name" className="block w-1/2 px-4 py-1 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></input>
-                <input type='text' onChange={(e)=>setCharacterBio(e.target.value)} placeholder="Character bio" className="block w-1/2 px-4 py-1 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></input>
-                <select id="class-selection" name="class-selection" onChange={handleClassSelection}>
-                    <option value={''} disabled selected>Select a Class</option>
-                    {classes.map((characterClass, index)=><option key={index} value={characterClass.name}>{characterClass.name}</option>)}
-                </select>
-                <div>Subclass: {selectedSubclass}</div>
-                <select id="race-selection" name="race-selection" onChange={handleRaceSelection}>
-                    <option value={''} disabled selected>Select a Race</option>
-                    {races.map((race, index)=><option key={index} value={race}>{race}</option>)}
-                </select>
-                <div>Level: {level}</div>
-                <div>Proficiency Bonus: +{pb} </div>
-                <div>Passive Perception: {passivePerception} </div>
-                <div>Speed: {speed} </div>
-                <div>Armor Class: {ac} </div>
-                <div>Hit Points: {hitPoints && hitPoints > 0 ? hitPoints:('')}</div>
-                <div>Hit Die: {hitDie}</div>
-                <div>Strength: {strengthAS + asBonus['str']}</div>
-                <div>Dexterity: {dexterityAS + asBonus['dex']}</div>
-                <div>Constitution: {constitutionAS + asBonus['con']}</div>
-                <div>Intelligence: {intelligenceAS +asBonus['int']}</div>
-                <div>Wisdom: {wisdomAS + asBonus['wis']}</div>
-                <div>Charisma: {charismaAS + asBonus['cha']}</div>
-                <button onClick={handleReroll}>Roll Ability Scores</button>
-                {raceData && raceData.ability_bonus_options ? (
-                    <div>
-                        <div>Choose {raceData.ability_bonus_options.choose} of the following ability score bonuses:</div>
-                        {raceData.ability_bonus_options.from.options.map((option, index)=>
-                            <div key={index}>
-                                <input type="checkbox" name={option.ability_score.name} disabled={Object.keys(checkedASB).length >= raceData.ability_bonus_options.choose && !checkedASB[`${option.ability_score.name}`]} onChange={(e) => handleASBChoiceChange(e, option.bonus)} />
-                                <label>{option.ability_score.name}: +{option.bonus}</label>
-                            </div>
-                        )}
-                    </div>
-                ):('')}
-                <div>Ability Proficiencies:</div>
-                {abProf['str'] ? <div>Strength </div>:null}
-                {abProf['dex'] ? <div>Dexterity </div>:null}
-                {abProf['con'] ? <div>Constitution </div>:null}
-                {abProf['int'] ? <div>Intelligence </div>:null}
-                {abProf['wis'] ? <div>Wisdom </div>:null}
-                {abProf['cha'] ? <div>Charisma </div>:null}
-                <div>Saving Throws</div>
-                <div>Strength Saving Throw: {asBonus['str']+strengthAS-10 > 0 ? '+' + Math.floor((asBonus['str'] + strengthAS - 10)/2): Math.ceil((asBonus['str'] + strengthAS - 10)/2)}</div>
-                <div>Dexterity Saving Throw: {asBonus['dex']+dexterityAS-10 > 0 ? '+' + Math.floor((asBonus['dex'] + dexterityAS - 10)/2): Math.ceil((asBonus['dex'] + dexterityAS - 10)/2)}</div>
-                <div>Constitution Saving Throw: {asBonus['con']+constitutionAS-10 > 0 ? '+' + Math.floor((asBonus['con'] + constitutionAS - 10)/2): Math.ceil((asBonus['con'] + constitutionAS - 10)/2)}</div>
-                <div>Intelligence Saving Throw: {asBonus['int']+intelligenceAS-10 > 0 ? '+' + Math.floor((asBonus['int'] + intelligenceAS - 10)/2): Math.ceil((asBonus['int'] + intelligenceAS - 10)/2)}</div>
-                <div>Wisdom Saving Throw: {asBonus['wis']+wisdomAS-10 > 0 ? '+' + Math.floor((asBonus['wis'] + wisdomAS - 10)/2): Math.ceil((asBonus['wis'] + wisdomAS - 10)/2)}</div>
-                <div>Charisma Saving Throw: {asBonus['cha']+charismaAS-10 > 0 ? '+' + Math.floor((asBonus['cha'] + charismaAS - 10)/2): Math.ceil((asBonus['cha'] + charismaAS - 10)/2)}</div>
-                {classData && classData.spellcasting ? (
-                    <div>
-                        <div>Spellcasting</div>
-                        <div>SpellCasting Ability: {spellcasting['scab']} </div>
-                        <div>Spellcasting Attack: {spellcasting['scat']} </div>
-                        <div>Spellcasting Save: {spellcasting['scs']} </div>
-                    </div>
-                ):null}
-                <div>
-                    <div>Features</div>
-                    {featureData ? (
-                        <div>
-                            {featureData.map((feature, index)=> 
-                                <Feature key={index} name={feature.name} url={feature.url} setFeatureUrl={setFeatureUrl} />
-                            )}
-                        </div>
-                    ):null}
-                </div>
-                <div>
-                    <div>Traits</div>
-                    {traitData ? (
-                        <div>
-                            {traitData.map((trait, index)=>
-                                <Trait key={index} name={trait.name} url={trait.url} setTraitUrl={setTraitUrl} />
-                            )}
-                        </div>
-                    ):('')}
-                </div>
-                <div>
-                    {raceProf !== [] ? (
-                        <div>
-                            <div>Starting Proficiencies</div>
-                            <div>
-                                {classProf ? (
-                                    classProf.map((prof, index)=>
-                                        <Proficiency key={index} name={prof.name} url={prof.url} setProficiencyUrl={setProficiencyUrl} />
-                                    )
-                                ):('')}
-                            </div>
-                            <div>
-                                {raceProf.map((proficiency, index)=>
-                                    <Proficiency key={index} name={proficiency.name} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
-                                    )}
-                            </div>
-                        </div>
-                    ):('')}
-                </div>
-                <div>
-                    {raceData.starting_proficiency_options && raceData.name == 'Dwarf' ? (
-                        <div>
-                            <div>{raceData.starting_proficiency_options.desc}</div>
-                            {raceData.starting_proficiency_options.from.options.map((option, index)=>
-                                <div key={index}>
-                                    <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedProf).length >= raceData.starting_proficiency_options.choose && !checkedProf[`${option.item.name}`]} onChange={handleProfChoiceChange} />
-                                    <label>{option.item.name}</label>
-                                </div>
-                            )}
-                        </div>
-                    ):('')}
-                    {raceData.starting_proficiency_options && raceData.name == 'Half-Elf' ? (
-                        <div>
-                            <div>Choose two from the following skills</div>
-                            {raceData.starting_proficiency_options.from.options.map((option, index)=>
-                                <div key={index}>
-                                    <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedRaceSkill).length >= raceData.starting_proficiency_options.choose && !checkedRaceSkill[`${option.item.name}`]} onChange={handleRaceSkillChoiceChange} />
-                                    <label>{option.item.name}</label>
-                                </div>
-                            )}
-                        </div>
-                    ):('')}
-                </div>
-                <div>
-                    {classData.proficiency_choices && classData.name != 'Monk' ? (
-                        <div>
-                            <div>
-                                {classData.proficiency_choices[0].desc}
-                                {classData.proficiency_choices[0].from.options.map((option, index)=>
+            <div className="text-white text-5xl font-bold pl-4 pb-10">Character Creation</div>
+            <div className="grid grid-cols-2 gap-8">
+                <div className="col-span-1">
+                    <div className="bg-white bg-opacity-50 rounded-lg shadow-lg p-4">
+                        <form onSubmit={handleCharacterSubmit} >
+                            <div className="grid grid-cols-2 gap-8">
+                                <div className="col-span-1">
+                                    <input type='text' onChange={(e)=>setCharacterName(e.target.value)} placeholder="Character name" className="block w-3/4 px-4 py-1 my-4 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></input>
+                                    <div>
+                                        <select id="class-selection" name="class-selection" onChange={handleClassSelection}>
+                                            <option value={''} disabled selected>Select a Class</option>
+                                            {classes.map((characterClass, index)=><option key={index} value={characterClass.name}>{characterClass.name}</option>)}
+                                        </select>
+                                        Subclass: {selectedSubclass}
+                                    </div>
+                                    <select id="race-selection" name="race-selection" onChange={handleRaceSelection}>
+                                        <option value={''} disabled selected>Select a Race</option>
+                                        {races.map((race, index)=><option key={index} value={race}>{race}</option>)}
+                                    </select>
+                                    {raceData && raceData.ability_bonus_options ? (
+                                        <div>
+                                            <div>Choose {raceData.ability_bonus_options.choose} of the following ability score bonuses:</div>
+                                            {raceData.ability_bonus_options.from.options.map((option, index)=>
                                                 <div key={index}>
-                                                    <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedSkill).length >= classData.proficiency_choices[0].choose  && !checkedSkill[`${option.item.name}`] } onChange={handleSkillChoiceChange} />
-                                                    <label>{option.item.name}</label>
+                                                    <input type="checkbox" name={option.ability_score.name} disabled={Object.keys(checkedASB).length >= raceData.ability_bonus_options.choose && !checkedASB[`${option.ability_score.name}`]} onChange={(e) => handleASBChoiceChange(e, option.bonus)} />
+                                                    <label>{option.ability_score.name}: +{option.bonus}</label>
                                                 </div>
                                             )}
-                            </div>
-                            {classData.proficiency_choices[1] ? (
-                                <div>
-                                    {classData.proficiency_choices[1].desc}
-                                    {classData.proficiency_choices[1].from.options.map((option, index)=>
+                                        </div>
+                                    ):('')}
+                                    <div>
+                                        {raceData.starting_proficiency_options && raceData.name == 'Dwarf' ? (
+                                            <div>
+                                                <div>{raceData.starting_proficiency_options.desc}</div>
+                                                {raceData.starting_proficiency_options.from.options.map((option, index)=>
                                                     <div key={index}>
-                                                        <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedEquip).length >= classData.proficiency_choices[1].choose  && !checkedEquip[`${option.item.name}`] } onChange={handleEquipChoiceChange} />
+                                                        <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedProf).length >= raceData.starting_proficiency_options.choose && !checkedProf[`${option.item.name}`]} onChange={handleProfChoiceChange} />
                                                         <label>{option.item.name}</label>
                                                     </div>
                                                 )}
-                                </div>
-                            ):('')}
-                        </div>
-                    ):('')}
-                    {classData.proficiency_choices && classData.name == 'Monk' ? (
-                        <div>
-                            <div>
-                                {classData.proficiency_choices[0].desc}
-                                {classData.proficiency_choices[0].from.options.map((option, index)=>
-                                                <div key={index}>
-                                                    <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedSkill).length >= classData.proficiency_choices[0].choose  && !checkedSkill[`${option.item.name}`] } onChange={handleSkillChoiceChange} />
-                                                    <label>{option.item.name}</label>
-                                                </div>
-                                            )}
-                            </div>
-                            {classData.proficiency_choices[1] ? (
-                                <div>
-                                    {classData.proficiency_choices[1].desc}
-                                    {classData.proficiency_choices[1].from.options.map((option, index)=>
-                                                    option.choice.from.options.map((deeper_option, index)=>     
-                                                        <div key={index}>
-                                                            <input type="checkbox" name={deeper_option.item.name} disabled={Object.keys(checkedEquip).length >= classData.proficiency_choices[1].choose  && !checkedEquip[`${deeper_option.item.name}`] } onChange={handleEquipChoiceChange} />
-                                                            <label>{deeper_option.item.name}</label>
-                                                        </div>
-                                                    )
+                                            </div>
+                                        ):('')}
+                                        {raceData.starting_proficiency_options && raceData.name == 'Half-Elf' ? (
+                                            <div>
+                                                <div>Choose two from the following skills</div>
+                                                {raceData.starting_proficiency_options.from.options.map((option, index)=>
+                                                    <div key={index}>
+                                                        <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedRaceSkill).length >= raceData.starting_proficiency_options.choose && !checkedRaceSkill[`${option.item.name}`]} onChange={handleRaceSkillChoiceChange} />
+                                                        <label>{option.item.name}</label>
+                                                    </div>
                                                 )}
+                                            </div>
+                                        ):('')}
+                                    </div>
+                                    <div>
+                                        {classData.proficiency_choices && classData.name != 'Monk' ? (
+                                            <div>
+                                                <div>
+                                                    {classData.proficiency_choices[0].desc}
+                                                    {classData.proficiency_choices[0].from.options.map((option, index)=>
+                                                                    <div key={index}>
+                                                                        <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedSkill).length >= classData.proficiency_choices[0].choose  && !checkedSkill[`${option.item.name}`] } onChange={handleSkillChoiceChange} />
+                                                                        <label>{option.item.name}</label>
+                                                                    </div>
+                                                                )}
+                                                </div>
+                                                {classData.proficiency_choices[1] ? (
+                                                    <div>
+                                                        {classData.proficiency_choices[1].desc}
+                                                        {classData.proficiency_choices[1].from.options.map((option, index)=>
+                                                                        <div key={index}>
+                                                                            <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedEquip).length >= classData.proficiency_choices[1].choose  && !checkedEquip[`${option.item.name}`] } onChange={handleEquipChoiceChange} />
+                                                                            <label>{option.item.name}</label>
+                                                                        </div>
+                                                                    )}
+                                                    </div>
+                                                ):('')}
+                                            </div>
+                                        ):('')}
+                                        {classData.proficiency_choices && classData.name == 'Monk' ? (
+                                            <div>
+                                                <div>
+                                                    {classData.proficiency_choices[0].desc}
+                                                    {classData.proficiency_choices[0].from.options.map((option, index)=>
+                                                                    <div key={index}>
+                                                                        <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedSkill).length >= classData.proficiency_choices[0].choose  && !checkedSkill[`${option.item.name}`] } onChange={handleSkillChoiceChange} />
+                                                                        <label>{option.item.name}</label>
+                                                                    </div>
+                                                                )}
+                                                </div>
+                                                {classData.proficiency_choices[1] ? (
+                                                    <div>
+                                                        {classData.proficiency_choices[1].desc}
+                                                        {classData.proficiency_choices[1].from.options.map((option, index)=>
+                                                                        option.choice.from.options.map((deeper_option, index)=>     
+                                                                        <div key={index}>
+                                                                                <input type="checkbox" name={deeper_option.item.name} disabled={Object.keys(checkedEquip).length >= classData.proficiency_choices[1].choose  && !checkedEquip[`${deeper_option.item.name}`] } onChange={handleEquipChoiceChange} />
+                                                                                <label>{deeper_option.item.name}</label>
+                                                                            </div>
+                                                                        )
+                                                                        )}
+                                                    </div>
+                                                ):('')}
+                                            </div>
+                                        ):('')}
+                                    </div>
                                 </div>
-                            ):('')}
-                        </div>
-                    ):('')}
+                                <div className="col-span-1">
+                                    <input type='text' onChange={(e)=>setCharacterBio(e.target.value)} placeholder="Character bio" className="block w-3/4 px-4 py-1 my-4 border  border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></input>
+                                </div>
+                            </div>
+                            <input type="submit" value='Create Character' className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg' />
+                        </form>
+                    </div>
                 </div>
-                <input type="submit" value='Create Character' className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg' />
-            </form>
+                <div className="col-span-1">
+                    <div className="bg-white bg-opacity-50 rounded-lg shadow-lg p-4">
+                        <div className="grid grid-cols-2 gap-8">
+                            <div className="col-span-1">
+                                <div>Level: {level}</div> <div>Proficiency Bonus: +{pb} </div>
+                                <div>Passive Perception: {passivePerception} </div>
+                                <div>Speed: {speed} </div>
+                                <div>Armor Class: {ac} </div>
+                                <div>Hit Points: {hitPoints && hitPoints > 0 ? hitPoints:('')}</div>
+                                <div>Hit Die: {hitDie}</div>
+                                <div>Strength: {strengthAS + asBonus['str']}</div>
+                                <div>Dexterity: {dexterityAS + asBonus['dex']}</div>
+                                <div>Constitution: {constitutionAS + asBonus['con']}</div>
+                                <div>Intelligence: {intelligenceAS +asBonus['int']}</div>
+                                <div>Wisdom: {wisdomAS + asBonus['wis']}</div>
+                                <div>Charisma: {charismaAS + asBonus['cha']}</div>
+                                <div>Ability Proficiencies:</div>
+                                    {abProf['str'] ? <div>Strength </div>:null}
+                                    {abProf['dex'] ? <div>Dexterity </div>:null}
+                                    {abProf['con'] ? <div>Constitution </div>:null}
+                                    {abProf['int'] ? <div>Intelligence </div>:null}
+                                    {abProf['wis'] ? <div>Wisdom </div>:null}
+                                    {abProf['cha'] ? <div>Charisma </div>:null}
+                                    <div>Saving Throws</div>
+                                    <div>Strength Saving Throw: {asBonus['str']+strengthAS-10 > 0 ? '+' + Math.floor((asBonus['str'] + strengthAS - 10)/2): Math.ceil((asBonus['str'] + strengthAS - 10)/2)}</div>
+                                    <div>Dexterity Saving Throw: {asBonus['dex']+dexterityAS-10 > 0 ? '+' + Math.floor((asBonus['dex'] + dexterityAS - 10)/2): Math.ceil((asBonus['dex'] + dexterityAS - 10)/2)}</div>
+                                    <div>Constitution Saving Throw: {asBonus['con']+constitutionAS-10 > 0 ? '+' + Math.floor((asBonus['con'] + constitutionAS - 10)/2): Math.ceil((asBonus['con'] + constitutionAS - 10)/2)}</div>
+                                    <div>Intelligence Saving Throw: {asBonus['int']+intelligenceAS-10 > 0 ? '+' + Math.floor((asBonus['int'] + intelligenceAS - 10)/2): Math.ceil((asBonus['int'] + intelligenceAS - 10)/2)}</div>
+                                    <div>Wisdom Saving Throw: {asBonus['wis']+wisdomAS-10 > 0 ? '+' + Math.floor((asBonus['wis'] + wisdomAS - 10)/2): Math.ceil((asBonus['wis'] + wisdomAS - 10)/2)}</div>
+                                    <div>Charisma Saving Throw: {asBonus['cha']+charismaAS-10 > 0 ? '+' + Math.floor((asBonus['cha'] + charismaAS - 10)/2): Math.ceil((asBonus['cha'] + charismaAS - 10)/2)}</div>
+                                    {classData && classData.spellcasting ? (
+                                        <div>
+                                            <div>Spellcasting</div>
+                                            <div>SpellCasting Ability: {spellcasting['scab']} </div>
+                                            <div>Spellcasting Attack: {spellcasting['scat']} </div>
+                                            <div>Spellcasting Save: {spellcasting['scs']} </div>
+                                        </div>
+                                    ):null}
+                                <button onClick={handleReroll} className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg'>Roll Ability Scores</button>
+                            </div>
+                            <div className="col-span-1">
+                                <div>
+                                    <div className="text-xl font-bold border-b text-white border-gray-300 mb-4 pb-2">Features</div>
+                                    {featureData ? (
+                                        <div className="mb-4 pb-2"> 
+                                            {featureData.map((feature, index)=> 
+                                                <Feature key={index} name={feature.name} url={feature.url} setFeatureUrl={setFeatureUrl} />
+                                            )}
+                                        </div>
+                                    ):null}
+                                </div>
+                                <div>
+                                    <div className="text-xl font-bold border-b text-white border-gray-300 mb-4 pb-2">Traits</div>
+                                        {traitData ? (
+                                            <div className="mb-4 pb-2">
+                                                {traitData.map((trait, index)=>
+                                                    <Trait key={index} name={trait.name} url={trait.url} setTraitUrl={setTraitUrl} />
+                                                )}
+                                            </div>
+                                        ):('')}
+                                </div>
+                                <div>
+                                    {raceProf !== [] ? (
+                                        <div>
+                                            <div className="text-xl font-bold border-b text-white border-gray-300 mb-4 pb-2">Starting Proficiencies</div>
+                                            <div>
+                                                {classProf ? (
+                                                    classProf.map((prof, index)=>
+                                                        <Proficiency key={index} name={prof.name} url={prof.url} setProficiencyUrl={setProficiencyUrl} />
+                                                    )
+                                                ):('')}
+                                            </div>
+                                        <div>
+                                            {raceProf.map((proficiency, index)=>
+                                                <Proficiency key={index} name={proficiency.name} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
+                                            )}
+                                        </div>
+                                        </div>
+                                    ):('')}
+                                </div>
+                            </div>
+                            <div className="col-span-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

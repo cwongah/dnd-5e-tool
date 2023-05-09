@@ -11,9 +11,9 @@ function NavBar({toggle, setToggle, referenceTable, setSearchedObject, setUserUr
     const navigate = useNavigate()
     const [menuOpen, setMenuOpen] = React.useState(false)
 
-    function handleLoginClick(){
-        navigate('/login')
-    }
+    // function handleLoginClick(){
+    //     navigate('/login')
+    // }
 
     return (
   <>
@@ -25,7 +25,7 @@ function NavBar({toggle, setToggle, referenceTable, setSearchedObject, setUserUr
             <div className="w-full relative flex justify-between lg:w-auto px-4 lg:static lg:block lg:justify-start">
               <div className="flex justify-center items-center">
                 <div className="mr-3"><FaDiceD20 size={28} color="white"/></div>
-                <button onClick={()=>navigate(`/users/${userId}`)} className="text-xl font-bold leading-relaxed inline-block mr-4 ml-2 py-2 whitespace-nowrap text-white" >
+                <button onClick={()=>navigate(`/dashboard`)} className="text-xl font-bold leading-relaxed inline-block mr-4 ml-2 py-2 whitespace-nowrap text-white" >
                   QuestKeeper
                 </button>
               </div>

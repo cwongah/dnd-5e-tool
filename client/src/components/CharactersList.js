@@ -27,12 +27,15 @@ function CharactersList({setCharacterId, token}){
         )
     })
 
-    return(
-        <div>
-            <div>Characters</div>
+    return (
+        <div className="bg-white bg-opacity-50  px-4 py-8 mx-20 rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold border-b border-gray-300 mb-4 pb-5">Characters</h2>
+          <div className="grid grid-cols-3 gap-10">
             {charactersToDisplay}
+          </div>
         </div>
-    )
+      );
+      
 }
 
 export default CharactersList
