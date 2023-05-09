@@ -498,50 +498,81 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                 <div className="col-span-1">
                     <div className="bg-white bg-opacity-50 rounded-lg shadow-lg p-4">
                         <form onSubmit={handleCharacterSubmit} >
+                        <div className="text-4xl font-bold border-b text-white border-gray-300 px-3 mb-2 pb-2">Character Information</div>
                             <div className="grid grid-cols-2 gap-8">
                                 <div className="col-span-1">
-                                    <input type='text' onChange={(e)=>setCharacterName(e.target.value)} placeholder="Character name" className="block w-3/4 px-4 py-1 my-4 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></input>
-                                    <div>
-                                        <select id="class-selection" name="class-selection" onChange={handleClassSelection}>
-                                            <option value={''} disabled selected>Select a Class</option>
-                                            {classes.map((characterClass, index)=><option key={index} value={characterClass.name}>{characterClass.name}</option>)}
-                                        </select>
+                                    <input type='text'
+                                        onChange={(e) => setCharacterName(e.target.value)}
+                                        placeholder="Character name"
+                                        className="block w-3/4 px-4 py-1 my-4 border-b border-gray-300 shadow-sm placeholder-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-transparent text-white"
+                                    />
+                                    <select
+                                        id="class-selection"
+                                        name="class-selection"
+                                        onChange={handleClassSelection}
+                                        className="block w-3/4 py-2 px-3 border-b border-gray-300 bg-transparent shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                                        >
+                                        <option value={''} disabled selected>
+                                            Select a Class
+                                        </option>
+                                        {classes.map((characterClass, index) => (
+                                            <option key={index} value={characterClass.name}>
+                                            {characterClass.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div className="block py-3 px-4 text-white sm:text-sm">
                                         Subclass: {selectedSubclass}
                                     </div>
-                                    <select id="race-selection" name="race-selection" onChange={handleRaceSelection}>
+                                    <select 
+                                        id="race-selection" 
+                                        name="race-selection" 
+                                        onChange={handleRaceSelection}
+                                        className="block w-3/4 py-2 px-3 border-b border-gray-300 bg-transparent shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-white"
+                                    >
                                         <option value={''} disabled selected>Select a Race</option>
                                         {races.map((race, index)=><option key={index} value={race}>{race}</option>)}
                                     </select>
                                     {raceData && raceData.ability_bonus_options ? (
                                         <div>
-                                            <div>Choose {raceData.ability_bonus_options.choose} of the following ability score bonuses:</div>
+                                            <div className="w-3/4 text-lg font-bold border-b text-white border-gray-300 px-3 mb-2 pb-2 pt-10">Ability Score Bonuses</div>
+                                            <div className="w-3/4 text-md px-3 pb-2 py-2" >Choose {raceData.ability_bonus_options.choose} of the following:</div>
                                             {raceData.ability_bonus_options.from.options.map((option, index)=>
-                                                <div key={index}>
-                                                    <input type="checkbox" name={option.ability_score.name} disabled={Object.keys(checkedASB).length >= raceData.ability_bonus_options.choose && !checkedASB[`${option.ability_score.name}`]} onChange={(e) => handleASBChoiceChange(e, option.bonus)} />
-                                                    <label>{option.ability_score.name}: +{option.bonus}</label>
+                                                <div key={index} className="px-3">
+                                                    {/* <input type="checkbox" name={option.ability_score.name} disabled={Object.keys(checkedASB).length >= raceData.ability_bonus_options.choose && !checkedASB[`${option.ability_score.name}`]} onChange={(e) => handleASBChoiceChange(e, option.bonus)} /> */}
+                                                    <input
+                                                        type="checkbox"
+                                                        name={option.ability_score.name}
+                                                        disabled={Object.keys(checkedASB).length >= raceData.ability_bonus_options.choose && !checkedASB[`${option.ability_score.name}`]}
+                                                        onChange={(e) => handleASBChoiceChange(e, option.bonus)}
+                                                        className="form-checkbox h-4 w-4 text-gray-600 transition duration-150 ease-in-out"
+                                                    />
+                                                    <label className="px-3 text-sm">{option.ability_score.name}: +{option.bonus}</label>
                                                 </div>
                                             )}
                                         </div>
                                     ):('')}
                                     <div>
                                         {raceData.starting_proficiency_options && raceData.name == 'Dwarf' ? (
-                                            <div>
-                                                <div>{raceData.starting_proficiency_options.desc}</div>
+                                            <div className="pb-5">
+                                                <div className="w-3/4 text-lg font-bold border-b text-white border-gray-300 px-3 mb-2 pb-2 pt-10">Proficiency Options</div>
+                                                <div className="w-3/4 text-md px-3 pb-2 py-2">Choose one of the following:</div>
                                                 {raceData.starting_proficiency_options.from.options.map((option, index)=>
-                                                    <div key={index}>
-                                                        <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedProf).length >= raceData.starting_proficiency_options.choose && !checkedProf[`${option.item.name}`]} onChange={handleProfChoiceChange} />
-                                                        <label>{option.item.name}</label>
+                                                    <div key={index} className="px-3">
+                                                        <input className="form-checkbox h-4 w-4 text-gray-600 transition duration-150 ease-in-out" type="checkbox" name={option.item.name} disabled={Object.keys(checkedProf).length >= raceData.starting_proficiency_options.choose && !checkedProf[`${option.item.name}`]} onChange={handleProfChoiceChange} />
+                                                        <label className="px-3 text-sm">{option.item.name}</label>
                                                     </div>
                                                 )}
                                             </div>
                                         ):('')}
                                         {raceData.starting_proficiency_options && raceData.name == 'Half-Elf' ? (
-                                            <div>
-                                                <div>Choose two from the following skills</div>
+                                            <div className="pb-5">
+                                                <div className="w-3/4 text-lg font-bold border-b text-white border-gray-300 px-3 mb-2 pb-2 pt-10">Skill Options</div>
+                                                <div className="w-3/4 text-md px-3 pb-2 py-2">Choose two of the following:</div>
                                                 {raceData.starting_proficiency_options.from.options.map((option, index)=>
-                                                    <div key={index}>
-                                                        <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedRaceSkill).length >= raceData.starting_proficiency_options.choose && !checkedRaceSkill[`${option.item.name}`]} onChange={handleRaceSkillChoiceChange} />
-                                                        <label>{option.item.name}</label>
+                                                    <div key={index} className="px-3">
+                                                        <input className="form-checkbox h-4 w-4 text-gray-600 transition duration-150 ease-in-out" type="checkbox" name={option.item.name} disabled={Object.keys(checkedRaceSkill).length >= raceData.starting_proficiency_options.choose && !checkedRaceSkill[`${option.item.name}`]} onChange={handleRaceSkillChoiceChange} />
+                                                        <label className="px-3 text-sm">{option.item.name}</label>
                                                     </div>
                                                 )}
                                             </div>
@@ -549,23 +580,25 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                                     </div>
                                     <div>
                                         {classData.proficiency_choices && classData.name != 'Monk' ? (
-                                            <div>
+                                            <div className="pb-5">
+                                                <div className="w-3/4 text-lg font-bold border-b text-white border-gray-300 px-3 mb-2 pb-2 pt-10">Skill Options</div>
                                                 <div>
-                                                    {classData.proficiency_choices[0].desc}
+                                                    <div className="w-3/4 text-md px-3 pb-2 py-2">Choose {classData.proficiency_choices[0].choose} of the following:</div>
                                                     {classData.proficiency_choices[0].from.options.map((option, index)=>
-                                                                    <div key={index}>
-                                                                        <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedSkill).length >= classData.proficiency_choices[0].choose  && !checkedSkill[`${option.item.name}`] } onChange={handleSkillChoiceChange} />
-                                                                        <label>{option.item.name}</label>
+                                                                    <div key={index} className="px-3">
+                                                                        <input className="form-checkbox h-4 w-4 text-gray-600 transition duration-150 ease-in-out" type="checkbox" name={option.item.name} disabled={Object.keys(checkedSkill).length >= classData.proficiency_choices[0].choose  && !checkedSkill[`${option.item.name}`] } onChange={handleSkillChoiceChange} />
+                                                                        <label className="px-3 text-sm">{option.item.name}</label>
                                                                     </div>
                                                                 )}
                                                 </div>
                                                 {classData.proficiency_choices[1] ? (
                                                     <div>
-                                                        {classData.proficiency_choices[1].desc}
+                                                        <div className="w-3/4 text-lg font-bold border-b text-white border-gray-300 px-3 mb-2 pb-2 pt-10">Instrument Options</div>
+                                                        <div className="w-3/4 text-md px-3 pb-2 py-2">Choose {classData.proficiency_choices[1].choose} of the following:</div>
                                                         {classData.proficiency_choices[1].from.options.map((option, index)=>
-                                                                        <div key={index}>
-                                                                            <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedEquip).length >= classData.proficiency_choices[1].choose  && !checkedEquip[`${option.item.name}`] } onChange={handleEquipChoiceChange} />
-                                                                            <label>{option.item.name}</label>
+                                                                        <div key={index} className="px-3">
+                                                                            <input className="form-checkbox h-4 w-4 text-gray-600 transition duration-150 ease-in-out" type="checkbox" name={option.item.name} disabled={Object.keys(checkedEquip).length >= classData.proficiency_choices[1].choose  && !checkedEquip[`${option.item.name}`] } onChange={handleEquipChoiceChange} />
+                                                                            <label className="px-3 text-sm">{option.item.name}</label>
                                                                         </div>
                                                                     )}
                                                     </div>
@@ -575,22 +608,24 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                                         {classData.proficiency_choices && classData.name == 'Monk' ? (
                                             <div>
                                                 <div>
-                                                    {classData.proficiency_choices[0].desc}
+                                                <div className="w-3/4 text-lg font-bold border-b text-white border-gray-300 px-3 mb-2 pb-2 pt-10">Skill Options</div>
+                                                    <div className="w-3/4 text-md px-3 pb-2 py-2">Choose {classData.proficiency_choices[0].choose} of the following:</div>
                                                     {classData.proficiency_choices[0].from.options.map((option, index)=>
-                                                                    <div key={index}>
-                                                                        <input type="checkbox" name={option.item.name} disabled={Object.keys(checkedSkill).length >= classData.proficiency_choices[0].choose  && !checkedSkill[`${option.item.name}`] } onChange={handleSkillChoiceChange} />
-                                                                        <label>{option.item.name}</label>
+                                                                    <div key={index} className="px-3">
+                                                                        <input className="form-checkbox h-4 w-4 text-gray-600 transition duration-150 ease-in-out" type="checkbox" name={option.item.name} disabled={Object.keys(checkedSkill).length >= classData.proficiency_choices[0].choose  && !checkedSkill[`${option.item.name}`] } onChange={handleSkillChoiceChange} />
+                                                                        <label className="px-3 text-sm">{option.item.name}</label>
                                                                     </div>
                                                                 )}
                                                 </div>
                                                 {classData.proficiency_choices[1] ? (
-                                                    <div>
-                                                        {classData.proficiency_choices[1].desc}
+                                                    <div className="pb-5">
+                                                        <div className="w-3/4 text-lg font-bold border-b text-white border-gray-300 px-3 mb-2 pb-2 pt-10">Tool Options</div>
+                                                        <div className="w-3/4 text-md px-3 pb-2 py-2">Choose {classData.proficiency_choices[1].choose} of the following:</div>
                                                         {classData.proficiency_choices[1].from.options.map((option, index)=>
                                                                         option.choice.from.options.map((deeper_option, index)=>     
-                                                                        <div key={index}>
-                                                                                <input type="checkbox" name={deeper_option.item.name} disabled={Object.keys(checkedEquip).length >= classData.proficiency_choices[1].choose  && !checkedEquip[`${deeper_option.item.name}`] } onChange={handleEquipChoiceChange} />
-                                                                                <label>{deeper_option.item.name}</label>
+                                                                        <div key={index} className="px-3">
+                                                                                <input className="form-checkbox h-4 w-4 text-gray-600 transition duration-150 ease-in-out" type="checkbox" name={deeper_option.item.name} disabled={Object.keys(checkedEquip).length >= classData.proficiency_choices[1].choose  && !checkedEquip[`${deeper_option.item.name}`] } onChange={handleEquipChoiceChange} />
+                                                                                <label className="px-3 text-sm">{deeper_option.item.name}</label>
                                                                             </div>
                                                                         )
                                                                         )}
@@ -601,7 +636,11 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                                     </div>
                                 </div>
                                 <div className="col-span-1">
-                                    <input type='text' onChange={(e)=>setCharacterBio(e.target.value)} placeholder="Character bio" className="block w-3/4 px-4 py-1 my-4 border  border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></input>
+                                    <textarea
+                                        className="block w-3/4 px-4 py-1 my-3 border-b  border-gray-300 shadow-sm h-8 placeholder-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-transparent text-white resize-y"
+                                        onChange={(e) => setCharacterBio(e.target.value)}
+                                        placeholder="Character bio"
+                                    />
                                 </div>
                             </div>
                             <input type="submit" value='Create Character' className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg' />
@@ -610,47 +649,50 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                 </div>
                 <div className="col-span-1">
                     <div className="bg-white bg-opacity-50 rounded-lg shadow-lg p-4">
+                    <div className="text-4xl font-bold border-b text-white border-gray-300 px-3 mb-2 pb-2">Character Statistics</div>
                         <div className="grid grid-cols-2 gap-8">
-                            <div className="col-span-1">
+                            <div className="col-span-1 pt-3">
+                                <div className="text-xl w-3/4 font-bold border-b text-white border-gray-300 mb-4 pb-2">Basic Information</div>
                                 <div>Level: {level}</div> <div>Proficiency Bonus: +{pb} </div>
                                 <div>Passive Perception: {passivePerception} </div>
                                 <div>Speed: {speed} </div>
                                 <div>Armor Class: {ac} </div>
                                 <div>Hit Points: {hitPoints && hitPoints > 0 ? hitPoints:('')}</div>
                                 <div>Hit Die: {hitDie}</div>
+                                <div className="text-xl w-3/4 font-bold border-b text-white border-gray-300 mb-4 pt-4 pb-2">Ability Scores</div>
                                 <div>Strength: {strengthAS + asBonus['str']}</div>
                                 <div>Dexterity: {dexterityAS + asBonus['dex']}</div>
                                 <div>Constitution: {constitutionAS + asBonus['con']}</div>
                                 <div>Intelligence: {intelligenceAS +asBonus['int']}</div>
                                 <div>Wisdom: {wisdomAS + asBonus['wis']}</div>
                                 <div>Charisma: {charismaAS + asBonus['cha']}</div>
-                                <div>Ability Proficiencies:</div>
+                                <button onClick={handleReroll} className='w-3/4 my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg'>Roll Ability Scores</button>
+                                <div className="text-xl w-3/4 font-bold border-b text-white border-gray-300 mb-4 pt-4 pb-2">Ability Proficiencies</div>
                                     {abProf['str'] ? <div>Strength </div>:null}
                                     {abProf['dex'] ? <div>Dexterity </div>:null}
                                     {abProf['con'] ? <div>Constitution </div>:null}
                                     {abProf['int'] ? <div>Intelligence </div>:null}
                                     {abProf['wis'] ? <div>Wisdom </div>:null}
                                     {abProf['cha'] ? <div>Charisma </div>:null}
-                                    <div>Saving Throws</div>
-                                    <div>Strength Saving Throw: {asBonus['str']+strengthAS-10 > 0 ? '+' + Math.floor((asBonus['str'] + strengthAS - 10)/2): Math.ceil((asBonus['str'] + strengthAS - 10)/2)}</div>
-                                    <div>Dexterity Saving Throw: {asBonus['dex']+dexterityAS-10 > 0 ? '+' + Math.floor((asBonus['dex'] + dexterityAS - 10)/2): Math.ceil((asBonus['dex'] + dexterityAS - 10)/2)}</div>
-                                    <div>Constitution Saving Throw: {asBonus['con']+constitutionAS-10 > 0 ? '+' + Math.floor((asBonus['con'] + constitutionAS - 10)/2): Math.ceil((asBonus['con'] + constitutionAS - 10)/2)}</div>
-                                    <div>Intelligence Saving Throw: {asBonus['int']+intelligenceAS-10 > 0 ? '+' + Math.floor((asBonus['int'] + intelligenceAS - 10)/2): Math.ceil((asBonus['int'] + intelligenceAS - 10)/2)}</div>
-                                    <div>Wisdom Saving Throw: {asBonus['wis']+wisdomAS-10 > 0 ? '+' + Math.floor((asBonus['wis'] + wisdomAS - 10)/2): Math.ceil((asBonus['wis'] + wisdomAS - 10)/2)}</div>
-                                    <div>Charisma Saving Throw: {asBonus['cha']+charismaAS-10 > 0 ? '+' + Math.floor((asBonus['cha'] + charismaAS - 10)/2): Math.ceil((asBonus['cha'] + charismaAS - 10)/2)}</div>
-                                    {classData && classData.spellcasting ? (
-                                        <div>
-                                            <div>Spellcasting</div>
-                                            <div>SpellCasting Ability: {spellcasting['scab']} </div>
-                                            <div>Spellcasting Attack: {spellcasting['scat']} </div>
-                                            <div>Spellcasting Save: {spellcasting['scs']} </div>
-                                        </div>
-                                    ):null}
-                                <button onClick={handleReroll} className='w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg'>Roll Ability Scores</button>
+                                    <div className="text-xl w-3/4 font-bold border-b text-white border-gray-300 mb-4 pt-4 pb-2">Saving Throws</div>
+                                <div>Strength Saving Throw: {asBonus['str']+strengthAS-10 > 0 ? '+' + Math.floor((asBonus['str'] + strengthAS - 10)/2): Math.ceil((asBonus['str'] + strengthAS - 10)/2)}</div>
+                                <div>Dexterity Saving Throw: {asBonus['dex']+dexterityAS-10 > 0 ? '+' + Math.floor((asBonus['dex'] + dexterityAS - 10)/2): Math.ceil((asBonus['dex'] + dexterityAS - 10)/2)}</div>
+                                <div>Constitution Saving Throw: {asBonus['con']+constitutionAS-10 > 0 ? '+' + Math.floor((asBonus['con'] + constitutionAS - 10)/2): Math.ceil((asBonus['con'] + constitutionAS - 10)/2)}</div>
+                                <div>Intelligence Saving Throw: {asBonus['int']+intelligenceAS-10 > 0 ? '+' + Math.floor((asBonus['int'] + intelligenceAS - 10)/2): Math.ceil((asBonus['int'] + intelligenceAS - 10)/2)}</div>
+                                <div>Wisdom Saving Throw: {asBonus['wis']+wisdomAS-10 > 0 ? '+' + Math.floor((asBonus['wis'] + wisdomAS - 10)/2): Math.ceil((asBonus['wis'] + wisdomAS - 10)/2)}</div>
+                                <div>Charisma Saving Throw: {asBonus['cha']+charismaAS-10 > 0 ? '+' + Math.floor((asBonus['cha'] + charismaAS - 10)/2): Math.ceil((asBonus['cha'] + charismaAS - 10)/2)}</div>
+                                {classData && classData.spellcasting ? (
+                                    <div>
+                                        <div>Spellcasting</div>
+                                        <div>SpellCasting Ability: {spellcasting['scab']} </div>
+                                        <div>Spellcasting Attack: {spellcasting['scat']} </div>
+                                        <div>Spellcasting Save: {spellcasting['scs']} </div>
+                                    </div>
+                                ):null}
                             </div>
-                            <div className="col-span-1">
+                            <div className="col-span-1 pt-3">
                                 <div>
-                                    <div className="text-xl font-bold border-b text-white border-gray-300 mb-4 pb-2">Features</div>
+                                    <div className="text-xl w-3/4 font-bold border-b text-white border-gray-300 mb-4 pb-2">Features</div>
                                     {featureData ? (
                                         <div className="mb-4 pb-2"> 
                                             {featureData.map((feature, index)=> 
@@ -660,7 +702,7 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                                     ):null}
                                 </div>
                                 <div>
-                                    <div className="text-xl font-bold border-b text-white border-gray-300 mb-4 pb-2">Traits</div>
+                                    <div className="text-xl  w-3/4 font-bold border-b text-white border-gray-300 mb-4 pb-2">Traits</div>
                                         {traitData ? (
                                             <div className="mb-4 pb-2">
                                                 {traitData.map((trait, index)=>
@@ -672,7 +714,7 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                                 <div>
                                     {raceProf !== [] ? (
                                         <div>
-                                            <div className="text-xl font-bold border-b text-white border-gray-300 mb-4 pb-2">Starting Proficiencies</div>
+                                            <div className="text-xl  w-3/4 font-bold border-b text-white border-gray-300 mb-4 pb-2">Starting Proficiencies</div>
                                             <div>
                                                 {classProf ? (
                                                     classProf.map((prof, index)=>
