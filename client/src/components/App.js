@@ -34,6 +34,7 @@ import CharacterCreation from "./CharacterCreation";
 import Dashboard from "./Dashboard";
 import Signup from "./Signup";
 import LevelUp from "./LevelUp";
+import EncounterCreation from "./EncounterCreation";
 
 function App() {
   const [referenceTable, setReferenceTable] = useState([])
@@ -44,7 +45,6 @@ function App() {
   const [searchedObject, setSearchedObject] = useState()
   const [characterId, setCharacterId] = useState('')
   const [encounterId, setEncounterId] = useState('')
-  const [encounterUser, setEncounterUser] = useState({})
   const [currentClass, setCurrentClass] = useState('')
   const [currentSubclass, setCurrentSubclass] = useState('')
   const [userUrl, setUserUrl] = useState('')
@@ -89,7 +89,7 @@ function App() {
             <Route path="/users" element={<Users token={token} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/characters" element={<CharactersList token={token} setCharacterId={setCharacterId} />} />
-            <Route path="/encounters" element={<EncountersList token={token} setEncounterId={setEncounterId} referenceTable={referenceTable} setEncounterUser={setEncounterUser} encounterUser={encounterUser} />} />
+            <Route path="/encounters" element={<EncountersList userId={userId} token={token} setEncounterId={setEncounterId} referenceTable={referenceTable} />} />
             <Route path="/skills" element={<SkillsList setSkillUrl={setSkillUrl} />} />
             <Route path="/features" element={<FeaturesList setFeatureUrl={setFeatureUrl} />} />
             <Route path="/equipment" element={<EquipmentsList setEquipmentUrl={setEquipmentUrl} />} />
@@ -99,7 +99,7 @@ function App() {
             <Route path="/subclasses" element={<SubclassesList setSubclassUrl={setSubclassUrl} />} />
             <Route path="/proficiencies" element={<ProficienciesList setProficiencyUrl={setProficiencyUrl} />} />
             <Route path="/traits" element={<TraitsList setTraitUrl={setTraitUrl} />} />
-            <Route path="/users/:id" element={<Dashboard setCharacterId={setCharacterId} userId={userId} />} />
+            <Route path="/users/:id" element={<Dashboard referenceTable={referenceTable} setEncounterId={setEncounterId} setCharacterId={setCharacterId} userId={userId} />} />
             <Route path="/characters/:id" element={<CharacterView userId={userId} token={token} characterId={characterId} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setClassUrl={setClassUrl} setTraitUrl={setTraitUrl} />} />
             <Route path="/encounters/:id" element={<EncounterView token={token} encounterId={encounterId} referenceTable={referenceTable} />} />
             <Route path="/skills/:id" element={<SkillView skillUrl={skillUrl} />} />
@@ -114,8 +114,9 @@ function App() {
             <Route path="/classes/:className/levels" element={<ClassLevels classLevelUrl={classLevelUrl} currentClass={currentClass} setFeatureUrl={setFeatureUrl} />} />
             <Route path="/classes/:className/spells" element={<ClassSpells spellUrl={spellUrl} currentClass={currentClass} setSpellUrl={setSpellUrl} classSpellUrl={classSpellUrl} />} />
             <Route path="/subclasses/:subclassName/levels" element={<SubclassLevels subclassLevelUrl={subclassLevelUrl} currentSubclass={currentSubclass} setFeatureUrl={setFeatureUrl} />} />
-            <Route path="/character_creation" element={<CharacterCreation userId={userId} setCharacterId={setCharacterId} referenceTable={referenceTable} setFeatureUrl={setFeatureUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
+            <Route path="/character_creation" element={<CharacterCreation setReferenceTable={setReferenceTable} userId={userId} setCharacterId={setCharacterId} referenceTable={referenceTable} setFeatureUrl={setFeatureUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
             <Route path="/characters/:id/level-up" element={<LevelUp referenceTable={referenceTable} token={token} characterId={characterId} setFeatureUrl={setFeatureUrl} />} />
+            <Route path="/encounter_creation" element={<EncounterCreation setEncounterId={setEncounterId} setReferenceTable={setReferenceTable} token={token} referenceTable={referenceTable} userId={userId} />} />
           </Routes>
         </div>
       </div>

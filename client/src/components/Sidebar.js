@@ -33,16 +33,22 @@ export default function Sidebar({token, setToken, toggle, setToggle, userId}) {
                                     </li>
 
                                     <li className="items-center">
-                                        <Link className="text-pink-500 hover:text-pink-600 text-xs uppercase py-3 font-bold block" to="/characters">
-                                            <i className="fas fa-tv opacity-75 mr-2 text-sm"></i> Characters
+                                        <Link className="text-pink-500 hover:text-pink-600 text-xs uppercase py-3 font-bold block" to="/encounter_creation">
+                                            <i className="fas fa-tv opacity-75 mr-2 text-sm"></i> Encounter Creation
                                         </Link>
                                     </li>
 
                                     <li className="items-center">
+                                        <Link className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block" to="/characters">
+                                            <i className="fas fa-tv opacity-75 mr-2 text-sm"></i> Characters
+                                        </Link>
+                                    </li>
+
+                                    {/* <li className="items-center">
                                         <Link className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block" to="/encounters">
                                             <i className="fas fa-newspaper text-blueGray-400 mr-2 text-sm"></i> Encounters
                                         </Link>
-                                    </li>
+                                    </li> */}
 
                                     <li className="items-center">
                                         <Link className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block" to={`/users/${userId}`}>

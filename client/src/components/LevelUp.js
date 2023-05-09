@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Feature from "./Feature";
-import { json } from "react-router-dom";
+import { json, useNavigate } from "react-router-dom";
 
 function LevelUp({characterId, token, setFeatureUrl, referenceTable}){
     const [character, setCharacter] = useState()
@@ -8,6 +8,7 @@ function LevelUp({characterId, token, setFeatureUrl, referenceTable}){
     const [newAs, setNewAs] = useState({'str': 0, 'dex': 0, 'con': 0, 'int': 0, 'wis': 0, 'cha': 0})
     const [asCount, setAsCount] = useState(0)
     const [newFeatureIds, setNewFeatureIds] = useState([])
+    const navigate = useNavigate()
 
     // console.log(characterId)
     
@@ -131,6 +132,7 @@ function LevelUp({characterId, token, setFeatureUrl, referenceTable}){
                 .then(r=>r.json())
                 .then(data=>console.log(data))
         })
+        navigate(`/characters/${character.name}`)
         console.log('levelup')
     }
 
@@ -163,7 +165,7 @@ function LevelUp({characterId, token, setFeatureUrl, referenceTable}){
     },[character])
 
     useEffect(()=>{
-        levelUpData && levelUpData.features ? setNewFeatureIds(levelUpData.features.map((feature)=> referenceTable.filter((reference)=> reference.name == feature.name)[0].object_id)) : null
+        (levelUpData && levelUpData.features) ? setNewFeatureIds(levelUpData.features.map((feature)=> referenceTable.filter((reference)=> reference.name == feature.name)[0].object_id)) : setNewFeatureIds('')
     }, [levelUpData])
 
     console.log(newFeatureIds)

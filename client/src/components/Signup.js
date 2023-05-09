@@ -33,10 +33,12 @@ function Signup(){
                 fetch('http://127.0.0.1:5555/references', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application.json'
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({"name": data.username, "url": `http://127.0.0.1:5555/users/${data.id}`, "class_type": "user", "object_id": data.id})
                 })
+                .then(r=>r.json())
+                .then(data=>console.log(data))
             })
         navigate('/')
     }

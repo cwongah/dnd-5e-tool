@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 function EncounterView({token, encounterId, referenceTable}){
 
     const [encounter, setEncounter] = useState({})
-    const [user, setUser] = useState([])
+    // const [user, setUser] = useState([])
 
     useEffect(() => {
         if(token && token != '' && token != undefined){
@@ -20,18 +20,18 @@ function EncounterView({token, encounterId, referenceTable}){
         }
     }, [])
 
-    useEffect(() => {
-        setUser(referenceTable.filter(reference => reference.class_type === 'user' && reference.object_id === encounter.user_id))
-      }, [encounter.user_id, referenceTable])
+    // useEffect(() => {
+    //     setUser(referenceTable.filter(reference => reference.class_type === 'user' && reference.object_id === encounter.user_id))
+    //   }, [])
 
     // console.log(encounter)
     // setUser(referenceTable.filter((reference) => reference.class_type == 'user' && reference.object_id == encounter.user_id))
-    console.log(user)
+    // console.log(user)
 
     const encounterAttrToDisplay = (
         <div>
             <div>name: {encounter.name} </div>
-            {user[0] && user.length > 0 ? (<div>{user[0].name}</div>) : (<div>Loading...</div>)}
+            {/* {user[0] && user.length > 0 ? (<div>{user[0].name}</div>) : (<div>Loading...</div>)} */}
             <div>Characters</div>
             {encounter.characters && encounter.characters.length > 0 ? (<div>{encounter.characters.map((character, index)=>(<div key={index}>{character.name} - level:{character.level}</div>))}</div>) : (<div>Loading...</div>)}
         </div>

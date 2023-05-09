@@ -4,7 +4,7 @@ import Proficiency from "./Proficiency";
 import Trait from "./Trait";
 import { useNavigate } from "react-router-dom";
 
-function CharacterCreation({userId, setCharacterId, referenceTable, setFeatureUrl, setProficiencyUrl, setTraitUrl}){
+function CharacterCreation({setReferenceTable, userId, setCharacterId, referenceTable, setFeatureUrl, setProficiencyUrl, setTraitUrl}){
     const navigate = useNavigate()
     const classes = [{'name': 'Barbarian','subclass': 'Berserker'},{'name': 'Bard','subclass': 'Lore'},{'name': 'Cleric','subclass': 'Life'},{'name': 'Druid','subclass': 'Land'},{'name': 'Fighter','subclass': 'Champion'},{'name': 'Monk','subclass': 'Open-Hand'},{'name': 'Paladin','subclass': 'Devotion'},{'name': 'Ranger','subclass': 'Hunter'},{'name': 'Rogue','subclass': 'Thief'},{'name': 'Sorcerer','subclass': 'Draconic'},{'name': 'Warlock','subclass': 'Fiend'},{'name': 'Wizard','subclass': 'Evocation'}]
     const races = ['Dragonborn', 'Dwarf', 'Elf', 'Gnome', 'Half-Elf', 'Half-Orc', 'Halfling', 'Human', 'Tiefling']
@@ -77,6 +77,14 @@ function CharacterCreation({userId, setCharacterId, referenceTable, setFeatureUr
         'charisma_saving_throw': 0,
         'user_id': 1
     })
+
+    useEffect(()=>{
+        fetch('http://127.0.0.1:5555/references')
+            .then(r => r.json())
+            .then(data => {
+                setReferenceTable(data)
+            })
+    }, [])
 
     useEffect(()=>{
         fetch(`https://www.dnd5eapi.co/api/classes/${selectedClass.toLowerCase()}`)
@@ -472,7 +480,13 @@ function CharacterCreation({userId, setCharacterId, referenceTable, setFeatureUr
         })
             .then(r=>r.json())
             .then(data=>console.log(data))
-        
+
+        fetch('http://127.0.0.1:5555/references')
+            .then(r => r.json())
+            .then(data => {
+                setReferenceTable(data)
+            })
+
         setCharacterId(charId)
         navigate(`/characters/${charId}`)
     }
