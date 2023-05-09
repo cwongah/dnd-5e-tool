@@ -3,12 +3,10 @@ import { useNavigate } from 'react-router-dom'
 
 function SearchBar({referenceTable, setSearchedObject, setUserUrl, setClassUrl, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setTraitUrl }){ 
     const [search, setSearch] = useState('')
-
+    console.log(search)
     const navigate = useNavigate()
-
     const handleSearchChange = (e)=>{
         setSearch(e.target.value.toLowerCase())
-
     }
 
     const handleSubmit = (e)=>{

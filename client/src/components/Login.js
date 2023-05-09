@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login({userId, setUserId, setEmail, setPw, email, pw, token, setToken}){
+function Login({userId, setUserId, setEmail, setPw, email, pw, token, setToken, setToggle}){
     // console.log(email, pw, token)
     // console.log(userId)
     const navigate = useNavigate()
@@ -32,6 +32,7 @@ function Login({userId, setUserId, setEmail, setPw, email, pw, token, setToken})
             sessionStorage.setItem("token", data.access_token)
             setToken(sessionStorage.getItem("token"))
             setUserId(data.user_id)
+            setToggle(false)
             navigate(`/users/${data.user_id}`)
         })
         .catch(error=>{
@@ -40,24 +41,60 @@ function Login({userId, setUserId, setEmail, setPw, email, pw, token, setToken})
     }
 
     return(
-        <div>
-            <div>Login</div>
-            {token && token != '' && token != undefined ? (
-               "You are logged in with this token" + token 
-            ):(
+        <div className="flex justify-center items-center h-screen bg-transparent">
+        <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
+        <h1 className="text-3xl font-bold mb-4 text-purple-600">Login</h1>
+        {token && token !== "" && token !== undefined ? (
+            <p>You are logged in with this token: {token}</p>
+        ) : (
             <div>
-                <div>
-                    <input id="email" type="text" placeholder="Email" value={email} onChange={(e)=> setEmail(e.target.value)}></input>
-                    <input id="password" type="password" placeholder="Password" value={pw} onChange={(e)=> setPw(e.target.value)}></input>
-                </div>
-                <button onClick={handleLoginClick} >Login</button>
-                <div>
-                    <label>New User?</label>
-                    <button onClick={handleSignupClick}>Signup</button>
+            <div className="mb-4">
+                <label className="block text-gray-500 mb-2" htmlFor="email">
+                Email
+                </label>
+                <input
+                id="email"
+                type="text"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full py-2 px-3 bg-gray-200 rounded-lg text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                />
+            </div>
+            <div className="mb-4">
+                <label className="block text-gray-500 mb-2" htmlFor="password">
+                Password
+                </label>
+                <input
+                id="password"
+                type="password"
+                placeholder="Password"
+                value={pw}
+                onChange={(e) => setPw(e.target.value)}
+                className="w-full py-2 px-3 bg-gray-200 rounded-lg text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                />
+            </div>
+            <div className="flex items-center justify-between">
+                <button
+                onClick={handleLoginClick}
+                className="bg-purple-600 hover:bg-purple-700 text-gray-100 py-2 px-4 rounded-lg"
+                >
+                Login
+                </button>
+                <div className="mt-4">
+                <label className="text-gray-500">New User?</label>
+                <button
+                    onClick={handleSignupClick}
+                    className="ml-2 bg-gray-500 hover:bg-gray-600 text-gray-100 py-2 px-4 rounded-lg"
+                >
+                    Signup
+                </button>
                 </div>
             </div>
-            )}
+            </div>
+        )}
         </div>
+    </div>
     )
 }
 

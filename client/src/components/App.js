@@ -74,18 +74,17 @@ function App() {
   }, [])
 
   return(
-    <div class="grid grid-cols-2">
-      <div class='col-span-1'>
-      {toggle && <Sidebar userId={userId} token={token} setToken={setToken} toggle={toggle} setToggle={setToggle} />}
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-800">
+      <div >
+      <Sidebar userId={userId} token={token} setToken={setToken} toggle={toggle} setToggle={setToggle} />
       </div>
-      <div>
-      </div>
-      <div class="col-span-2  ">
-        <NavBar toggle={toggle} setToggle={setToggle} referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />
-        <div className="px-10">
+      <div >
+      {/* className={`${toggle ? "transform translate-x-64" : ""}`} */}
+        <NavBar userId={userId} toggle={toggle} setToggle={setToggle} referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />
+        <div className="px-5">
           <Routes>
-            <Route path="/" element={<Home userId={userId} setUserId={setUserId} token={token} setToken={setToken} email={email} setEmail={setEmail} pw={pw} setPw={setPw} referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
-            <Route path="/login" element={<Login userId={userId} setUserId={setUserId} token={token} setToken={setToken} email={email} setEmail={setEmail} pw={pw} setPw={setPw} />} />
+            {/* <Route path="/" element={<Home userId={userId} setUserId={setUserId} token={token} setToken={setToken} email={email} setEmail={setEmail} pw={pw} setPw={setPw} referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} /> */}
+            <Route path="/" element={<Login setToggle={setToggle} userId={userId} setUserId={setUserId} token={token} setToken={setToken} email={email} setEmail={setEmail} pw={pw} setPw={setPw} />} />
             <Route path="/users" element={<Users token={token} />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/characters" element={<CharactersList token={token} setCharacterId={setCharacterId} />} />
