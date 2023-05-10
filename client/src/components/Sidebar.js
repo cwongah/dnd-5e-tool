@@ -69,6 +69,17 @@ export default function Sidebar({token, setToken, toggle, setToggle, userId}) {
                         {/* Navigation */}
                         <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4 bg-white pb-[500px]">
                             <li className="inline-flex">
+                                <Link className="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold" to="/classes" onClick={()=>setToggle(false)}>
+                                <i className="fab fa-js-square mr-2 text-blueGray-400 text-base"></i> Classes
+                                </Link>
+                            </li>
+
+                            <li className="inline-flex">
+                                <Link className="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold" to="/subclasses" onClick={()=>setToggle(false)}>
+                                <i className="fab fa-js-square mr-2 text-blueGray-400 text-base"></i> Subclasses
+                                </Link>
+                            </li>
+                            <li className="inline-flex">
                                 <Link className="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold" to="/skills" onClick={()=>setToggle(false)}>
                                 <i className="fas fa-paint-brush mr-2 text-blueGray-400 text-base"></i> Skills
                                 </Link>
@@ -98,17 +109,6 @@ export default function Sidebar({token, setToken, toggle, setToggle, userId}) {
                                 </Link>
                             </li>
 
-                            <li className="inline-flex">
-                                <Link className="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold" to="/classes" onClick={()=>setToggle(false)}>
-                                <i className="fab fa-js-square mr-2 text-blueGray-400 text-base"></i> Classes
-                                </Link>
-                            </li>
-
-                            <li className="inline-flex">
-                                <Link className="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold" to="/subclasses" onClick={()=>setToggle(false)}>
-                                <i className="fab fa-js-square mr-2 text-blueGray-400 text-base"></i> Subclasses
-                                </Link>
-                            </li>
 
                             <li className="inline-flex">
                                 <Link className="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold" to="/proficiencies" onClick={()=>setToggle(false)}>

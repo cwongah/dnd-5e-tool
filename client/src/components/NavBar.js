@@ -17,7 +17,7 @@ function NavBar({toggle, setToggle, referenceTable, setSearchedObject, setUserUr
 
     return (
       <>
-        <div className="flex flex-wrap py-2 pb-10">
+        <div className=" flex flex-wrap py-2 pb-10">
           <div className="w-full">
             <nav className="relative flex flex-wrap items-center justify-between py-3 h-15 bg-transparent border-b border-gray-500">
               <button className="pl-8" onClick={() => setToggle(!toggle)}><AiOutlineMenu size={35} color="white" /></button>
@@ -25,7 +25,10 @@ function NavBar({toggle, setToggle, referenceTable, setSearchedObject, setUserUr
                 <div className="w-full relative flex justify-between px-4 lg:static lg:block lg:justify-start">
                   <div className="flex mr-20 pr-[150px] justify-center items-center">
                     <div className="mr-3"><FaDiceD20 size={28} color="white"/></div>
-                    <button onClick={()=>navigate(`/dashboard`)} className="text-xl font-bold leading-relaxed inline-block mr-4 ml-2 py-2 whitespace-nowrap text-white" >
+                    <button onClick={()=>{
+                        setToggle(false)
+                        navigate(`/dashboard`)
+                      }} className="text-xl font-bold leading-relaxed inline-block mr-4 ml-2 py-2 whitespace-nowrap text-white" >
                       QuestKeeper
                     </button>
                   </div>

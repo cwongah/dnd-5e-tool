@@ -11,7 +11,7 @@ function SearchBar({referenceTable, setSearchedObject, setUserUrl, setClassUrl, 
 
     const handleSubmit = (e)=>{
         e.preventDefault()
-        let searchObject = referenceTable.filter((reference) => reference.name.toLowerCase().includes(search))
+        let searchObject = referenceTable.filter((reference) => reference.name.toLowerCase() === (search))
         if(searchObject.length == 0){
             alert('Not Found')
         }else{

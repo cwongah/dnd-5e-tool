@@ -12,6 +12,12 @@ import { useNavigate } from "react-router-dom";
 import LevelUp from "./LevelUp";
 import Test from "./test";
 import ClassPopup from "./ClassPopup";
+import SubclassPop from "./SubclassPopup";
+import RacePopup from "./RacePopup";
+import SkillPopup from "./SkillPopup";
+import FeaturePopup from "./FeaturePopup";
+import TraitPopup from "./TraitPopup";
+import ProfPopup from "./ProfPopup";
 
 function CharacterView({referenceTable, userId, token, characterId, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setClassUrl, setTraitUrl, setCurrentClass, setClassSpellUrl}){
 
@@ -19,8 +25,18 @@ function CharacterView({referenceTable, userId, token, characterId, setSkillUrl,
     const [character, setCharacter] = useState({})
     const [showPopup, setShowPopup] = useState(false)
     const [classPop, setClassPop] = useState(false)
+    const [subclassPop, setSubclassPop] = useState(false)
+    const [racePop, setRacePop] = useState(false)
+    const [skillPop, setSkillPop] = useState(false)
+    const [skillPopUrl, setSkillPopUrl] = useState()
+    const [featurePop, setFeaturePop] = useState(false)
+    const [featurePopUrl, setFeaturePopUrl] = useState()
+    const [traitPop, setTraitPop] = useState(false)
+    const [traitPopUrl, setTraitPopUrl] = useState()
+    const [profPop, setProfPop] = useState(false)
+    const [profPopUrl, setProfPopUrl] = useState()
 
-    console.log(character)
+    // console.log(character)
 
     function togglePopup(){
         setShowPopup(!showPopup);
@@ -79,9 +95,9 @@ function CharacterView({referenceTable, userId, token, characterId, setSkillUrl,
                                         {character.subclasses && character.subclasses.length > 0 ? (
                                             <div>
                                                 {character.subclasses.map((subclass, index) => (
-                                                    <div className="flex gap-1">
+                                                    <div key={index} className="flex gap-1">
                                                         <div>Subclass:</div>
-                                                        <Subclass key={index} name={subclass.name} url={subclass.url} setSubclassUrl={setSubclassUrl} />
+                                                        <div onClick={()=>setSubclassPop(!subclassPop)}>{subclass.name}</div>
                                                     </div>
                                                 ))}
                                             </div>
@@ -89,9 +105,9 @@ function CharacterView({referenceTable, userId, token, characterId, setSkillUrl,
                                         {character.races && character.races.length > 0 ? (
                                             <div>
                                                 {character.races.map((race, index) => (
-                                                    <div className="flex gap-1">
+                                                    <div key={index} className="flex gap-1">
                                                         <div>Race:</div>
-                                                        <Race key={index} name={race.name} url={race.url} setRaceUrl={setRaceUrl} />
+                                                        <div onClick={()=>setRacePop(!racePop)}>{race.name}</div>
                                                     </div>
                                                 ))}
                                             </div>
@@ -153,8 +169,13 @@ function CharacterView({referenceTable, userId, token, characterId, setSkillUrl,
                                 {character.skills && character.skills.length > 0 ? (
                                     <div className="px-3">
                                         {character.skills.map((skill, index) => (
-                                            <div className="flex gap-1">
-                                                <Skill key={index} name={skill.name} url={skill.url} setSkillUrl={setSkillUrl} />
+                                            <div key={index} className="flex gap-1">
+                                                <div onClick={()=>{
+                                                    setSkillPop(!skillPop)
+                                                    setSkillPopUrl(skill.url)
+                                                }}>
+                                                    {skill.name}
+                                                </div>
                                             </div>
                                         ))}
                                     </div>
@@ -163,7 +184,15 @@ function CharacterView({referenceTable, userId, token, characterId, setSkillUrl,
                                 {character.features && character.features.length > 0 ? (
                                     <div className="px-3">
                                         {character.features.map((feature, index) => (
-                                            <Feature key={index} name={feature.name} url={feature.url} setFeatureUrl={setFeatureUrl} />
+                                            // <Feature key={index} name={feature.name} url={feature.url} setFeatureUrl={setFeatureUrl} />
+                                            <div key={index} className="flex gap-1">
+                                                <div onClick={()=>{
+                                                    setFeaturePop(!featurePop)
+                                                    setFeaturePopUrl(feature.url)
+                                                }}>
+                                                    {feature.name}
+                                                </div>
+                                            </div>
                                         ))}
                                     </div>
                                 ) : (<div>Loading...</div>)}
@@ -171,7 +200,15 @@ function CharacterView({referenceTable, userId, token, characterId, setSkillUrl,
                                 {character.traits && character.traits.length > 0 ? (
                                     <div className="px-3">
                                         {character.traits.map((trait, index) => (
-                                            <Trait key={index} name={trait.name} url={trait.url} setTraitUrl={setTraitUrl} />
+                                            // <Trait key={index} name={trait.name} url={trait.url} setTraitUrl={setTraitUrl} />
+                                            <div key={index} className="flex gap-1">
+                                                <div onClick={()=>{
+                                                    setTraitPop(!traitPop)
+                                                    setTraitPopUrl(trait.url)
+                                                }}>
+                                                    {trait.name}
+                                                </div>
+                                            </div>
                                             ))}
                                     </div>
                                 ) : (<div>Loading...</div>)}
@@ -181,7 +218,15 @@ function CharacterView({referenceTable, userId, token, characterId, setSkillUrl,
                                 {character.proficiencies && character.proficiencies.length > 0 ? (
                                     <div>
                                         {character.proficiencies.map((proficiency, index) => (
-                                            <Proficiency key={index} name={proficiency.name} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
+                                            // <Proficiency key={index} name={proficiency.name} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
+                                            <div key={index} className="flex gap-1">
+                                            <div onClick={()=>{
+                                                setProfPop(!profPop)
+                                                setProfPopUrl(proficiency.url)
+                                            }}>
+                                                {proficiency.name}
+                                            </div>
+                                        </div>
                                         ))}
                                     </div>
                                 ) : (<div>Loading...</div>)}
@@ -226,9 +271,51 @@ function CharacterView({referenceTable, userId, token, characterId, setSkillUrl,
             </div> 
             ) : null}
             {classPop ? (
-                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center">
-                <div className="bg-white rounded-lg p-6 max-w-6xl w-full lg:w-3/4 overflow-y-scroll">
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="h-2/3 bg-white rounded-lg p-6 max-w-6xl w-full lg:w-3/4 overflow-y-scroll">
                     <ClassPopup classPop={classPop} setClassPop={setClassPop} classUrl={character.character_classes[0].url} setCurrentClass={setCurrentClass} setClassSpellUrl={setClassSpellUrl} />
+                </div>
+            </div> 
+            ) : null}
+            {subclassPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-xl w-full lg:w-3/4 h-3/4 overflow-y-scroll">
+                    <SubclassPop subclassPop={subclassPop} setSubclassPop={setSubclassPop} subclassUrl={character.subclasses[0].url} />
+                </div>
+            </div> 
+            ) : null}
+            {racePop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-4xl w-full lg:w-3/4 h-3/4 overflow-y-scroll">
+                    <RacePopup racePop={racePop} setRacePop={setRacePop} raceUrl={character.races[0].url} />
+                </div>
+            </div> 
+            ) : null}
+            {skillPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-xl w-full lg:w-3/4 overflow-y-scroll">
+                    <SkillPopup skillPop={skillPop} setSkillPop={setSkillPop} skillUrl={skillPopUrl} />
+                </div>
+            </div> 
+            ) : null}
+            {featurePop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-2xl w-full lg:w-3/4 overflow-y-scroll">
+                    <FeaturePopup featurePop={featurePop} setFeaturePop={setFeaturePop} featureUrl={featurePopUrl} />
+                </div>
+            </div> 
+            ) : null}
+            {traitPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-2xl w-full lg:w-3/4 overflow-y-scroll">
+                    <TraitPopup traitPop={traitPop} setTraitPop={setTraitPop} traitUrl={traitPopUrl} />
+                </div>
+            </div> 
+            ) : null}
+            {profPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-xs w-full lg:w-3/4 ">
+                    <ProfPopup profPop={profPop} setProfPop={setProfPop} proficiencyUrl={profPopUrl} />
                 </div>
             </div> 
             ) : null}

@@ -10,7 +10,7 @@ function CharacterClass({name, index, url, setClassUrl}){
     }
 
     return(
-        <div className="bg-white rounded-md shadow-md p-4 cursor-pointer">
+        <div onClick={handleClick} className="bg-white rounded-md shadow-md p-4 cursor-pointer">
           <div className="text-lg font-bold">{name}</div>
         </div>
     )

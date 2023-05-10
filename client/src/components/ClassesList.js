@@ -17,7 +17,7 @@ function ClassesList({setClassUrl, setCurrentClass}){
 
     const classesToDisplay = classesList.map((characterClass, index) => {
         return(
-            <div className="bg-white rounded-md shadow-md p-4 cursor-pointer">
+            <div key={index} className="bg-white rounded-md shadow-md p-4 cursor-pointer">
                 <div onClick={()=> {
                     setClassPop(!classPop)
                     setUrl(characterClass.url)
@@ -37,8 +37,8 @@ function ClassesList({setClassUrl, setCurrentClass}){
                 {classesToDisplay}
             </div>
             {classPop ? (
-                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center">
-                <div className="bg-white rounded-lg p-6 max-w-6xl w-full lg:w-3/4 overflow-y-scroll">
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="h-3/4 bg-white rounded-lg p-6 max-w-6xl w-full lg:w-3/4 overflow-y-scroll">
                     <ClassPopup classPop={classPop} setClassPop={setClassPop} classUrl={url} setCurrentClass={setCurrentClass}  />
                 </div>
             </div> 

@@ -21,7 +21,7 @@ function ClassPopup({classUrl, setCurrentClass, setClassSpellUrl, classPop, setC
     // }
 
     return(
-        <div className="text-xs">
+        <div className="text-sm">
             <div className="text-lg font-bold mb-4 border-b border-gray-300">{characterClass.name}</div>
             <div className="grid grid-cols-2 gap-8">
                 <div className="col-span-1">
