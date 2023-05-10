@@ -18,7 +18,7 @@ function Dashboard({userId, setEncounterId, setCharacterId, referenceTable}){
         <div className="grid grid-cols-2 gap-8">
           <div className="col-span-1">
             <div className="bg-white bg-opacity-50 rounded-lg shadow-lg p-4">
-              <h2 className="text-xl font-bold border-b border-gray-300 mb-4 pb-2">Characters</h2>
+              <h2 className="text-2xl font-bold border-b border-gray-300 mb-4 pb-2 text-white">Characters</h2>
               {userData && userData.characters
                 ? userData.characters.map((character, index) => (
                     <div key={index} className="my-4 w-full">
@@ -35,7 +35,7 @@ function Dashboard({userId, setEncounterId, setCharacterId, referenceTable}){
           </div>
           <div className="col-span-1">
             <div className="bg-white bg-opacity-50 rounded-lg shadow-lg p-4">
-              <h2 className="text-xl font-bold border-b border-gray-300 mb-4 pb-2">Encounters</h2>
+              <h2 className="text-2xl font-bold border-b border-gray-300 mb-4 pb-2 text-white">Encounters</h2>
               {userData && userData.encounters
                 ? userData.encounters.map((encounter, index) => (
                     <div key={index} className="my-4 w-full">

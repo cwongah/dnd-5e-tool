@@ -95,13 +95,13 @@ function App() {
             <Route path="/equipment" element={<EquipmentsList setEquipmentUrl={setEquipmentUrl} />} />
             <Route path="/spells" element={<SpellsList setSpellUrl={setSpellUrl} />} />
             <Route path="/races" element={<RacesList setRaceUrl={setRaceUrl} />} />
-            <Route path="/classes" element={<ClassesList setClassUrl={setClassUrl} />} />
+            <Route path="/classes" element={<ClassesList setClassUrl={setClassUrl} setCurrentClass={setCurrentClass} />} />
             <Route path="/subclasses" element={<SubclassesList setSubclassUrl={setSubclassUrl} />} />
             <Route path="/proficiencies" element={<ProficienciesList setProficiencyUrl={setProficiencyUrl} />} />
             <Route path="/traits" element={<TraitsList setTraitUrl={setTraitUrl} />} />
             <Route path="/dashboard" element={<Dashboard referenceTable={referenceTable} setEncounterId={setEncounterId} setCharacterId={setCharacterId} userId={userId} />} />
             <Route path="/users/:id" element={<UserView userUrl={userUrl} referenceTable={referenceTable} setEncounterId={setEncounterId} setCharacterId={setCharacterId} userId={userId} />} />
-            <Route path="/characters/:id" element={<CharacterView userId={userId} token={token} characterId={characterId} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setClassUrl={setClassUrl} setTraitUrl={setTraitUrl} />} />
+            <Route path="/characters/:id" element={<CharacterView referenceTable={referenceTable} userId={userId} token={token} characterId={characterId} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setClassUrl={setClassUrl} setTraitUrl={setTraitUrl} setCurrentClass={setCurrentClass} setClassSpellUrl={setClassSpellUrl} />} />
             <Route path="/encounters/:id" element={<EncounterView token={token} encounterId={encounterId} referenceTable={referenceTable} />} />
             <Route path="/skills/:id" element={<SkillView skillUrl={skillUrl} />} />
             <Route path="/features/:id" element={<FeatureView featureUrl={featureUrl} setClassUrl={setClassUrl} setSubclassUrl={setSubclassUrl} />} />
@@ -116,7 +116,7 @@ function App() {
             <Route path="/classes/:className/spells" element={<ClassSpells spellUrl={spellUrl} currentClass={currentClass} setSpellUrl={setSpellUrl} classSpellUrl={classSpellUrl} />} />
             <Route path="/subclasses/:subclassName/levels" element={<SubclassLevels subclassLevelUrl={subclassLevelUrl} currentSubclass={currentSubclass} setFeatureUrl={setFeatureUrl} />} />
             <Route path="/character_creation" element={<CharacterCreation setReferenceTable={setReferenceTable} userId={userId} setCharacterId={setCharacterId} referenceTable={referenceTable} setFeatureUrl={setFeatureUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />
-            <Route path="/characters/:id/level-up" element={<LevelUp referenceTable={referenceTable} token={token} characterId={characterId} setFeatureUrl={setFeatureUrl} />} />
+            {/* <Route path="/characters/:id/level-up" element={<LevelUp referenceTable={referenceTable} token={token} characterId={characterId} setFeatureUrl={setFeatureUrl} />} /> */}
             <Route path="/encounter_creation" element={<EncounterCreation setEncounterId={setEncounterId} setReferenceTable={setReferenceTable} token={token} referenceTable={referenceTable} userId={userId} />} />
           </Routes>
         </div>

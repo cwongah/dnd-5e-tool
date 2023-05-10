@@ -75,17 +75,47 @@ function EncounterCreation({setEncounterId, setReferenceTable, referenceTable, u
 
     return(
         <div>
-            <div>Encounter Creation</div>
-            <input onChange={handleEncounterNameChange} value={encounterName} type="text" placeholder="Encounter Name" />
-            <button onClick={handleEncounterCreation} >Create Encounter</button>
-            <div>
-                <input onChange={handleCharSearchChange} value={searchedChar} type="text" placeholder="Search Characters" />
-                <button onClick={addCharacter}>Add Character</button>
+            <div className="text-white text-5xl font-bold pl-4 pb-10">Encounter Creation</div>
+            <div className="bg-white bg-opacity-50 rounded-lg shadow-lg p-6">
+                <div className="grid grid-cols-2 gap-8">
+                    <div className="col-span-1">
+                    <div className="text-4xl w-3/4 font-bold border-b text-white border-gray-300 px-3 mb-2 pb-2">Encounter Information</div>
+                        <div className="px-6">
+                            <div>
+                                <input 
+                                    onChange={handleEncounterNameChange} 
+                                    value={encounterName} 
+                                    type="text" 
+                                    placeholder="Encounter Name" 
+                                    className="block w-1/4 px-4 pt-6 my-4 border-b border-gray-300 shadow-sm placeholder-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-transparent text-white"
+                                />
+                            </div>
+                            <div className="flex items-center gap-8">
+                                <input 
+                                    onChange={handleCharSearchChange} 
+                                    value={searchedChar} 
+                                    type="text" 
+                                    placeholder="Search Characters" 
+                                    className="block w-1/4 px-4 my-4 border-b border-gray-300 shadow-sm placeholder-white focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-transparent text-white"
+                                />
+                                <button className='w-1/5 my-5 py-1 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg' onClick={addCharacter}>Add Character</button>
+                            </div>
+                            <div>
+                                <button className='w-3/4 my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg' onClick={handleEncounterCreation} >Create Encounter</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-span-1">
+                    <div className="text-4xl w-3/4 font-bold border-b text-white border-gray-300 px-3 mb-2 pb-2">Added Characters</div>
+                        {encounterChars.map((char)=>(
+                            <div key={char.id} className="flex items-center gap-3 px-6">
+                                <div>{char.name}</div>
+                                <button className='w-1/5 my-5 py-1 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg' onClick={()=> handleRemoveCharacter(char.id)} >Remove Character</button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
-            <div id="Character List"></div>
-            {encounterChars.map((char)=>(
-                <div key={char.id}>{char.name}<button onClick={()=> handleRemoveCharacter(char.id)} >Remove Character</button></div>
-            ))}
         </div>
     )
 }

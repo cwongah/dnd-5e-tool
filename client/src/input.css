@@ -9,3 +9,27 @@ body{
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.spin {
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(720deg);
+    }
+  }
+
+  .relative {
+    position: relative;
+  }
+  
+  .absolute {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  }
+  
+  

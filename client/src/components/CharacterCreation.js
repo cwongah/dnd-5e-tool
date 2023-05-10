@@ -653,40 +653,41 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                         <div className="grid grid-cols-2 gap-8">
                             <div className="col-span-1 pt-3">
                                 <div className="text-xl w-3/4 font-bold border-b text-white border-gray-300 mb-4 pb-2">Basic Information</div>
-                                <div>Level: {level}</div> <div>Proficiency Bonus: +{pb} </div>
-                                <div>Passive Perception: {passivePerception} </div>
-                                <div>Speed: {speed} </div>
-                                <div>Armor Class: {ac} </div>
-                                <div>Hit Points: {hitPoints && hitPoints > 0 ? hitPoints:('')}</div>
-                                <div>Hit Die: {hitDie}</div>
+                                <div className="px-3 text-sm">Level: {level}</div> 
+                                <div className="px-3 text-sm">Proficiency Bonus: +{pb} </div>
+                                <div className="px-3 text-sm">Passive Perception: {passivePerception} </div>
+                                <div className="px-3 text-sm">Speed: {speed} </div>
+                                <div className="px-3 text-sm">Armor Class: {ac} </div>
+                                <div className="px-3 text-sm">Hit Points: {hitPoints && hitPoints > 0 ? hitPoints:('')}</div>
+                                <div className="px-3 text-sm">Hit Die: {hitDie}</div>
                                 <div className="text-xl w-3/4 font-bold border-b text-white border-gray-300 mb-4 pt-4 pb-2">Ability Scores</div>
-                                <div>Strength: {strengthAS + asBonus['str']}</div>
-                                <div>Dexterity: {dexterityAS + asBonus['dex']}</div>
-                                <div>Constitution: {constitutionAS + asBonus['con']}</div>
-                                <div>Intelligence: {intelligenceAS +asBonus['int']}</div>
-                                <div>Wisdom: {wisdomAS + asBonus['wis']}</div>
-                                <div>Charisma: {charismaAS + asBonus['cha']}</div>
+                                <div className="px-3 text-sm">Strength: {strengthAS + asBonus['str']}</div>
+                                <div className="px-3 text-sm">Dexterity: {dexterityAS + asBonus['dex']}</div>
+                                <div className="px-3 text-sm">Constitution: {constitutionAS + asBonus['con']}</div>
+                                <div className="px-3 text-sm">Intelligence: {intelligenceAS +asBonus['int']}</div>
+                                <div className="px-3 text-sm">Wisdom: {wisdomAS + asBonus['wis']}</div>
+                                <div className="px-3 text-sm">Charisma: {charismaAS + asBonus['cha']}</div>
                                 <button onClick={handleReroll} className='w-3/4 my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg'>Roll Ability Scores</button>
                                 <div className="text-xl w-3/4 font-bold border-b text-white border-gray-300 mb-4 pt-4 pb-2">Ability Proficiencies</div>
-                                    {abProf['str'] ? <div>Strength </div>:null}
-                                    {abProf['dex'] ? <div>Dexterity </div>:null}
-                                    {abProf['con'] ? <div>Constitution </div>:null}
-                                    {abProf['int'] ? <div>Intelligence </div>:null}
-                                    {abProf['wis'] ? <div>Wisdom </div>:null}
-                                    {abProf['cha'] ? <div>Charisma </div>:null}
+                                    {abProf['str'] ? <div className="px-3 text-sm">Strength </div>:null}
+                                    {abProf['dex'] ? <div className="px-3 text-sm">Dexterity </div>:null}
+                                    {abProf['con'] ? <div className="px-3 text-sm">Constitution </div>:null}
+                                    {abProf['int'] ? <div className="px-3 text-sm">Intelligence </div>:null}
+                                    {abProf['wis'] ? <div className="px-3 text-sm">Wisdom </div>:null}
+                                    {abProf['cha'] ? <div className="px-3 text-sm">Charisma </div>:null}
                                     <div className="text-xl w-3/4 font-bold border-b text-white border-gray-300 mb-4 pt-4 pb-2">Saving Throws</div>
-                                <div>Strength Saving Throw: {asBonus['str']+strengthAS-10 > 0 ? '+' + Math.floor((asBonus['str'] + strengthAS - 10)/2): Math.ceil((asBonus['str'] + strengthAS - 10)/2)}</div>
-                                <div>Dexterity Saving Throw: {asBonus['dex']+dexterityAS-10 > 0 ? '+' + Math.floor((asBonus['dex'] + dexterityAS - 10)/2): Math.ceil((asBonus['dex'] + dexterityAS - 10)/2)}</div>
-                                <div>Constitution Saving Throw: {asBonus['con']+constitutionAS-10 > 0 ? '+' + Math.floor((asBonus['con'] + constitutionAS - 10)/2): Math.ceil((asBonus['con'] + constitutionAS - 10)/2)}</div>
-                                <div>Intelligence Saving Throw: {asBonus['int']+intelligenceAS-10 > 0 ? '+' + Math.floor((asBonus['int'] + intelligenceAS - 10)/2): Math.ceil((asBonus['int'] + intelligenceAS - 10)/2)}</div>
-                                <div>Wisdom Saving Throw: {asBonus['wis']+wisdomAS-10 > 0 ? '+' + Math.floor((asBonus['wis'] + wisdomAS - 10)/2): Math.ceil((asBonus['wis'] + wisdomAS - 10)/2)}</div>
-                                <div>Charisma Saving Throw: {asBonus['cha']+charismaAS-10 > 0 ? '+' + Math.floor((asBonus['cha'] + charismaAS - 10)/2): Math.ceil((asBonus['cha'] + charismaAS - 10)/2)}</div>
+                                <div className="px-3 text-sm">Strength Saving Throw: {asBonus['str']+strengthAS-10 > 0 ? '+' + Math.floor((asBonus['str'] + strengthAS - 10)/2): Math.ceil((asBonus['str'] + strengthAS - 10)/2)}</div>
+                                <div className="px-3 text-sm">Dexterity Saving Throw: {asBonus['dex']+dexterityAS-10 > 0 ? '+' + Math.floor((asBonus['dex'] + dexterityAS - 10)/2): Math.ceil((asBonus['dex'] + dexterityAS - 10)/2)}</div>
+                                <div className="px-3 text-sm">Constitution Saving Throw: {asBonus['con']+constitutionAS-10 > 0 ? '+' + Math.floor((asBonus['con'] + constitutionAS - 10)/2): Math.ceil((asBonus['con'] + constitutionAS - 10)/2)}</div>
+                                <div className="px-3 text-sm">Intelligence Saving Throw: {asBonus['int']+intelligenceAS-10 > 0 ? '+' + Math.floor((asBonus['int'] + intelligenceAS - 10)/2): Math.ceil((asBonus['int'] + intelligenceAS - 10)/2)}</div>
+                                <div className="px-3 text-sm">Wisdom Saving Throw: {asBonus['wis']+wisdomAS-10 > 0 ? '+' + Math.floor((asBonus['wis'] + wisdomAS - 10)/2): Math.ceil((asBonus['wis'] + wisdomAS - 10)/2)}</div>
+                                <div className="px-3 text-sm">Charisma Saving Throw: {asBonus['cha']+charismaAS-10 > 0 ? '+' + Math.floor((asBonus['cha'] + charismaAS - 10)/2): Math.ceil((asBonus['cha'] + charismaAS - 10)/2)}</div>
                                 {classData && classData.spellcasting ? (
                                     <div>
-                                        <div>Spellcasting</div>
-                                        <div>SpellCasting Ability: {spellcasting['scab']} </div>
-                                        <div>Spellcasting Attack: {spellcasting['scat']} </div>
-                                        <div>Spellcasting Save: {spellcasting['scs']} </div>
+                                        <div className="text-xl w-3/4 font-bold border-b text-white border-gray-300 mb-4 pt-4 pb-2">Spellcasting</div>
+                                        <div className="px-3 text-sm">Spellcasting Ability: {spellcasting['scab']} </div>
+                                        <div className="px-3 text-sm">Spellcasting Attack: {spellcasting['scat']} </div>
+                                        <div className="px-3 text-sm">Spellcasting Save: {spellcasting['scs']} </div>
                                     </div>
                                 ):null}
                             </div>
@@ -694,7 +695,7 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                                 <div>
                                     <div className="text-xl w-3/4 font-bold border-b text-white border-gray-300 mb-4 pb-2">Features</div>
                                     {featureData ? (
-                                        <div className="mb-4 pb-2"> 
+                                        <div className="mb-4 pb-2 px-3 text-sm"> 
                                             {featureData.map((feature, index)=> 
                                                 <Feature key={index} name={feature.name} url={feature.url} setFeatureUrl={setFeatureUrl} />
                                             )}
@@ -704,7 +705,7 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                                 <div>
                                     <div className="text-xl  w-3/4 font-bold border-b text-white border-gray-300 mb-4 pb-2">Traits</div>
                                         {traitData ? (
-                                            <div className="mb-4 pb-2">
+                                            <div className="mb-4 pb-2 px-3 text-sm">
                                                 {traitData.map((trait, index)=>
                                                     <Trait key={index} name={trait.name} url={trait.url} setTraitUrl={setTraitUrl} />
                                                 )}
@@ -715,18 +716,18 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                                     {raceProf !== [] ? (
                                         <div>
                                             <div className="text-xl  w-3/4 font-bold border-b text-white border-gray-300 mb-4 pb-2">Starting Proficiencies</div>
-                                            <div>
+                                            <div className=" px-3 text-sm">
                                                 {classProf ? (
                                                     classProf.map((prof, index)=>
                                                         <Proficiency key={index} name={prof.name} url={prof.url} setProficiencyUrl={setProficiencyUrl} />
                                                     )
                                                 ):('')}
                                             </div>
-                                        <div>
-                                            {raceProf.map((proficiency, index)=>
-                                                <Proficiency key={index} name={proficiency.name} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
-                                            )}
-                                        </div>
+                                            <div className="mb-4 pb-2 px-3 text-sm">
+                                                {raceProf.map((proficiency, index)=>
+                                                    <Proficiency key={index} name={proficiency.name} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
+                                                )}
+                                            </div>
                                         </div>
                                     ):('')}
                                 </div>

@@ -6162,13 +6162,31 @@ def make_references():
 
     db.session.commit()
 
+def seed_delete():
+    User.query.delete()
+    Encounter.query.delete()
+    Character.query.delete()
+    EncounterCharacter.query.delete()
+    CharacterSkill.query.delete()
+    CharacterFeature.query.delete()
+    CharacterEquipment.query.delete()
+    CharacterSpell.query.delete()
+    CharacterRace.query.delete()
+    CharacterCharacterClass.query.delete()
+    CharacterSubclass.query.delete()
+    CharacterProficiency.query.delete()
+    CharacterTrait.query.delete()
+
+    db.session.commit()
+
+
 if __name__ == '__main__':
     fake = Faker()
     with app.app_context():
         print("Starting seed...")
-        make_users()
-        make_encounters()
-        make_characters()
+        # make_users()
+        # make_encounters()
+        # make_characters()
         make_skills()
         make_features()
         make_equipment()
@@ -6178,17 +6196,18 @@ if __name__ == '__main__':
         make_subclasses()
         make_proficiencies()
         make_traits()
-        make_encounter_characters()
-        make_character_skills()
-        make_character_features()
-        make_character_equipments()
-        make_character_spells()
-        make_character_race()
-        make_character_character_classes()
-        make_character_subclasses()
-        make_character_proficiencies()
-        make_character_traits()
+        # make_encounter_characters()
+        # make_character_skills()
+        # make_character_features()
+        # make_character_equipments()
+        # make_character_spells()
+        # make_character_race()
+        # make_character_character_classes()
+        # make_character_subclasses()
+        # make_character_proficiencies()
+        # make_character_traits()
         make_references()
+        seed_delete()
         print("Seed completed")
 
 # def make_character_():
