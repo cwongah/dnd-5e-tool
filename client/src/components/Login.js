@@ -77,7 +77,7 @@ function Login({userId, setUserId, setEmail, setPw, email, pw, token, setToken, 
             <div className="flex items-center justify-between">
                 <button
                 onClick={handleLoginClick}
-                className="bg-purple-600 hover:bg-purple-700 text-gray-100 py-2 px-4 rounded-lg"
+                className="bg-purple-600 hover:bg-purple-700 text-gray-100 py-2 mt-4 px-4 rounded-lg"
                 >
                 Login
                 </button>

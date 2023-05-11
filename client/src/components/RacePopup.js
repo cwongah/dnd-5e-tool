@@ -52,10 +52,10 @@ function RacePopup({raceUrl,racePop, setRacePop}){
                         )}
                 </div>
             ):('')}
-            <div>{race.language_desc}</div>
             {race.languages ? (
                 <div>
                     <div className="text-md font-bold py-2 w-3/4">Languages</div>
+                    <div>{race.language_desc}</div>
                     {race.languages.map((language, index) => 
                         <div key={index}>
                             {language.name}

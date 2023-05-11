@@ -44,8 +44,8 @@ function EncounterView({token, encounterId, referenceTable}){
         // fadeDiv.classList.toggle('opacity-0')
         // fadeDiv.classList.toggle('opacity-100')
         // setTimeout(()=>fadeDiv.classList.toggle('opacity-0'), 1000)
-        setShowRoll(!showRoll)
-        setTimeout(()=> setShowRoll(false))
+        setTimeout(()=> setShowRoll(true), 1000)
+        setTimeout(()=> setShowRoll(false), 2500)
     }
 
     function rollD12(){
@@ -53,6 +53,8 @@ function EncounterView({token, encounterId, referenceTable}){
         setChosenDie(d12)
         setSpin(!spin)
         setTimeout(()=> setSpin(false), 1000)
+        setTimeout(()=> setShowRoll(true), 1000)
+        setTimeout(()=> setShowRoll(false), 2500)
     }
 
     function rollD10(){
@@ -60,6 +62,8 @@ function EncounterView({token, encounterId, referenceTable}){
         setChosenDie(d10)
         setSpin(!spin)
         setTimeout(()=> setSpin(false), 1000)
+        setTimeout(()=> setShowRoll(true), 1000)
+        setTimeout(()=> setShowRoll(false), 2500)
     }
 
     function rollD8(){
@@ -67,6 +71,8 @@ function EncounterView({token, encounterId, referenceTable}){
         setChosenDie(d8)
         setSpin(!spin)
         setTimeout(()=> setSpin(false), 1000)
+        setTimeout(()=> setShowRoll(true), 1000)
+        setTimeout(()=> setShowRoll(false), 2500)
     }
 
     function rollD6(){
@@ -74,6 +80,8 @@ function EncounterView({token, encounterId, referenceTable}){
         setChosenDie(d6)
         setSpin(!spin)
         setTimeout(()=> setSpin(false), 1000)
+        setTimeout(()=> setShowRoll(true), 1000)
+        setTimeout(()=> setShowRoll(false), 2500)
     }
 
     function rollD4(){
@@ -81,6 +89,8 @@ function EncounterView({token, encounterId, referenceTable}){
         setChosenDie(d4)
         setSpin(!spin)
         setTimeout(()=> setSpin(false), 1000)
+        setTimeout(()=> setShowRoll(true), 1000)
+        setTimeout(()=> setShowRoll(false), 2500)
     }
 
     useEffect(() => {
@@ -124,7 +134,7 @@ function EncounterView({token, encounterId, referenceTable}){
                             <div>
                                 <div className="flex justify-center gap-8 px-3">
                                     {initiativeOrder.map(char=>
-                                        <div className=" w-1/4 mt-10 bg-teal-500 bg-opacity-70 shadow-lg shadow-teal-500/50  hover:shadow-teal-500/40 text-white text-s font-semibold rounded-lg p-2 pt-20 mr-4">
+                                        <div className=" w-1/4 mt-10 bg-teal-500 bg-opacity-70 shadow-lg shadow-teal-500/50  hover:shadow-teal-500/40 text-white text-s font-semibold rounded-lg p-5 mr-4">
                                             <div>{char.name}</div>
                                             <div>Initiative: {char.initiative}</div>
                                         </div>)}
@@ -159,9 +169,11 @@ function EncounterView({token, encounterId, referenceTable}){
                         {/* <div className="w-full absolute flex justify-center items-center">{dieRoll}</div> */}
                         <div className="relative flex justify-center  bg-black bg-opacity-30 rounded-lg shadow-lg mx-20 my-10 py-10">
                             <img className={`h-[200px] w-[200px] my-10 ${spin ? 'spin': ''}`}  src={chosenDie} />
-                            {/* <div class={`absolute top-14 left-15 w-3/4 h-3/4 flex flex-col items-center justify-center text-white rounded-lg transition duration-500 ease-in-out`}>
-                                <h1 class="text-3xl font-bold mb-4">Your Text Here</h1>
-                            </div> */}
+                            {showRoll ? 
+                                <div class={`absolute top-14 left-15 w-3/4 h-3/4 flex flex-col items-center justify-center text-white rounded-lg transition duration-500 ease-in-out`}>
+                                    <h1 class="text-3xl font-bold mb-4">{dieRoll}</h1>
+                                </div>
+                            : null}
                             {/* {showRoll ? <div id="fadeDiv" class="bg-red-500 text-white px-4 py-2 rounded opacity-0 transition-opacity duration-1000">This div will fade in/out</div>: null} */}
                         </div>
                         <div className=" bg-teal-500 bg-opacity-70 shadow-lg shadow-teal-500/50  hover:shadow-teal-500/40 text-white text-s font-semibold rounded-lg p-2">

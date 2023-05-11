@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function SearchBar({referenceTable, setSearchedObject, setUserUrl, setClassUrl, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setTraitUrl }){ 
+function SearchBar({setToggle,setCharacterId, referenceTable, setSearchedObject, setUserUrl, setClassUrl, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setTraitUrl }){ 
     const [search, setSearch] = useState('')
     console.log(search)
     const navigate = useNavigate()
@@ -15,6 +15,7 @@ function SearchBar({referenceTable, setSearchedObject, setUserUrl, setClassUrl, 
         if(searchObject.length == 0){
             alert('Not Found')
         }else{
+            setToggle(false)
             // console.log(searchObject)
             switch(searchObject[0].class_type){
                 case 'user':
@@ -56,6 +57,10 @@ function SearchBar({referenceTable, setSearchedObject, setUserUrl, setClassUrl, 
                 case 'trait':
                     setTraitUrl(searchObject[0].url)
                     navigate(`/traits/${searchObject[0].name}`)
+                    break
+                case 'character':
+                    setCharacterId(searchObject[0].object_id)
+                    navigate(`/characters/${searchObject[0].name}`)
                     break
             }
         }

@@ -178,8 +178,8 @@ function LevelUp({characterId, token, setFeatureUrl, referenceTable, setShowPopu
             {levelUpData ? (
                 <div>
                     <h2 className="text-4xl font-bold mb-4">Time to Level Up!</h2>
-                    {levelUpData.level ? <div className="text-l font-bold mb-2 pt-4">{character.name} is now level: {levelUpData.level}!</div>:null}
-                    <div className="text-l font-bold mb-2 pt-4">New Features!</div>
+                    {levelUpData.level ? <div className="text-l font-bold mb-2 pt-4">{character.name} is moving up to level: {levelUpData.level}!</div>:null}
+                    <div className="text-l w-1/2 font-bold mb-2 pt-4 border-b border-black">New Features!</div>
                     {levelUpData.features && levelUpData.features[0].name != 'Ability Score Improvement' ? levelUpData.features.map((feature, index)=>
                         <Feature key={index} name={feature.name} url={feature.url} setFeatureUrl={setFeatureUrl} />
                         ) :null}

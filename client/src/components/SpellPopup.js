@@ -24,12 +24,16 @@ function SpellPopup({spellUrl, setClassUrl, setSubclassUrl, setSpellPop, spellPo
                 <div className="px-3">{spell.range}</div>
                 <div className="text-md font-bold">Components</div>
                 <div className="px-3">{spell.components}</div>
-                <div className="text-md font-bold">Materials</div>
-                <div className="px-3">{spell.material}</div>
+                {spell.material ? (
+                    <div>
+                        <div className="text-md font-bold">Materials</div>
+                        <div className="px-3">{spell.material}</div>
+                    </div>
+                ): null}
                 {spell.area_of_effect ? (
                     <div>
                         <div className="text-md font-bold">
-                            Materials
+                            Area of Effect
                         </div>
                         <div className="px-3">
                             {spell.area_of_effect.type}: {spell.area_of_effect.size}

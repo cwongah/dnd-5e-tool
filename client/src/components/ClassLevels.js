@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from "react";
 import Feature from "./Feature";
 
-function ClassLevels({classLevelUrl, currentClass, setFeatureUrl}){
+function ClassLevels({classLevelUrl, currentClass, setFeatureUrl, classLevelPop, setClassLevelPop}){
     const [classLevels, setClassLevels] = useState([])
 
     useEffect(()=>{
-        fetch(classLevelUrl)
+        fetch(`https://www.dnd5eapi.co${classLevelUrl}`)
             .then(r => r.json())
             .then(data => setClassLevels(data))
     }, [])
 
+    console.log(classLevels)
+
     return(
         <div>
-            <div>{currentClass} Levels</div>
             {classLevels ? (
                 <div>
                     {classLevels.map((item, index)=>
                     <div key={index}>
-                        <div>Level: {item.level}</div>
-                        <div>AB: {item.ability_score_bonuses}</div>
-                        <div>PB: {item.prof_bonus}</div>
+                        <div className="text-lg font-bold mb-4 py-2 border-b border-gray-300">Level: {item.level}</div>
+                        <div className="font-bold py-2">Score Bonuses</div>
+                        <div className="px-3">Ability Score Bonuses: {item.ability_score_bonuses}</div>
+                        <div className="px-3">Proficiency Bonus: {item.prof_bonus}</div>
                         <div>
                             {item.features ? (
                               <div>
-                                Features
+                                <div className="font-bold py-2">Features</div>
                                 {item.features.map((feature, index) =>
-                                    <Feature key={index} name={feature.name} url={feature.url} setFeatureUrl={setFeatureUrl} />
+                                    <div className="px-3">{feature.name}</div>
                                 )}
                               </div>
                             ):('')}
@@ -33,9 +35,10 @@ function ClassLevels({classLevelUrl, currentClass, setFeatureUrl}){
                         <div>
                             {item.spellcasting ? (
                                 <div>
+                                    <div className="font-bold py-2">Spellcasting</div>
                                     {Object.entries(item.spellcasting).map(([key, value])=>{
                                         return(
-                                            <div key={key}>
+                                            <div className="px-3" key={key}>
                                                 {key}: {value}
                                             </div>
                                     )})}
@@ -43,11 +46,12 @@ function ClassLevels({classLevelUrl, currentClass, setFeatureUrl}){
                             ):('')}
                         </div>
                         <div>
-                            {item.class_specific ? (
+                            {item.class_specific && item.class.index !== "rogue" ? (
                                 <div>
+                                    <div className="font-bold py-2">Class Specific</div>
                                     {Object.entries(item.class_specific).map(([key, value])=>{
                                         return(
-                                            <div key={key}>
+                                            <div className="px-3" key={key}>
                                                 {key}: {value}
                                             </div>
                                     )})}
@@ -58,6 +62,11 @@ function ClassLevels({classLevelUrl, currentClass, setFeatureUrl}){
                     )}
                 </div>
             ):('')}
+            <div className="flex justify-center">
+                <button onClick={()=> setClassLevelPop(!classLevelPop)} className='w-1/4 h-1/4 py-2 ml-10  mt-3 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white text-xs font-semibold rounded-lg'>
+                    Close
+                </button>
+            </div>
         </div>
     )
 }

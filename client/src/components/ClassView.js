@@ -3,11 +3,27 @@ import { useNavigate } from "react-router-dom";
 import Subclass from "./Subclass";
 import Proficiency from "./Proficiency";
 import Equipment from "./Equipment";
+import SubclassPop from "./SubclassPopup";
+import ProfPopup from "./ProfPopup";
+import SkillPopup from "./SkillPopup";
+import EquipmentPopup from "./EquipmentPopup";
+import ClassLevels from "./ClassLevels";
+import ClassSpells from "./ClassSpells";
 
 function ClassView({classUrl, setCurrentClass, setClassLevelUrl, setClassSpellUrl, setSubclassUrl, setProficiencyUrl, setEquipmentUrl}){
     const navigate = useNavigate()
-
     const [characterClass, setCharacterClass] = useState({})
+    const [subclassPop, setSubclassPop] = useState(false)
+    const [profPop, setProfPop] = useState(false)
+    const [profPopUrl, setProfPopUrl] = useState()
+    const [skillPop, setSkillPop] = useState(false)
+    const [skillPopUrl, setSkillPopUrl] = useState()
+    const [equipPop, setEquipPop] = useState(false)
+    const [equipPopUrl, setEquipPopUrl] = useState()
+    const [classLevelPop, setClassLevelPop] = useState(false)
+    const [classSpellPop, setClassSpellPop] = useState(false)
+
+    console.log(characterClass.spells)
 
     useEffect(()=>{
         fetch(classUrl)
@@ -43,13 +59,12 @@ function ClassView({classUrl, setCurrentClass, setClassLevelUrl, setClassSpellUr
                                     {characterClass.subclasses ? (
                                         <div>
                                             {characterClass.subclasses.map((subclass, index)=>
-                                                <div>Subclass: {subclass.name}</div>
+                                                <div onClick={()=> setSubclassPop(!subclassPop)}>Subclass: {subclass.name}</div>
                                             )}
                                         </div>
                                     ):('')}
-                                    {/* DO THIS FUCKING THING */}
-                                    {characterClass.class_levels ? (<div onClick={handleLevelsClick}>Class Levels</div>):('')}
-                                    {/* Do iot fucker you have to */}
+                                    {characterClass.class_levels ? (<div onClick={()=> setClassLevelPop(!classLevelPop)}>Class Levels</div>):('')}
+                                    {characterClass.spells ? (<div onClick={()=> setClassSpellPop(!classSpellPop)} >Class Spells</div>):('')}
                                 </div> 
                             </div>
                             <div className="col-span-1">
@@ -88,88 +103,141 @@ function ClassView({classUrl, setCurrentClass, setClassLevelUrl, setClassSpellUr
                                 </div>
                             </div>
                         ):('')}
-                        {/* DO THIS FUCKING THING */}
-                        {characterClass.spells ? (<div onClick={handleSpellsClick} >Spells</div>):('')}
-                        {/* Do iot fucker you have to */}
                     </div>
                 </div>
                 <div className="col-span-1">
                     <div className="bg-white bg-opacity-50 rounded-lg shadow-lg p-4">
+                        <div className="text-4xl font-bold text-white px-3 mb-5 pb-2 border-b border-gray-300">Skills, Proficiencies, and Equipment</div>
                         <div className="grid grid-cols-2 gap-8">
                             <div className="col-span-1">
-                                
-                            </div>
-                        </div>
-                    <div className="text-4xl font-bold text-white px-3 mb-5 pb-2 border-b border-gray-300">Skills and Proficiencies</div>
-                        {characterClass.proficiencies ? (
-                            <div>
-                                {characterClass.proficiencies.map((proficiency, index) => 
-                                    <Proficiency key={index} name={proficiency.name} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
-                                )}
-                            </div>
-                        ):('')}
-                        {characterClass.proficiency_choices && characterClass.index != 'monk' ? (
-                            <div>
-                                {characterClass.proficiency_choices.map((proficiency, index)=>
-                                    <div key={index}>
-                                        {proficiency.desc}
-                                        {proficiency.from.options.map((option, index) => 
-                                            // <div key={index}>{option.item.name}</div>)
-                                            <Proficiency key={index} name={option.item.name} url={option.item.url} setProficiencyUrl={setProficiencyUrl} />
+                                {characterClass.proficiencies ? (
+                                    <div>
+                                        <div className="text-xl w-full font-bold border-b text-white border-gray-300 mb-4 p-4">Starting Proficiencies</div>
+                                        {characterClass.proficiencies.map((proficiency, index) => 
+                                            <div className="px-3" onClick={()=> {
+                                                setProfPop(!profPop)
+                                                setProfPopUrl([proficiency.url])
+                                            }}>{proficiency.name}</div>
                                         )}
                                     </div>
-                                )}
-                            </div>
-                        ):('')}
-                        {characterClass.proficiency_choices && characterClass.index == 'monk' ? (
-                            <div>
-                                {characterClass.proficiency_choices.map((proficiency, index)=>
-                                    <div key={index}>
-                                        {proficiency.desc}
-                                        {proficiency.choose == 2 ? (
-                                            <div>
+                                ):('')}
+                                {characterClass.proficiency_choices && characterClass.index != 'monk' ? (
+                                    <div>
+                                        <div className="text-xl w-full font-bold border-b text-white border-gray-300 mb-4 p-4">Starting Proficiencies Options</div>
+                                        {characterClass.proficiency_choices.map((proficiency, index)=>
+                                            <div className="px-3" key={index}>
+                                                <div className="font-bold py-2">{proficiency.desc}</div>
                                                 {proficiency.from.options.map((option, index) => 
-                                                    <Proficiency key={index} name={option.item.name} url={option.item.url} setProficiencyUrl={setProficiencyUrl} />
+                                                    // <div key={index}>{option.item.name}</div>)
+                                                    <div onClick={()=>{
+                                                        setProfPop(!profPop)
+                                                        setProfPopUrl(option.item.url)
+                                                    }}>{option.item.name}</div>
                                                 )}
-                                            </div>):(
-                                            <div>
-                                                {proficiency.from.options.map((option) =>
+                                            </div>
+                                        )}
+                                    </div>
+                                ):('')}
+                                {characterClass.proficiency_choices && characterClass.index == 'monk' ? (
+                                    <div>
+                                        <div className="text-xl w-full font-bold border-b text-white border-gray-300 mb-4 p-4">Starting Proficiencies Options</div>
+                                        {characterClass.proficiency_choices.map((proficiency, index)=>
+                                            <div className="px-3" key={index}>
+                                                <div className="font-bold py-2>">{proficiency.desc}</div>
+                                                {proficiency.choose == 2 ? (
                                                     <div>
-                                                        {option.choice.desc}
-                                                        {option.choice.from.options.map((deeper_option, index)=>
-                                                            <Proficiency key={index} name={deeper_option.item.name} url={deeper_option.item.url} setProficiencyUrl={setProficiencyUrl} />
+                                                        {proficiency.from.options.map((option, index) => 
+                                                            <div>{option.item.name}</div>
+                                                        )}
+                                                    </div>):(
+                                                    <div>
+                                                        {proficiency.from.options.map((option) =>
+                                                            <div>
+                                                                <div className="font-bold py-2">{option.choice.desc}</div>
+                                                                {option.choice.from.options.map((deeper_option, index)=>
+                                                                    <div>{deeper_option.item.name}</div>
+                                                                )}
+                                                            </div>
                                                         )}
                                                     </div>
                                                 )}
                                             </div>
                                         )}
                                     </div>
-                                )}
+                                ):('')}
+                                
                             </div>
-                        ):('')}
-                        {characterClass.starting_equipment ? (
-                            <div>
-                                {characterClass.starting_equipment.map((equip, index) =>
-                                    <Equipment key={index} name={equip.equipment.name} url={equip.equipment.url} setEquipmentUrl={setEquipmentUrl} />
-                                )}
-                            </div>
-                        ):('')}
-                        {characterClass.starting_equipment_options ? (
-                            <div>
-                                {characterClass.starting_equipment_options.map((option, index)=>
-                                    <div key={index}>                            
-                                            {option.desc}
+                            <div className="col-span-1">
+                                {characterClass.starting_equipment ? (
+                                    <div>
+                                        <div className="text-xl w-full font-bold border-b text-white border-gray-300 mb-4 p-4">Starting Equipment</div>
+                                        {characterClass.starting_equipment.map((equip, index) => 
+                                            <div onClick={()=> {
+                                                setEquipPop(!equipPop)
+                                                setEquipPopUrl(equip.equipment.url)
+                                            }} key={index} className="px-3">
+                                                {equip.equipment.name}
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                            </div>
-                        ):('')}
-
+                                ):('')}
+                                {characterClass.starting_equipment_options ? (
+                                    <div>
+                                        <div className="text-xl w-full font-bold border-b text-white border-gray-300 mb-4 p-4">Starting Equipment Options</div>
+                                        {characterClass.starting_equipment_options.map((option, index)=>
+                                            <div key={index} className="px-3">                            
+                                                    {option.desc}
+                                            </div>
+                                        )}
+                                    </div>
+                                ):('')}
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            
-            
+            {subclassPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-xl w-full lg:w-3/4 h-3/4 overflow-y-scroll">
+                    <SubclassPop subclassPop={subclassPop} setSubclassPop={setSubclassPop} subclassUrl={characterClass.subclasses[0].url} />
+                </div>
+            </div> 
+            ) : null}
+            {profPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-xs w-full lg:w-3/4 ">
+                    <ProfPopup profPop={profPop} setProfPop={setProfPop} proficiencyUrl={profPopUrl} />
+                </div>
+            </div> 
+            ) : null}
+            {skillPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-xl w-full lg:w-3/4 overflow-y-scroll">
+                    <SkillPopup skillPop={skillPop} setSkillPop={setSkillPop} skillUrl={skillPopUrl} />
+                </div>
+            </div> 
+            ) : null}
+            {equipPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="h-3/4 bg-white rounded-lg p-6 max-w-2xl w-full lg:w-3/4 overflow-y-scroll">
+                    <EquipmentPopup equipPop={equipPop} setEquipPop={setEquipPop} equipmentUrl={equipPopUrl}  />
+                </div>
+            </div> 
+            ) : null}
+            {classLevelPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="h-3/4 bg-white rounded-lg p-6 max-w-lg w-full lg:w-3/4 overflow-y-scroll">
+                    <ClassLevels classLevelPop={classLevelPop} setClassLevelPop={setClassLevelPop} classLevelUrl={characterClass.class_levels}  />
+                </div>
+            </div> 
+            ) : null}
+            {classSpellPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="h-2/3 bg-white rounded-lg p-6 max-w-xs w-full lg:w-3/4 overflow-y-scroll">
+                    <ClassSpells classSpellPop={classSpellPop} setClassSpellPop={setClassSpellPop} classSpellUrl={characterClass.spells}  />
+                </div>
+            </div> 
+            ) : null}
         </div>
     )
 }

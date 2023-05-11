@@ -81,7 +81,7 @@ function App() {
       </div>
       <div >
       {/* className={`${toggle ? "transform translate-x-64" : ""}`} */}
-        <NavBar userId={userId} toggle={toggle} setToggle={setToggle} referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />
+        <NavBar userId={userId} toggle={toggle} setToggle={setToggle} referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} setCharacterId={setCharacterId} />
         <div className="px-5">
           <Routes>
             {/* <Route path="/" element={<Home userId={userId} setUserId={setUserId} token={token} setToken={setToken} email={email} setEmail={setEmail} pw={pw} setPw={setPw} referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} /> */}
@@ -112,7 +112,7 @@ function App() {
             <Route path="/subclasses/:id" element={<SubclassView subclassUrl={subclassUrl} setSubclassUrl={setSubclassUrl} setCurrentSubclass={setCurrentSubclass} setSpellUrl={setSpellUrl} setSubclassLevelUrl={setSubclassLevelUrl} />} />
             <Route path="/proficiencies/:id" element={<ProficiencyView proficiencyUrl={proficiencyUrl} setProficiencyUrl={setProficiencyUrl} setRaceUrl={setRaceUrl} setClassUrl={setClassUrl} />} />
             <Route path="/traits/:id" element={<TraitView traitUrl={traitUrl} setRaceUrl={setRaceUrl} />} />
-            <Route path="/classes/:className/levels" element={<ClassLevels classLevelUrl={classLevelUrl} currentClass={currentClass} setFeatureUrl={setFeatureUrl} />} />
+            {/* <Route path="/classes/:className/levels" element={<ClassLevels classLevelUrl={classLevelUrl} currentClass={currentClass} setFeatureUrl={setFeatureUrl} />} /> */}
             <Route path="/classes/:className/spells" element={<ClassSpells spellUrl={spellUrl} currentClass={currentClass} setSpellUrl={setSpellUrl} classSpellUrl={classSpellUrl} />} />
             <Route path="/subclasses/:subclassName/levels" element={<SubclassLevels subclassLevelUrl={subclassLevelUrl} currentSubclass={currentSubclass} setFeatureUrl={setFeatureUrl} />} />
             <Route path="/character_creation" element={<CharacterCreation setReferenceTable={setReferenceTable} userId={userId} setCharacterId={setCharacterId} referenceTable={referenceTable} setFeatureUrl={setFeatureUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />} />

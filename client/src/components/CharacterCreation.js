@@ -3,6 +3,9 @@ import Feature from "./Feature";
 import Proficiency from "./Proficiency";
 import Trait from "./Trait";
 import { useNavigate } from "react-router-dom";
+import FeaturePopup from "./FeaturePopup";
+import TraitPopup from "./TraitPopup";
+import ProfPopup from "./ProfPopup";
 
 function CharacterCreation({setReferenceTable, userId, setCharacterId, referenceTable, setFeatureUrl, setProficiencyUrl, setTraitUrl}){
     const navigate = useNavigate()
@@ -43,6 +46,12 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
     const [level, setLevel] = useState(1)
     const [hitDieTotal, setHitDieTotal] = useState(1)
     const [spellcasting, setSpellcasting] = useState({'scab':0, 'scat':0, 'scs':0})
+    const [featurePop, setFeaturePop] = useState(false)
+    const [featurePopUrl, setFeaturePopUrl] = useState()
+    const [traitPop, setTraitPop] = useState(false)
+    const [traitPopUrl, setTraitPopUrl] = useState()
+    const [profPop, setProfPop] = useState(false)
+    const [profPopUrl, setProfPopUrl] = useState()
     const [newChar, setNewChar] = useState({
         'name': '',
         'bio': '',
@@ -697,7 +706,10 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                                     {featureData ? (
                                         <div className="mb-4 pb-2 px-3 text-sm"> 
                                             {featureData.map((feature, index)=> 
-                                                <Feature key={index} name={feature.name} url={feature.url} setFeatureUrl={setFeatureUrl} />
+                                                <div key={index} onClick={()=> {
+                                                    setFeaturePop(!featurePop)
+                                                    setFeaturePopUrl(feature.url)
+                                                }}>{feature.name}</div>
                                             )}
                                         </div>
                                     ):null}
@@ -707,7 +719,10 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                                         {traitData ? (
                                             <div className="mb-4 pb-2 px-3 text-sm">
                                                 {traitData.map((trait, index)=>
-                                                    <Trait key={index} name={trait.name} url={trait.url} setTraitUrl={setTraitUrl} />
+                                                    <div key={index} onClick={()=> {
+                                                        setTraitPop(!traitPop)
+                                                        setTraitPopUrl(trait.url)
+                                                    }}>{trait.name}</div>
                                                 )}
                                             </div>
                                         ):('')}
@@ -719,13 +734,19 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                                             <div className=" px-3 text-sm">
                                                 {classProf ? (
                                                     classProf.map((prof, index)=>
-                                                        <Proficiency key={index} name={prof.name} url={prof.url} setProficiencyUrl={setProficiencyUrl} />
+                                                    <div key={index} onClick={()=> {
+                                                        setProfPop(!profPop)
+                                                        setProfPopUrl(prof.url)
+                                                    }}>{prof.name}</div>
                                                     )
                                                 ):('')}
                                             </div>
                                             <div className="mb-4 pb-2 px-3 text-sm">
                                                 {raceProf.map((proficiency, index)=>
-                                                    <Proficiency key={index} name={proficiency.name} url={proficiency.url} setProficiencyUrl={setProficiencyUrl} />
+                                                    <div key={index} onClick={()=> {
+                                                        setProfPop(!profPop)
+                                                        setProfPopUrl(proficiency.url)
+                                                    }}>{proficiency.name}</div>
                                                 )}
                                             </div>
                                         </div>
@@ -737,6 +758,27 @@ function CharacterCreation({setReferenceTable, userId, setCharacterId, reference
                     </div>
                 </div>
             </div>
+            {featurePop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-2xl w-full lg:w-3/4 overflow-y-scroll">
+                    <FeaturePopup featurePop={featurePop} setFeaturePop={setFeaturePop} featureUrl={featurePopUrl} />
+                </div>
+            </div> 
+            ) : null}
+            {traitPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-2xl w-full lg:w-3/4 overflow-y-scroll">
+                    <TraitPopup traitPop={traitPop} setTraitPop={setTraitPop} traitUrl={traitPopUrl} />
+                </div>
+            </div> 
+            ) : null}
+            {profPop ? (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-700 bg-opacity-50 flex justify-center items-center ">
+                <div className="bg-white rounded-lg p-6 max-w-xs w-full lg:w-3/4 ">
+                    <ProfPopup profPop={profPop} setProfPop={setProfPop} proficiencyUrl={profPopUrl} />
+                </div>
+            </div> 
+            ) : null}
         </div>
     )
 }

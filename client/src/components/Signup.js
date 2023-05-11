@@ -94,7 +94,7 @@ function Signup(){
                     <div className="flex items-center justify-between">
                     <button
                         onClick={handleSignup}
-                        className="bg-purple-600 hover:bg-purple-700 text-gray-100 py-2 px-4 rounded-lg"
+                        className="bg-purple-600 hover:bg-purple-700 text-gray-100 py-2 px-4 mt-4 rounded-lg"
                     >
                         Signup
                     </button>

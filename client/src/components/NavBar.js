@@ -7,7 +7,7 @@ import { FaDiceD20} from 'react-icons/fa'
 
 
 
-function NavBar({toggle, setToggle, referenceTable, setSearchedObject, setUserUrl, setClassUrl, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setTraitUrl, userId}){
+function NavBar({toggle, setToggle, referenceTable, setSearchedObject, setUserUrl, setClassUrl, setCharacterId, setSkillUrl, setFeatureUrl, setEquipmentUrl, setSpellUrl, setRaceUrl, setSubclassUrl, setProficiencyUrl, setTraitUrl, userId}){
     const navigate = useNavigate()
     const [menuOpen, setMenuOpen] = React.useState(false)
 
@@ -36,7 +36,7 @@ function NavBar({toggle, setToggle, referenceTable, setSearchedObject, setUserUr
                 <div className="lg:flex flex-grow items-center">
                   <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
                     <li className="nav-item absolute inline-flex rounded-full h-2 w-auto right-20 top-1/4">
-                      <SearchBar referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />
+                      <SearchBar setToggle={setToggle} setCharacterId={setCharacterId} referenceTable={referenceTable} setSearchedObject={setSearchedObject} setUserUrl={setUserUrl} setClassUrl={setClassUrl} setSkillUrl={setSkillUrl} setFeatureUrl={setFeatureUrl} setEquipmentUrl={setEquipmentUrl} setSpellUrl={setSpellUrl} setRaceUrl={setRaceUrl} setSubclassUrl={setSubclassUrl} setProficiencyUrl={setProficiencyUrl} setTraitUrl={setTraitUrl} />
                     </li>
                   </ul>
                 </div>
